@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>Add project</title>
+</head>
+<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+<div th:replace="fragments/header :: header"/>
+<h1>Add project</h1>
+<form action="#" th:action="@{/projects/add}" th:object="${project}" method="post">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td><label>Description:</label></td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Save"/></td>
+        </tr>
+    </table>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect2">User</label>
+        </div>
+        <select id="inputGroupSelect2" class="custom-select" th:field="${project.user.id}">
+            <option selected th:value="null">Choose</option>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.displayName}"></option>
+        </select>
+    </div>
+</form>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My participation in project</title>
+</head>
+<body>
+<a th:href="@{/add-participation}">
+    <button>Add participation in project</button>
+</a>
+
+
+<li th:each="participation: ${participationInProject}">
+    <p th:text="'id:' + ${participation.id}"/>
+
+    <a th:href="@{/edit-participationInProject/{id}(id = ${participation.id})}">
+        <button>Edit</button>
+    </a>
+    <a th:href="@{/delete-participationInProject/{id}(id = ${participation.id})}">
+        <button>Delete</button>
+    </a>
+
+</li>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>Edit project</title>
+</head>
+<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+<div th:replace="fragments/header :: header"/>
+<h1>Edit project</h1>
+<form action="#" th:action="@{/project/edit}" th:object="${project}" method="post">
+    <table>
+        <tr>
+            <td><label>Id:</label></td>
+            <td><input readonly type="text" th:field="*{id}"/></td>
+        </tr>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td><label>Description:</label></td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Save"/></td>
+        </tr>
+    </table>
+</form>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

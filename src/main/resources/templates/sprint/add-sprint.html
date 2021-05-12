@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>Add sprint</title>
+</head>
+<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+<div th:replace="fragments/header :: header"/>
+<h1>Add sprint</h1>
+<form action="#" th:action="@{/sprint/add}" th:object="${sprint}" method="post">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td><label>Date from:</label></td>
+            <td><input type="date" th:field="*{dateFrom}"/></td>
+        </tr>
+        <tr>
+            <td><label>Date to:</label></td>
+            <td><input type="date" th:field="*{dateTo}"/></td>
+        </tr>
+        <tr>
+            <td><label>Planned story points:</label></td>
+            <td><input type="text" th:field="*{plannedStoryPoints}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Save"/></td>
+        </tr>
+    </table>
+</form>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>
