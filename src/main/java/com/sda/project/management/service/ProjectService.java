@@ -26,7 +26,7 @@ public class ProjectService {
         log.info("save project {}", project);
         String name = project.getName();
 
-        Project existingProject = projectRepository.findByName(name)
+        Project existingProject = projectRepository.findByName(name.toLowerCase())
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
 
         if (existingProject == null) {
