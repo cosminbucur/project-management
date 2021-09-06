@@ -3,6 +3,7 @@ package com.sda.project.management.config;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.User;
+import com.sda.project.management.model.UserPrincipal;
 import com.sda.project.management.repository.ProjectRepository;
 import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.UserRepository;
@@ -12,8 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class DbInit {
@@ -38,6 +46,12 @@ public class DbInit {
 
             User user = new User("user", "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi", "user@gmail.com", "Alex Vasile", "USER");
             userRepository.save(user);
+
+            UserPrincipal userPrincipal = new UserPrincipal(user);
+            Authentication auth =
+                    new UsernamePasswordAuthenticationToken(user, null, userPrincipal.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(auth);
 
             Project project = new Project();
             project.setName("Sakura");

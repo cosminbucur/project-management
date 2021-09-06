@@ -1,5 +1,7 @@
 package com.sda.project.management.service;
 
+import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
+import com.sda.project.management.controller.exception.ResourceNotFoundException;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.repository.ProjectRepository;
 import org.slf4j.Logger;
@@ -22,7 +24,16 @@ public class ProjectService {
 
     public void save(Project project) {
         log.info("save project {}", project);
-        projectRepository.save(project);
+        String name = project.getName();
+
+        Project existingProject = projectRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
+
+        if (existingProject == null) {
+            projectRepository.save(project);
+        } else {
+            throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
+        }
     }
 
     public List<Project> findAll() {
@@ -31,17 +42,26 @@ public class ProjectService {
     }
 
     public Project findById(Long id) {
+        log.info("find project id {}", id);
         return projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("project not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
     }
 
     public void update(Project project) {
+        log.info("update project {}", project);
+        findById(project.getId());
         projectRepository.save(project);
     }
 
     public void delete(Long id) {
         log.info("delete project {}", id);
+        projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
         projectRepository.deleteById(id);
+    }
+
+    private boolean exists(Long id) {
+        return projectRepository.existsById(id);
     }
 
 }
