@@ -15,13 +15,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @Configuration
 public class DbInit {
@@ -63,7 +59,7 @@ public class DbInit {
             sprint.setName("SAK-20-1");
             sprint.setDateFrom(LocalDate.now());
             sprint.setDateTo(sprint.getDateFrom().plusDays(14));
-            sprint.setPlannedStoryPoints(20);
+            sprint.setStoryPoints(20);
             sprintRepository.save(sprint);
         };
     }

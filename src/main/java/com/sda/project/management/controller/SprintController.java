@@ -20,38 +20,48 @@ public class SprintController {
         this.sprintService = sprintService;
     }
 
-    @GetMapping("sprints")
+    @GetMapping("/sprints")
     public String showSprintsPage(Model model) {
         model.addAttribute("sprints", sprintService.findAll());
         return "sprint/sprints";
     }
 
-    @GetMapping("add-sprint")
+    @GetMapping("/sprints/add")
     public String showAddForm(Model model) {
         model.addAttribute("sprint", new Sprint());
-        return "sprint/add-sprint";
+        return "sprint/sprint-add";
     }
 
-    @PostMapping("sprint/add")
+    @PostMapping(value = "/sprints/add", params = "save")
     public String add(@ModelAttribute Sprint sprint){
         sprintService.save(sprint);
         return "redirect:/sprints";
     }
 
-    @GetMapping("edit-sprint/{id}")
+    @PostMapping(value = "/sprints/add", params = "cancel")
+    public String cancelAdd() {
+        return "redirect:/sprints";
+    }
+
+    @GetMapping("/sprints/{id}/edit")
     public String showEditForm(Model model, @PathVariable("id") Long id){
         Sprint sprint = sprintService.findById(id);
         model.addAttribute("sprint", sprint);
-        return "sprint/edit-sprint";
+        return "sprint/sprint-edit";
     }
 
-    @PostMapping("sprint/edit")
+    @PostMapping(value = "/sprints/{id}/edit", params = "save")
     public String edit(@ModelAttribute Sprint sprint){
         sprintService.update(sprint);
         return "redirect:/sprints";
     }
 
-    @GetMapping("delete-sprint/{id}")
+    @PostMapping(value = "/sprints/{id}/edit", params = "cancel")
+    public String cancelEdit() {
+        return "redirect:/sprints";
+    }
+
+    @GetMapping("/sprints/{id}/delete")
     public String delete(@PathVariable("id") Long id){
         sprintService.delete(id);
         return "redirect:/sprints";

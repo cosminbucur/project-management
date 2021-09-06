@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AcceptanceTest {
+class AcceptanceTest {
 
     @Test
     void startSprint() {
@@ -29,7 +29,7 @@ public class AcceptanceTest {
 
         assertThat(project.getSprints()).hasSize(1);
         assertThat(sprint.getTasks()).hasSize(2);
-        assertThat(sprint.getPlannedStoryPoints()).isEqualTo(8);
+        assertThat(sprint.getStoryPoints()).isEqualTo(8);
     }
 
     private User createAdmin() {
