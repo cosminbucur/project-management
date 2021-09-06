@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -26,13 +27,11 @@ public class ProjectService {
         log.info("save project {}", project);
         String name = project.getName();
 
-        Project existingProject = projectRepository.findByName(name.toLowerCase())
-                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
-
-        if (existingProject == null) {
-            projectRepository.save(project);
-        } else {
+        Optional<Project> projectOptional = projectRepository.findByName(name.toLowerCase());
+        if (projectOptional.isPresent()) {
             throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
+        } else {
+            projectRepository.save(project);
         }
     }
 
