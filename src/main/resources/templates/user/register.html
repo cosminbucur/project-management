@@ -1,8 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: header-css"/>
     <title>Register</title>
 </head>
+
 <body>
 <form action="#" th:action="@{/register/add}" th:object="${user}" method="post">
     <table>

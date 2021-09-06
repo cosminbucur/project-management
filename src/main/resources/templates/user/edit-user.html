@@ -3,8 +3,11 @@
     <div th:replace="fragments/header :: header-css"/>
     <title>Edit user</title>
 </head>
+
 <body>
+
 <div th:replace="fragments/header :: header"/>
+
 <p>Edit User</p>
 <form action="#" th:action="@{/user/edit}" th:object="${userToBeEdit}" method="post">
     <table border="1">
@@ -33,6 +36,8 @@
         </tr>
     </table>
 </form>
+
 <div th:replace="fragments/footer :: footer"/>
+
 </body>
 </html>

@@ -28,12 +28,12 @@ public class SprintController {
 
     @GetMapping("add-sprint")
     public String showAddForm(Model model) {
-        model.addAttribute("newSprint", new Sprint());
+        model.addAttribute("sprint", new Sprint());
         return "sprint/add-sprint";
     }
 
     @PostMapping("sprint/add")
-    public String addSprint(@ModelAttribute Sprint sprint){
+    public String add(@ModelAttribute Sprint sprint){
         sprintService.save(sprint);
         return "redirect:/sprints";
     }
@@ -46,7 +46,7 @@ public class SprintController {
     }
 
     @PostMapping("sprint/edit")
-    public String editSprint(@ModelAttribute Sprint sprint){
+    public String edit(@ModelAttribute Sprint sprint){
         sprintService.update(sprint);
         return "redirect:/sprints";
     }

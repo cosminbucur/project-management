@@ -25,8 +25,7 @@ public class TaskController {
 
     @GetMapping("tasks")
     public String showTasksPage(Model model) {
-        List<Task> taskList = taskService.findAll();
-        model.addAttribute("tasks", taskList);
+        model.addAttribute("tasks", taskService.findAll());
         return "task/tasks";
     }
 

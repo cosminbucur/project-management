@@ -3,6 +3,7 @@ package com.sda.project.management.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +19,10 @@ public class Sprint {
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dateFrom;
+    private LocalDate dateFrom;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dateTo;
+    private LocalDate dateTo;
 
     private Integer plannedStoryPoints;
 
@@ -47,19 +48,19 @@ public class Sprint {
         this.name = name;
     }
 
-    public Date getDateFrom() {
+    public LocalDate getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Date dateFrom) {
+    public void setDateFrom(LocalDate dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Date getDateTo() {
+    public LocalDate getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    public void setDateTo(LocalDate dateTo) {
         this.dateTo = dateTo;
     }
 
@@ -75,8 +76,8 @@ public class Sprint {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void addTask(Task task) {
+        this.tasks.add(task);
     }
 
     @Override

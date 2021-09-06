@@ -3,8 +3,11 @@
     <div th:replace="fragments/header :: header-css"/>
     <title>Edit project</title>
 </head>
-<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+
 <div th:replace="fragments/header :: header"/>
+
 <h1>Edit project</h1>
 <form action="#" th:action="@{/project/edit}" th:object="${project}" method="post">
     <table>
@@ -25,6 +28,8 @@
         </tr>
     </table>
 </form>
+
 <div th:replace="fragments/footer :: footer"/>
+
 </body>
 </html>

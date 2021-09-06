@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>Access denied page</title>
+</head>
+
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+
+<div class="d-flex flex-row align-items-center">
+    <div class="container">
+        <span class="display-1 d-block">Access denied</span>
+        <a href="/" th:href="@{/}" class="btn btn-link">Back to Home Page</a>
+    </div>
+</div>
+
+</body>
+</html>

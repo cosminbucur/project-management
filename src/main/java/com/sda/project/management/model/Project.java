@@ -18,7 +18,7 @@ public class Project {
     public List<Sprint> sprints = new ArrayList<>();
 
     @ManyToOne
-    private User user;
+    private User owner;
 
     public Project() {
     }
@@ -51,16 +51,16 @@ public class Project {
         return sprints;
     }
 
-    public void setSprints(List<Sprint> sprints) {
-        this.sprints = sprints;
+    public void addSprint(Sprint sprint) {
+        this.sprints.add(sprint);
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Project {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", user=" + user +
+                ", owner=" + owner +
                 '}';
     }
 }

@@ -3,50 +3,52 @@
     <div th:replace="fragments/header :: header-css"/>
     <title>Add task</title>
 </head>
-<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+
 <div th:replace="fragments/header :: header"/>
+
 <h1>Add task</h1>
 <form action="#" th:action="@{/task/add}" th:object="${task}" method="post">
     <table>
         <tr>
-            <td><label>Name:</label></td>
-            <td><input type="text" th:field="*{name}"/></td>
+            <td><label>Project</label></td>
+            <td><input type="text" th:field="*{project}"/></td>
         </tr>
         <tr>
-            <td><label>Description:</label></td>
+            <td><label>Summary</label></td>
+            <td><input type="text" th:field="*{summary}"/></td>
+        </tr>
+        <tr>
+            <td><label>Description</label></td>
             <td><input type="text" th:field="*{description}"/></td>
         </tr>
         <tr>
-            <td><label>Sprint:</label></td>
+            <td><label>Sprint</label></td>
             <td><input type="number" th:field="*{sprint}"/></td>
         </tr>
         <tr>
-            <td><label>Weight:</label></td>
-            <td><input type="number" th:field="*{weight}"/></td>
-        </tr>
-        <tr>
-            <td><label>Story points:</label></td>
+            <td><label>Story points</label></td>
             <td><input type="number" th:field="*{storyPoints}"/></td>
-        </tr>
-        <tr>
-            <td><label>Progress:</label></td>
-            <td><input type="text" th:field="*{progress}"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Save"/></td>
         </tr>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect2">User</label>
+                <label class="input-group-text" for="userSelect">User</label>
             </div>
-            <select id="inputGroupSelect2" class="custom-select" th:field="${task.user.id}">
+            <select id="userSelect" class="custom-select" th:field="${task.user.id}">
                 <option selected th:value="null">Choose</option>
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.displayName}"></option>
             </select>
         </div>
+
+        <tr>
+            <td><input type="submit" value="Save"/></td>
+        </tr>
     </table>
 </form>
+
 <div th:replace="fragments/footer :: footer"/>
+
 </body>
 </html>

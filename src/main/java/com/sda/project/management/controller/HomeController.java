@@ -10,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomePageController {
+public class HomeController {
 
     private final UserService userService;
 
     @Autowired
-    public HomePageController(UserService userService) {
+    public HomeController(UserService userService) {
         this.userService = userService;
     }
 

@@ -41,13 +41,13 @@ public class ProjectController {
         return "project/add-project";
     }
 
-    @PostMapping("projects/add")
-    public String addProject(@ModelAttribute Project project) {
+    @PostMapping("project/add")
+    public String add(@ModelAttribute Project project) {
         projectService.save(project);
         return "redirect:/projects";
     }
 
-    @GetMapping("projects/{id}")
+    @GetMapping("edit-project/{id}")
     public String showEditForm(Model model, @PathVariable("id") Long id) {
         Project project = projectService.findById(id);
         model.addAttribute("projectToBeEdit", project);
@@ -57,7 +57,7 @@ public class ProjectController {
     }
 
     @PostMapping("project/edit")
-    public String editProject(@ModelAttribute Project project) {
+    public String edit(@ModelAttribute Project project) {
         projectService.update(project);
         return "redirect:/projects";
     }

@@ -18,7 +18,10 @@ public class User {
     private String displayName;
     private String roles = "";
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     private List<Task> tasks = new ArrayList<>();
 
     public User() {

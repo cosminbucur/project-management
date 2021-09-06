@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <div th:replace="fragments/header :: header-css"/>
     <title>Error page</title>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}"/>
 </head>
+
 <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
-    <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-    <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-    <a href="/" th:href="@{/index.html}">Back to Home Page</a>
+    <div class="d-flex flex-row align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <span class="display-1 d-block" th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</span>
+                    <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+                    <div class="mb-4 lead">The page you are looking for was not found.</div>
+                    <a href="/" th:href="@{/}" class="btn btn-link">Back to Home Page</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

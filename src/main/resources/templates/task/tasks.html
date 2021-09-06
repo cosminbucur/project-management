@@ -3,7 +3,9 @@
     <div th:replace="fragments/header :: header-css"/>
     <title>Tasks</title>
 </head>
-<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+
 <div th:replace="fragments/header :: header"/>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,6 +52,8 @@
         </div>
     </div>
 </div>
+
 <div th:replace="fragments/footer :: footer"/>
+
 </body>
 </html>

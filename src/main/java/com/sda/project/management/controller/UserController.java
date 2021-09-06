@@ -1,6 +1,5 @@
 package com.sda.project.management.controller;
 
-import com.sda.project.management.model.Task;
 import com.sda.project.management.model.User;
 import com.sda.project.management.service.TaskService;
 import com.sda.project.management.service.UserService;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -58,8 +55,7 @@ public class UserController {
     @GetMapping("add-user")
     public String showAddForm(Model model) {
         model.addAttribute("user", new User());
-        List<Task> taskNameEntities = taskService.findAll();
-        model.addAttribute("tasks", taskNameEntities);
+        model.addAttribute("tasks", taskService.findAll());
         return "user/add-user";
     }
 

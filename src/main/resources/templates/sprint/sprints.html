@@ -3,7 +3,9 @@
     <div th:replace="fragments/header :: header-css"/>
     <title>Sprints</title>
 </head>
-<body background="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg">
+
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+
 <div th:replace="fragments/header :: header"/>
 
 <div class="container">
@@ -17,16 +19,16 @@
                  class="card-img-top" alt="...">
             <div class="card-body">
                 <h3 class="card-title" th:text="${sprint.name}"></h3>
-                <p class="card-text" th:text="${sprint.dateFrom}"></p>
-                <p class="card-text" th:text="${sprint.dateTo}"></p>
+                <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span> - <span th:text="${#temporals.format(sprint.dateTo, 'd MMM')}"></span>
                 <p class="card-text" th:text="${sprint.plannedStoryPoints}"></p>
                 <a th:href="@{/delete-sprint/{id}(id = ${sprint.id})}" class="btn btn-danger">Delete</a>
                 <a th:href="@{/edit-sprint/{id}(id = ${sprint.id})}" class="btn btn-primary">Edit</a>
             </div>
-            <div class="p-3 mb-2 bg-secondary text-white"></div>
         </div>
     </div>
 </div>
+
 <div th:replace="fragments/footer :: footer"/>
+
 </body>
 </html>

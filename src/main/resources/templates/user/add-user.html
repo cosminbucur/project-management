@@ -4,9 +4,11 @@
     <title>Add user</title>
 </head>
 <body>
+
 <div th:replace="fragments/header :: header"/>
+
 <h1>Add user</h1>
-<form action="#" th:action="@{/user/add}" th:object="${newUser}" method="post">
+<form action="#" th:action="@{/user/add}" th:object="${user}" method="post">
     <table>
         <tr>
             <td><label>Username:</label></td>
@@ -37,6 +39,8 @@
         </div>
     </div>
 </form>
+
 <div th:replace="fragments/footer :: footer"/>
+
 </body>
 </html>

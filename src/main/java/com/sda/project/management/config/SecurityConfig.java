@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -21,20 +22,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/register", "/register/add").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-//                .loginPage("/login")
-//                .failureUrl("/login-error.html")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("logout"))
-                .logoutSuccessUrl("/login?logout").permitAll();
+                .antMatchers("/register", "/register/add", "/login").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/users").hasRole("ADMIN")
+                .anyRequest().authenticated();
+
+        http.formLogin();
+
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
+
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(createDaoAuthentication());
     }
 
@@ -45,11 +51,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DaoAuthenticationProvider createDaoAuthentication() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        System.out.println("test " + passwordEncoder().encode("pass"));
-        return daoAuthenticationProvider;
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(passwordEncoder());
+
+        // TODO: remove this after generating the password
+        System.out.println("encoded admin pass: " + passwordEncoder().encode("pass"));
+
+        return provider;
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 }
 

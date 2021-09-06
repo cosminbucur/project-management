@@ -9,19 +9,30 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
-    private int sprint;
-    private double weight;
-    private int storyPoints;
-
-    @Enumerated(EnumType.STRING)
-    private State progress;
 
     @ManyToOne
-    private User user;
+    private Project project;
+
+    private String summary;
+    private String description;
+
+    @ManyToOne
+    private User assignee;
+
+    @ManyToOne
+    private Sprint sprint;
+
+    @Enumerated(EnumType.STRING)
+    private TaskType taskType;
+
+    @Column(name = "story_points")
+    private Integer storyPoints;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
     public Task() {
+        this.status = TaskStatus.TODO;
     }
 
     public Long getId() {
@@ -32,12 +43,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getDescription() {
@@ -48,61 +59,61 @@ public class Task {
         this.description = description;
     }
 
-    public int getSprint() {
+    public Sprint getSprint() {
         return sprint;
     }
 
-    public void setSprint(int sprint) {
+    public void setSprint(Sprint sprint) {
         this.sprint = sprint;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 
     public int getStoryPoints() {
         return storyPoints;
     }
 
-    public void setStoryPoints(int storyPoints) {
+    public void setStoryPoints(Integer storyPoints) {
         this.storyPoints = storyPoints;
     }
 
-    public State getProgress() {
-        return progress;
+    public TaskStatus getStatus() {
+        return status;
     }
 
-    public void setProgress(State progress) {
-        this.progress = progress;
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public User getAssignee() {
+        return assignee;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
     }
 
-    public enum State {
-        TO_DO, ONGOING, BACKLOG, DONE, POSTPONED
+    public Project getProject() {
+        return project;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", sprint=" + sprint +
-                ", weight=" + weight +
-                ", storyPoints=" + storyPoints +
-                ", progress=" + progress +
-                ", user=" + user +
-                '}';
+    public void setProject(Project project) {
+        this.project = project;
     }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
+
+    public enum TaskType {
+        TASK, BUG
+    }
+
+    public enum TaskStatus {
+        TODO, IN_PROGRESS, DONE
+    }
+
+
 }
