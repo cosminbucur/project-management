@@ -9,7 +9,7 @@
 <div th:replace="fragments/header :: header"/>
 
 <div class="container">
-    <a th:href="@{/add-sprint}">
+    <a th:href="@{/sprints/add}">
         <button type="button" class="btn btn-primary">Add Sprint</button>
     </a>
     <h1>My sprints</h1>
@@ -20,9 +20,9 @@
             <div class="card-body">
                 <h3 class="card-title" th:text="${sprint.name}"></h3>
                 <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span> - <span th:text="${#temporals.format(sprint.dateTo, 'd MMM')}"></span>
-                <p class="card-text" th:text="${sprint.plannedStoryPoints}"></p>
-                <a th:href="@{/delete-sprint/{id}(id = ${sprint.id})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/edit-sprint/{id}(id = ${sprint.id})}" class="btn btn-primary">Edit</a>
+                <p class="card-text" th:text="${sprint.storyPoints}"></p>
+                <a th:href="@{/sprints/{id}/delete(id = ${sprint.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     </div>

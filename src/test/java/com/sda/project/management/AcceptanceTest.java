@@ -29,7 +29,7 @@ class AcceptanceTest {
 
         assertThat(project.getSprints()).hasSize(1);
         assertThat(sprint.getTasks()).hasSize(2);
-        assertThat(sprint.getPlannedStoryPoints()).isEqualTo(8);
+        assertThat(sprint.getStoryPoints()).isEqualTo(8);
     }
 
     private User createAdmin() {

@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,7 +23,7 @@ public class Sprint {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
 
-    private Integer plannedStoryPoints;
+    private Integer storyPoints;
 
     @OneToMany
     public List<Task> tasks = new ArrayList<>();
@@ -64,12 +63,12 @@ public class Sprint {
         this.dateTo = dateTo;
     }
 
-    public Integer getPlannedStoryPoints() {
-        return plannedStoryPoints;
+    public Integer getStoryPoints() {
+        return storyPoints;
     }
 
-    public void setPlannedStoryPoints(Integer plannedStoryPoints) {
-        this.plannedStoryPoints = plannedStoryPoints;
+    public void setStoryPoints(Integer storyPoints) {
+        this.storyPoints = storyPoints;
     }
 
     public List<Task> getTasks() {
@@ -87,7 +86,7 @@ public class Sprint {
                 ", name=" + name +
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +
-                ", plannedStoryPoints=" + plannedStoryPoints +
+                ", storyPoints=" + storyPoints +
                 '}';
     }
 }
