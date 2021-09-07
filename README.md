@@ -20,12 +20,26 @@ WebConfig
 ### security
 - use DaoAuthenticationProvider
 
+### bypass login form for development
+- use a filter to set authentication
+- add in memory authentication to security config
+- remove login form from security config
+
 ## Frontend
 
 ### add custom css
+- create src/main/resources/static/css/main.css
+- import in head of html:
+```html
+<link href="../../css/main.css" rel="stylesheet" th:href="@{/css/main.css}"/>
+```
 
 ### add custom js
-
+- create src/main/resources/static/js/main.js
+- import in footer of html:
+```html
+<script src="../../js/main.js" type="text/javascript"></script>
+```
 ### add images
 
 # Features
@@ -51,6 +65,8 @@ WebConfig
 - configure Extensions > Manage extensions > LiveReload > Details 
   
       Allow access to file URLs
+      Allow access on all sites
+      Click icon to enable
   
 - make change and recompile page
   
