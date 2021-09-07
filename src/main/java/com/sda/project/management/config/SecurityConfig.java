@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
-        http.formLogin();
+        // TODO: uncomment this in production
+//        http.formLogin();
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -40,8 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(createDaoAuthentication());
+
+        // TODO: remove this in production
+        // bypass login form
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password(passwordEncoder().encode("pass"))
+                .roles("ADMIN");
     }
 
     @Bean

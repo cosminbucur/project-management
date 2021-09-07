@@ -43,12 +43,6 @@ public class DbInit {
             User user = new User("user", "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi", "user@gmail.com", "Alex Vasile", "USER");
             userRepository.save(user);
 
-            UserPrincipal userPrincipal = new UserPrincipal(user);
-            Authentication auth =
-                    new UsernamePasswordAuthenticationToken(user, null, userPrincipal.getAuthorities());
-
-            SecurityContextHolder.getContext().setAuthentication(auth);
-
             Project project = new Project();
             project.setName("Sakura");
             project.setDescription("CRM web application");
