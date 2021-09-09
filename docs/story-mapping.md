@@ -3,6 +3,8 @@
     - user story
 
 # register
+- view register page
+- register with username and password
 - view login page
 - login with username and password
 - logout
@@ -12,6 +14,7 @@
 - create project
 - update project info
 - delete project
+- as project lead, add user to project
 
 # manage task
 - view backlog page
@@ -29,5 +32,9 @@
 - assign user to task
 - un-assign user from task
 - start sprint
-- view total story points
+- view sprint total story points
 
+# manage user
+- view users page
+- update user info
+- as admin, delete user
