@@ -35,6 +35,10 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException("project not found"));
     }
 
+    public List<Task> getTasks(Long sprintId) {
+        return taskRepository.getTasks(sprintId);
+    }
+
     public void update(Task task) {
         taskRepository.save(task);
     }
@@ -43,5 +47,4 @@ public class TaskService {
         log.info("delete task {}", id);
         taskRepository.deleteById(id);
     }
-
 }
