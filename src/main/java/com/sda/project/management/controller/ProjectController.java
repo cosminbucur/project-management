@@ -34,7 +34,7 @@ public class ProjectController {
     public String showAddForm(Model model) {
         model.addAttribute("project", new Project());
         model.addAttribute("users", userService.findAll());
-        return "project/add-project";
+        return "project/project-add";
     }
 
     @PostMapping(value = "/projects/add", params = "save")
@@ -45,7 +45,7 @@ public class ProjectController {
         } catch (ResourceAlreadyExistsException e) {
             String errorMessage = e.getMessage();
             model.addAttribute("errorMessage", errorMessage);
-            return "project/add-project";
+            return "project/project-add";
         }
     }
 
@@ -58,7 +58,7 @@ public class ProjectController {
     public String showEditForm(Model model, @PathVariable("id") Long id) {
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("users", userService.findAll());
-        return "project/edit-project";
+        return "project/project-edit";
     }
 
     @PostMapping(value = "/projects/{id}/edit", params = "save")

@@ -41,7 +41,7 @@ public class DbInit {
 
             Project project = new Project();
             project.setName("Sakura");
-            project.setDescription("CRM web application");
+            project.setKey("SAK");
             project.setProjectLead(admin);
             projectRepository.save(project);
 

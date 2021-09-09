@@ -4,11 +4,11 @@
     <title>Edit project</title>
 </head>
 
-<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+<body>
 
 <div th:replace="fragments/header :: header"/>
 
-<h1>Edit project</h1>
+<h2>Edit project</h2>
 <form class="row g-3"action="#" th:action="@{/projects/{id}/edit(id=${project.id})}" th:object="${project}" method="post">
 
     <div class="col-md-12">
@@ -24,8 +24,8 @@
     </div>
 
     <div class="col-md-12">
-        <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" placeholder="Project description" th:field="*{description}">
+        <label for="key" class="form-label">Key</label>
+        <input type="text" class="form-control" id="key" th:field="*{key}">
     </div>
 
     <div class="col-12">
