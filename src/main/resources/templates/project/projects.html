@@ -10,9 +10,9 @@
 
 <div class="container">
     <a th:href="@{/projects/add}">
-        <button type="button" class="btn btn-primary">Add Project</button>
+        <button type="button" class="btn btn-primary">Create project</button>
     </a>
-    <h1>My projects</h1>
+    <h1><i class="fas fa-address-book"></i> Projects</h1>
     <div th:each="project: ${projects}">
         <div class="card project-card">
             <img src="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg)"
