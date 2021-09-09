@@ -5,14 +5,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "sprint")
 public class Sprint {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -25,8 +27,15 @@ public class Sprint {
 
     private Integer storyPoints;
 
-    @OneToMany
-    public List<Task> tasks = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    @OneToMany(
+            mappedBy = "sprint",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Task> tasks = new HashSet<>();
 
     public Sprint() {
     }
@@ -71,8 +80,20 @@ public class Sprint {
         this.storyPoints = storyPoints;
     }
 
-    public List<Task> getTasks() {
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Set<Task> getTasks() {
         return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public void addTask(Task task) {
@@ -83,7 +104,7 @@ public class Sprint {
     public String toString() {
         return "Sprint{" +
                 "id=" + id +
-                ", name=" + name +
+                ", name='" + name + '\'' +
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +
                 ", storyPoints=" + storyPoints +
