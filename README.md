@@ -1,77 +1,31 @@
-# Orange: scrum management tool
+# Project management
+```scrum management tool```
 
-## Backend
+# plan
+task management - [jira board](https://freeminions.atlassian.net/jira/software/projects/DEV/boards/2)
 
-### create initial data
-DbInit
-- persist an admin user
-- add initial data 
+documentation - [confluence](https://freeminions.atlassian.net/wiki/spaces/FM/pages/131171/Team+strategies)
 
-### error handler
+- story mapping: /story-mapping.md
+- backend tasks: /task-backend.md
+- frontend tasks: /task-fronted.md
+- class diagram: /project mgm.drawio
 
-### use webjars for bootstrap5
-WebConfig
-webjar locators - locates CSS and JS files without version
+collaboration - [slack](freeminions.slack.com)
 
-### security config
-- allow /login and /register
-- secure api
-- use password encoder
+# design
+design - [figma](https://www.figma.com/files/team/720697583435508813/free-minions?fuid=720697471832871306)
 
-### security
-- use DaoAuthenticationProvider
+# write code
+[git repository](https://github.com/cosminbucur/project-management)
 
-### bypass login form for development
-- use a filter to set authentication
-- add in memory authentication to security config
-- remove login form from security config
+# test
 
-## Frontend
+# run
+- create mysql database: project_management
+- use the run configuration: ProjectManagementApplication
+- open http://localhost:8081/ in browser
 
-### add custom css
-- create src/main/resources/static/css/main.css
-- import in head of html:
-```html
-<link href="../../css/main.css" rel="stylesheet" th:href="@{/css/main.css}"/>
-```
+# deploy
 
-### add custom js
-- create src/main/resources/static/js/main.js
-- import in footer of html:
-```html
-<script src="../../js/main.js" type="text/javascript"></script>
-```
-### add images
-
-### add icons
-
-
-# Features
-
-
-
-## Fun
-
-### add favicon
-- generate [favicon](https://favicon.io/favicon-generator/)
-- add icon [example](https://www.baeldung.com/spring-boot-favicon)
-  src/main/resources/static/favicon.ico
-- allow icon in spring config
-
-### add custom banner
-- generate [banner](https://manytools.org/hacker-tools/ascii-banner/)
-- add banner [example](https://www.baeldung.com/spring-boot-custom-banners)
-
-### enable live reload
-- add dependency
-- install live reload extension
-[live reload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
-- configure Extensions > Manage extensions > LiveReload > Details 
-  
-      Allow access to file URLs
-      Allow access on all sites
-      Click icon to enable
-  
-- make change and recompile page
-  
-      Build > Recompile (CTRL+SHIFT+F9)
+# monitor
