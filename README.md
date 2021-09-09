@@ -11,6 +11,7 @@ DbInit
 
 ### use webjars for bootstrap5
 WebConfig
+webjar locators - locates CSS and JS files without version
 
 ### security config
 - allow /login and /register
