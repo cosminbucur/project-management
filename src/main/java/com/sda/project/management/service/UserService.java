@@ -1,7 +1,7 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.model.User;
-import com.sda.project.management.model.UserPrincipal;
+import com.sda.project.management.config.UserPrincipal;
 import com.sda.project.management.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,5 +72,4 @@ public class UserService implements UserDetailsService {
         log.info("delete user {}", id);
         userRepository.deleteById(id);
     }
-
 }
