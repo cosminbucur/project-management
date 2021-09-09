@@ -20,8 +20,8 @@
     </div>
 
     <div class="col-md-12">
-        <select class="form-select" th:field="${project.owner.id}">
-            <option selected th:value="null">Choose an owner</option>
+        <select class="form-select" th:field="${project.projectLead.id}">
+            <option selected th:value="null">Choose a project lead</option>
             <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.displayName}"></option>
         </select>
     </div>

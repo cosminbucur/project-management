@@ -7,20 +7,23 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @ManyToOne
-    private Project project;
 
     private String summary;
     private String description;
 
-    @ManyToOne
-    private User assignee;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sprint_id")
     private Sprint sprint;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User assignee;
 
     @Enumerated(EnumType.STRING)
     private TaskType taskType;
@@ -32,7 +35,6 @@ public class Task {
     private TaskStatus status;
 
     public Task() {
-        this.status = TaskStatus.TODO;
     }
 
     public Long getId() {
@@ -59,6 +61,14 @@ public class Task {
         this.description = description;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     public Sprint getSprint() {
         return sprint;
     }
@@ -67,7 +77,23 @@ public class Task {
         this.sprint = sprint;
     }
 
-    public int getStoryPoints() {
+    public User getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
+
+    public Integer getStoryPoints() {
         return storyPoints;
     }
 
@@ -83,28 +109,16 @@ public class Task {
         this.status = status;
     }
 
-    public User getAssignee() {
-        return assignee;
-    }
-
-    public void setAssignee(User assignee) {
-        this.assignee = assignee;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public TaskType getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(TaskType taskType) {
-        this.taskType = taskType;
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", summary='" + summary + '\'' +
+                ", description='" + description + '\'' +
+                ", taskType=" + taskType +
+                ", storyPoints=" + storyPoints +
+                ", status=" + status +
+                '}';
     }
 
     public enum TaskType {
@@ -114,6 +128,5 @@ public class Task {
     public enum TaskStatus {
         TODO, IN_PROGRESS, DONE
     }
-
 
 }

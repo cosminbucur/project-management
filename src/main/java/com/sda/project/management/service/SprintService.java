@@ -1,7 +1,10 @@
 package com.sda.project.management.service;
 
+import com.sda.project.management.controller.exception.ResourceNotFoundException;
 import com.sda.project.management.model.Sprint;
+import com.sda.project.management.model.Task;
 import com.sda.project.management.repository.SprintRepository;
+import com.sda.project.management.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +17,26 @@ public class SprintService {
 
     private static final Logger log = LoggerFactory.getLogger(SprintService.class);
     private final SprintRepository sprintRepository;
+    private final TaskRepository taskRepository;
 
     @Autowired
-    public SprintService(SprintRepository sprintRepository) {
+    public SprintService(SprintRepository sprintRepository, TaskRepository taskRepository) {
         this.sprintRepository = sprintRepository;
+        this.taskRepository = taskRepository;
     }
 
     public void save(Sprint sprint){
         log.info("save sprint {}", sprint);
+        sprintRepository.save(sprint);
+    }
+
+    public void addTaskToSprint(Long sprintId, Long taskId){
+        log.info("add task {} to sprint {}", taskId, sprintId);
+        Sprint sprint = sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("task not found"));
+        sprint.addTask(task);
         sprintRepository.save(sprint);
     }
 
@@ -33,7 +48,7 @@ public class SprintService {
     public Sprint findById(Long id) {
         log.info("find sprint {}", id);
         return sprintRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
     }
 
     public void update(Sprint sprint) {
@@ -43,5 +58,9 @@ public class SprintService {
     public void delete(Long id) {
         log.info("delete sprint {}", id);
         sprintRepository.deleteById(id);
+    }
+
+    public List<Task> getTasks(Long sprintId) {
+        return sprintRepository.getTasks(sprintId);
     }
 }

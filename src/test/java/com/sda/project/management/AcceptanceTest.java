@@ -10,21 +10,22 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// FIXME: create acceptance test using services
 class AcceptanceTest {
 
     @Test
     void startSprint() {
-        User owner = createAdmin();
+        User projectLead = createAdmin();
         User user = createUser();
 
-        Project project = createProject(owner);
+        Project project = createProject(projectLead);
 
         Sprint sprint = createSprint();
 
         // add sprint
         project.addSprint(sprint);
 
-        addTask1(owner, project, sprint);
+        addTask1(projectLead, project, sprint);
         addTask2(user, project, sprint);
 
         assertThat(project.getSprints()).hasSize(1);
@@ -33,13 +34,13 @@ class AcceptanceTest {
     }
 
     private User createAdmin() {
-        User owner = new User();
-        owner.setDisplayName("admin");
-        owner.setEmail("admin@gmail.com");
-        owner.setUsername("admin");
-        owner.setPassword("pass");
-        owner.setRoles("ADMIN");
-        return owner;
+        User projectLead = new User();
+        projectLead.setDisplayName("admin");
+        projectLead.setEmail("admin@gmail.com");
+        projectLead.setUsername("admin");
+        projectLead.setPassword("pass");
+        projectLead.setRoles("ADMIN");
+        return projectLead;
     }
 
     private User createUser() {
@@ -52,13 +53,13 @@ class AcceptanceTest {
         return user;
     }
 
-    private Project createProject(User owner) {
+    private Project createProject(User projectLead) {
         Project project = new Project();
         project.setName("Sakura");
         project.setDescription("CRM web application");
 
         // set user
-        project.setOwner(owner);
+        project.setProjectLead(projectLead);
         return project;
     }
 
@@ -70,37 +71,37 @@ class AcceptanceTest {
         return sprint;
     }
 
-    private void addTask2(User user, Project project, Sprint sprint) {
-        Task task2 = new Task();
+    private void addTask1(User assignee, Project project, Sprint sprint) {
+        Task task = new Task();
         // set project
-        task2.setProject(project);
+        task.setProject(project);
 
-        task2.setSummary("my task2");
-        task2.setDescription("complex task description");
+        task.setSummary("my task1");
+        task.setDescription("complex task description");
 
         // set user
-        task2.setAssignee(user);
+        task.setAssignee(assignee);
 
         // set sprint
-        task2.setSprint(sprint);
+        task.setSprint(sprint);
 
-        task2.setStoryPoints(5);
+        task.setStoryPoints(3);
     }
 
-    private void addTask1(User owner, Project project, Sprint sprint) {
-        Task task1 = new Task();
+    private void addTask2(User user, Project project, Sprint sprint) {
+        Task task = new Task();
         // set project
-        task1.setProject(project);
+        task.setProject(project);
 
-        task1.setSummary("my task1");
-        task1.setDescription("complex task description");
+        task.setSummary("my task2");
+        task.setDescription("complex task description");
 
         // set user
-        task1.setAssignee(owner);
+        task.setAssignee(user);
 
         // set sprint
-        task1.setSprint(sprint);
+        task.setSprint(sprint);
 
-        task1.setStoryPoints(3);
+        task.setStoryPoints(5);
     }
 }

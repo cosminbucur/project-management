@@ -1,8 +1,8 @@
 package com.sda.project.management.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -14,11 +14,20 @@ public class Project {
     private String name;
     private String description;
 
-    @OneToMany
-    public List<Sprint> sprints = new ArrayList<>();
+    @OneToOne
+    private User projectLead;
 
-    @ManyToOne
-    private User owner;
+    @OneToMany(
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<ProjectAccess> projectAccessList = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Sprint> sprints = new HashSet<>();
 
     public Project() {
     }
@@ -47,20 +56,34 @@ public class Project {
         this.description = description;
     }
 
-    public List<Sprint> getSprints() {
+    public Set<Sprint> getSprints() {
         return sprints;
     }
 
     public void addSprint(Sprint sprint) {
-        this.sprints.add(sprint);
+        sprints.add(sprint);
+        sprint.setProject(this);
     }
 
-    public User getOwner() {
-        return owner;
+    public void removeSprint(Sprint sprint) {
+        sprints.remove(sprint);
+        sprint.setProject(null);
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public User getProjectLead() {
+        return projectLead;
+    }
+
+    public void setProjectLead(User projectLead) {
+        this.projectLead = projectLead;
+    }
+
+    public Set<ProjectAccess> getProjectAccessList() {
+        return projectAccessList;
+    }
+
+    public void setProjectAccessList(Set<ProjectAccess> projectAccessList) {
+        this.projectAccessList = projectAccessList;
     }
 
     @Override
@@ -69,7 +92,7 @@ public class Project {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", owner=" + owner +
+                ", projectLead=" + projectLead +
                 '}';
     }
 }

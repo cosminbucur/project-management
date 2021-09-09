@@ -1,9 +1,7 @@
 package com.sda.project.management.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
@@ -19,10 +17,10 @@ public class User {
     private String roles = "";
 
     @OneToMany(
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "user_id")
-    private List<Task> tasks = new ArrayList<>();
+    private Set<ProjectAccess> projectAccessList = new HashSet<>();
 
     public User() {
     }
@@ -91,12 +89,12 @@ public class User {
         return new ArrayList<>();
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public Set<ProjectAccess> getProjectAccessList() {
+        return projectAccessList;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setProjectAccessList(Set<ProjectAccess> projectAccessList) {
+        this.projectAccessList = projectAccessList;
     }
 
     @Override
