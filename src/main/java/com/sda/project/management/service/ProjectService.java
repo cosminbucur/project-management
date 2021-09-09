@@ -3,7 +3,11 @@ package com.sda.project.management.service;
 import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
 import com.sda.project.management.model.Project;
+import com.sda.project.management.model.Sprint;
+import com.sda.project.management.model.User;
 import com.sda.project.management.repository.ProjectRepository;
+import com.sda.project.management.repository.SprintRepository;
+import com.sda.project.management.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +21,16 @@ public class ProjectService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectService.class);
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
+    private final SprintRepository sprintRepository;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository,
+                          UserRepository userRepository,
+                          SprintRepository sprintRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+        this.sprintRepository = sprintRepository;
     }
 
     public void save(Project project) {
@@ -48,7 +58,24 @@ public class ProjectService {
 
     public void update(Project project) {
         log.info("update project {}", project);
-        findById(project.getId());
+        projectRepository.save(project);
+    }
+
+    public void setProjectLead(Long projectId, Long userId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found"));
+        project.setProjectLead(user);
+        projectRepository.save(project);
+    }
+
+    public void addSprintToProject(Long projectId, Long sprintId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
+        Sprint sprint = sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+        project.addSprint(sprint);
         projectRepository.save(project);
     }
 
@@ -58,9 +85,4 @@ public class ProjectService {
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
         projectRepository.deleteById(id);
     }
-
-    private boolean exists(Long id) {
-        return projectRepository.existsById(id);
-    }
-
 }
