@@ -13,7 +13,9 @@
 </div>
 
 <button type="button" class="btn btn-primary" id="test" name="test"
-        th:onclick="'javascript:showToast([[${myToast}]]);'"></i>Toast</button>
+        th:onclick="'javascript:showToast([[${myToast}]]);'">
+    <i class="fas fa-address-book"></i>
+    Toast</button>
 <!--            th:onclick="'javascript:toast(\''+ ${user.displayName} +'\');'">Toast</button>-->
 
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">

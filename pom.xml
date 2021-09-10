@@ -20,6 +20,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <bootstrap.version>5.1.0</bootstrap.version>
         <webjars-locator.version>0.42</webjars-locator.version>
+        <font-awesome.version>5.15.4</font-awesome.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>${bootstrap.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>${font-awesome.version}</version>
         </dependency>
 
         <!-- manage the client-side dependencies -->
