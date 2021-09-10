@@ -1,5 +1,7 @@
 package com.sda.project.management.controller;
 
+import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
+import com.sda.project.management.model.Project;
 import com.sda.project.management.model.User;
 import com.sda.project.management.service.TaskService;
 import com.sda.project.management.service.UserService;
@@ -52,11 +54,21 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("add-user")
-    public String showAddForm(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("tasks", taskService.findAll());
-        return "user/add-user";
+    @PostMapping(value = "/register/add", params = "save")
+    public String add(Model model, @ModelAttribute User user) {
+        try {
+            userService.save(user);
+            return "redirect:/";
+        } catch (ResourceAlreadyExistsException e) {
+            String errorMessage = e.getMessage();
+            model.addAttribute("errorMessage", errorMessage);
+            return "user/register";
+        }
+    }
+
+    @PostMapping(value = "/register/add", params = "cancel")
+    public String cancelRegister() {
+        return "redirect:/";
     }
 
     @PostMapping(path = "user/add")
