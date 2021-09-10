@@ -5,24 +5,41 @@
 </head>
 
 <body>
-<form action="#" th:action="@{/register/add}" th:object="${user}" method="post">
-    <table>
-        <tr>
-            <td><label>Username</label></td>
-            <td><input type="text" th:field="*{username}"/></td>
-        </tr>
-        <tr>
-            <td><label>Password</label></td>
-            <td><input type="password" th:field="*{password}"/></td>
-        </tr>
-        <tr>
-            <td><label>Email</label></td>
-            <td><input type="email" th:field="*{email}"/></td>
-        </tr>
-        <td colspan="2">
-            <button type="submit" value="Save"></button>
-        </td>
-    </table>
+
+<div th:replace="fragments/header :: header"/>
+
+<h2>Register your user</h2>
+
+<form class="row g-3" action="#" th:action="@{/register/add}" th:object="${user}" method="post">
+
+    <div class="col-md-12">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}">
+    </div>
+
+    <div class="col-md-12">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}">
+    </div>
+
+    <div class="col-md-12">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
+    </div>
+
+    <div class="col-md-12">
+        <label for="displayName" class="form-label">Display name</label>
+        <input type="text" class="form-control" id="displayName" placeholder="Display name" th:field="*{displayName}">
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Back</button>
+        <button type="submit" class="btn btn-primary" id="save" name="save">Create account</button>
+    </div>
+
 </form>
+
+<div th:replace="fragments/footer :: footer-js"/>
+
 </body>
 </html>
