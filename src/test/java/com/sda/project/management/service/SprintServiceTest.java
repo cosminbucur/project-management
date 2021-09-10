@@ -42,18 +42,15 @@ class SprintServiceTest {
 
     @Test
     void shouldCreateSprint(){
-
         Sprint sprint = new Sprint();
-        sprint.setName("alex");
+        sprint.setName("sprint 1");
         sprint.setDateFrom(LocalDate.now());
-        sprint.setDateTo(LocalDate.now().plusDays(5));
+        sprint.setDateTo(LocalDate.now().plusDays(14));
         sprint.setStoryPoints(2);
         sprint.setSprintGoal("terminate");
 
-        sprintService.save(sprint);
+        Sprint savedSprint = sprintService.save(sprint);
 
-        String test = sprintService.findById(sprint.getId()).getSprintGoal();
-
-        assertThat(test).isEqualTo("terminate");
+        assertThat(savedSprint).isNotNull();
     }
 }
