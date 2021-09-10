@@ -43,14 +43,15 @@ public class DbInit {
             project.setName("Sakura");
             project.setKey("SAK");
             project.setProjectLead(admin);
-            projectRepository.save(project);
+            // FIXME: can't save because of project - user relationship
+//            projectRepository.save(project);
 
             Sprint sprint = new Sprint();
             sprint.setName("SAK-20-1");
             sprint.setDateFrom(LocalDate.now());
             sprint.setDateTo(sprint.getDateFrom().plusDays(14));
             sprint.setStoryPoints(20);
-            sprintRepository.save(sprint);
+//            sprintRepository.save(sprint);
         };
     }
 }

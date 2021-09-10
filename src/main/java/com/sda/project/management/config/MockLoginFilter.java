@@ -2,6 +2,7 @@ package com.sda.project.management.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,8 @@ public class MockLoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if (SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getName().equals("anonymousUser")) {
             request.login("ADMIN", "pass");
             response.sendRedirect("/");
         }

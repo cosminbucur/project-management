@@ -9,12 +9,13 @@ import java.util.Set;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String key;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User projectLead;
 
     @OneToMany(
@@ -92,7 +93,6 @@ public class Project {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", key='" + key + '\'' +
-                ", projectLead=" + projectLead +
                 '}';
     }
 }
