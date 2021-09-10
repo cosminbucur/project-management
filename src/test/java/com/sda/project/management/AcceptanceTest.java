@@ -99,11 +99,13 @@ class AcceptanceTest {
         return project;
     }
 
+    //TODO-Alex: not working
     private Sprint createSprint() {
         Sprint sprint = new Sprint();
         sprint.setName("SAK 20-1");
         sprint.setDateFrom(LocalDate.now());
         sprint.setDateTo(sprint.getDateFrom().plusDays(14));
+        sprint.setSprintGoal("learning");
         return sprint;
     }
 
