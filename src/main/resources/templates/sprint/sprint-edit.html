@@ -9,32 +9,38 @@
 <div th:replace="fragments/header :: header"/>
 
 <p>Edit sprint</p>
-<form action="#" th:action="@{/sprint/edit}" th:object="${sprint}" method="post">
-    <table>
-        <tr>
-            <td><label>Id:</label></td>
-            <td><input readonly type="text" th:field="*{id}"/></td>
-        </tr>
-        <tr>
-            <td><label>Name:</label></td>
-            <td><input type="text" th:field="*{name}"/></td>
-        </tr>
-        <tr>
-            <td><label>Date from:</label></td>
-            <td><input type="date" th:field="*{dateFrom}"/></td>
-        </tr>
-        <tr>
-            <td><label>Date to:</label></td>
-            <td><input type="date" th:field="*{dateTo}"/></td>
-        </tr>
-        <tr>
-            <td><label>Planned Story Points:</label></td>
-            <td><input type="text" th:field="*{storyPoints}"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Save"/></td>
-        </tr>
-    </table>
+<form class="row g-3" action="#" th:action="@{/sprints/{id}/edit(id=${sprint.id})}" th:object="${sprint}" method="post">
+
+    <div class="col-md-12">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Sprint name" th:field="*{name}">
+    </div>
+
+    <div class="col-md-12">
+        <label for="dateFrom" class="form-label" id="dateFrom">Date from</label>
+        <input type="date" th:field="*{dateFrom}"/>
+    </div>
+
+    <div class="col-md-12">
+        <label for="dateTo" class="form-label" id="dateTo">Date to</label>
+        <input type="date" th:field="*{dateTo}"/>
+    </div>
+
+    <div class="col-md-12">
+        <label for="storyPoints" class="form-label">Story points</label>
+        <input type="text" class="form-control" id="storyPoints" placeholder="1 2 3 5 ..." th:field="*{storyPoints}">
+    </div>
+
+    <div class="mb-3">
+        <label for="sprintGoal" class="form-label">Sprint goal</label>
+        <textarea class="form-control" id="sprintGoal" rows="3"></textarea>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="save" name="save">Update</button>
+    </div>
+
 </form>
 
 <div th:replace="fragments/footer :: footer"/>
