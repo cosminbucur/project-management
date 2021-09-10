@@ -4,43 +4,82 @@ import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.model.User;
+import com.sda.project.management.service.*;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// FIXME: create acceptance test using services
+@SpringBootTest
 class AcceptanceTest {
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ProjectService projectService;
+
+    @Autowired
+    SprintService sprintService;
+
+    @Autowired
+    TaskService taskService;
+
+    @Autowired
+    ProjectAccessService projectAccessService;
+
     @Test
-    void startSprint() {
+    void acceptanceFlow() {
+        // create users
         User projectLead = createAdmin();
         User user = createUser();
+        userService.save(projectLead);
+        userService.save(user);
 
-        Project project = createProject(projectLead);
+        // create project
+        Project project = createProject();
 
+        // set project lead
+        project.setProjectLead(projectLead);
+        projectService.save(project);
+
+        // create sprint
         Sprint sprint = createSprint();
+        sprintService.save(sprint);
 
-        // add sprint
-        project.addSprint(sprint);
+        // create tasks
+        Task task1 = createTask1();
+        Task task2 = createTask2();
+        taskService.save(task1);
+        taskService.save(task2);
 
-        addTask1(projectLead, project, sprint);
-        addTask2(user, project, sprint);
+        // add user to project
+        projectAccessService.addUserToProject(user, project);
+        Project projectWithUsers = projectService.findById(project.getId());
+        assertThat(projectWithUsers.getProjectAccessList()).hasSize(1);
 
+        // add sprint to project
+        projectService.addSprintToProject(project.getId(), sprint.getId());
         assertThat(project.getSprints()).hasSize(1);
+
+        // add tasks to sprint
+        sprintService.addTaskToSprint(sprint.getId(), task1.getId());
+        sprintService.addTaskToSprint(sprint.getId(), task2.getId());
         assertThat(sprint.getTasks()).hasSize(2);
         assertThat(sprint.getStoryPoints()).isEqualTo(8);
     }
 
     private User createAdmin() {
-        User projectLead = new User();
-        projectLead.setDisplayName("admin");
-        projectLead.setEmail("admin@gmail.com");
-        projectLead.setUsername("admin");
-        projectLead.setPassword("pass");
-        projectLead.setRoles("ADMIN");
-        return projectLead;
+        User user = new User();
+        user.setDisplayName("admin");
+        user.setEmail("admin@gmail.com");
+        user.setUsername("admin");
+        user.setPassword("pass");
+        user.setRoles("ADMIN");
+        return user;
     }
 
     private User createUser() {
@@ -53,13 +92,10 @@ class AcceptanceTest {
         return user;
     }
 
-    private Project createProject(User projectLead) {
+    private Project createProject() {
         Project project = new Project();
         project.setName("Sakura");
         project.setKey("SAK");
-
-        // set user
-        project.setProjectLead(projectLead);
         return project;
     }
 
@@ -71,37 +107,19 @@ class AcceptanceTest {
         return sprint;
     }
 
-    private void addTask1(User assignee, Project project, Sprint sprint) {
+    private Task createTask1() {
         Task task = new Task();
-        // set project
-        task.setProject(project);
-
         task.setSummary("my task1");
-        task.setDescription("complex task description");
-
-        // set user
-        task.setAssignee(assignee);
-
-        // set sprint
-        task.setSprint(sprint);
-
+        task.setDescription("easy task");
         task.setStoryPoints(3);
+        return task;
     }
 
-    private void addTask2(User user, Project project, Sprint sprint) {
+    private Task createTask2() {
         Task task = new Task();
-        // set project
-        task.setProject(project);
-
         task.setSummary("my task2");
-        task.setDescription("complex task description");
-
-        // set user
-        task.setAssignee(user);
-
-        // set sprint
-        task.setSprint(sprint);
-
+        task.setDescription("hard task");
         task.setStoryPoints(5);
+        return task;
     }
 }

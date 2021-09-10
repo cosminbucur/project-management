@@ -117,6 +117,9 @@
   src/main/resources/static/favicon.ico
 - allow icon in spring config
 
+### add bootstrap toasts
+
+
 ### enable live reload
 - add dependency
 - install live reload extension

@@ -8,7 +8,7 @@
 
 <div th:replace="fragments/header :: header"/>
 
-<p>Edit sprint</p>
+<h2>Edit sprint</h2>
 <form class="row g-3" action="#" th:action="@{/sprints/{id}/edit(id=${sprint.id})}" th:object="${sprint}" method="post">
 
     <div class="col-md-12">

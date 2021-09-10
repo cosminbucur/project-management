@@ -42,9 +42,9 @@ public class DbInit {
             Project project = new Project();
             project.setName("Sakura");
             project.setKey("SAK");
-            project.setProjectLead(admin);
+//            project.setProjectLead(admin);
             // FIXME: can't save because of project - user relationship
-//            projectRepository.save(project);
+            projectRepository.save(project);
 
             Sprint sprint = new Sprint();
             sprint.setName("SAK-20-1");
