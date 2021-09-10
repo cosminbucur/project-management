@@ -4,9 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,6 +34,8 @@ public class Sprint {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<Task> tasks = new HashSet<>();
+
+    private String sprintGoal;
 
     public Sprint() {
     }
@@ -100,6 +100,14 @@ public class Sprint {
         this.tasks.add(task);
     }
 
+    public String getSprintGoal() {
+        return sprintGoal;
+    }
+
+    public void setSprintGoal(String sprintGoal) {
+        this.sprintGoal = sprintGoal;
+    }
+
     @Override
     public String toString() {
         return "Sprint{" +
@@ -108,6 +116,7 @@ public class Sprint {
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +
                 ", storyPoints=" + storyPoints +
+                ", sprintGoal=" + sprintGoal +
                 '}';
     }
 }

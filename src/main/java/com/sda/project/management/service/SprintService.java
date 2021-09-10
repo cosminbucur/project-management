@@ -25,9 +25,9 @@ public class SprintService {
         this.taskRepository = taskRepository;
     }
 
-    public void save(Sprint sprint){
+    public Sprint save(Sprint sprint){
         log.info("save sprint {}", sprint);
-        sprintRepository.save(sprint);
+        return sprintRepository.save(sprint);
     }
 
     public void addTaskToSprint(Long sprintId, Long taskId){
