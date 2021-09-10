@@ -56,7 +56,7 @@ class AcceptanceTest {
     private Project createProject(User projectLead) {
         Project project = new Project();
         project.setName("Sakura");
-        project.setDescription("CRM web application");
+        project.setKey("SAK");
 
         // set user
         project.setProjectLead(projectLead);

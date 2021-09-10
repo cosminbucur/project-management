@@ -4,11 +4,12 @@
     <title>Add project</title>
 </head>
 
-<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+<body>
 
 <div th:replace="fragments/header :: header"/>
 
-<h1>Add project</h1>
+<h2>Add project details</h2>
+<p>You can change these details anytime in your project settings.</p>
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
@@ -27,13 +28,13 @@
     </div>
 
     <div class="col-md-12">
-        <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" placeholder="Project description" th:field="*{description}">
+        <label for="key" class="form-label">Key</label>
+        <input type="text" class="form-control" id="key" th:field="*{key}">
     </div>
 
     <div class="col-12">
         <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Cancel</button>
-        <button type="submit" class="btn btn-primary" id="save" name="save">Save</button>
+        <button type="submit" class="btn btn-primary" id="save" name="save">Create project</button>
     </div>
 
 </form>

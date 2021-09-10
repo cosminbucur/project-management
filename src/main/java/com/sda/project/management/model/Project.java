@@ -12,7 +12,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String description;
+    private String key;
 
     @OneToOne
     private User projectLead;
@@ -48,12 +48,12 @@ public class Project {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getKey() {
+        return key;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public Set<Sprint> getSprints() {
@@ -91,7 +91,7 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", key='" + key + '\'' +
                 ", projectLead=" + projectLead +
                 '}';
     }
