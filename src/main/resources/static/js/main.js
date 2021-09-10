@@ -1,18 +1,15 @@
 (function(){
-    console.log("Hello World!");
+    console.log("Application started...");
 })();
 
-$(document).ready(function(){
-    $(".show-toast").click(function(){
-        $("#myToast").toast('show');
+// activate toasts
+document.getElementById("toast-btn").onclick = function() {
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function(toastEl) {
+        // creates an array of toasts with default options
+        return new bootstrap.Toast(toastEl)
     });
-});
+    toastList.forEach(toast => toast.show());
 
-//function showToast(name, message) {
-//  $("#myToast").toast('show');
-//}
-
-function showToast(toast) {
-    console.log('in toast');
-    M.toast({html: toast});
-}
+    console.log(toastList);
+};
