@@ -12,7 +12,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String key;
+    private String projectKey;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -49,12 +49,12 @@ public class Project {
         this.name = name;
     }
 
-    public String getKey() {
-        return key;
+    public String getProjectKey() {
+        return projectKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setProjectKey(String projectKey) {
+        this.projectKey = projectKey;
     }
 
     public Set<Sprint> getSprints() {
@@ -92,7 +92,7 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", key='" + key + '\'' +
+                ", projectKey='" + projectKey + '\'' +
                 '}';
     }
 }
