@@ -2,7 +2,6 @@ package com.sda.project.management.service;
 
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
-import com.sda.project.management.repository.SprintRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -53,6 +52,8 @@ class SprintServiceTest {
 
         sprintService.save(sprint);
 
-        assertThat(sprintService.findById(sprint.getId()).getSprintGoal()).isEqualTo("terminate");
+        String test = sprintService.findById(sprint.getId()).getSprintGoal();
+
+        assertThat(test).isEqualTo("terminate");
     }
 }
