@@ -41,16 +41,9 @@ public class UserService implements UserDetailsService {
         return new UserPrincipal(user);
     }
 
-    public void saveCustomer(User user) {
-        user.setRoles("ROLE_CUSTOMER");
-        String password = user.getPassword();
-        String encodePassword = passwordEncoder.encode(password);
-        user.setPassword(encodePassword);
-        userRepository.save(user);
-    }
-
     public void save(User user) {
         log.info("save user {}", user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles("USER");
         userRepository.save(user);
     }
