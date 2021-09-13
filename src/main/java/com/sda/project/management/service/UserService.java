@@ -51,7 +51,12 @@ public class UserService implements UserDetailsService {
 
     public void save(User user) {
         log.info("save user {}", user);
-        userRepository.save(user);
+        if(!user.getRoles().equals("ADMIN")){
+            log.info("user" + user + "is being saved");
+            userRepository.save(user);
+        }else{
+            throw new RuntimeException("cannot save admin user");
+        }
     }
 
     public List<User> findAll() {
