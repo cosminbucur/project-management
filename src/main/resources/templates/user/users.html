@@ -31,7 +31,6 @@
             <img src="https://www.orangescrum.org/articles/wp-content/uploads/2020/01/Why-should-you-invest-in-an-Enterprise-Project-Management-Software.jpg"
             <div class="card-body">
                 <h5 class="card-title" th:text="${user.displayName}"></h5>
-                <p class="card-text" th:text="${user.username}"/>
                 <p class="card-text" th:text="${user.email}"/>
                 <p class="card-text" th:text="${user.displayName}"></p>
                 <a th:href="@{/delete-user/{id}(id = ${user.id})}" class="btn btn-danger">Delete</a>

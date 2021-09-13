@@ -76,7 +76,6 @@ class AcceptanceTest {
         User user = new User();
         user.setDisplayName("admin");
         user.setEmail("admin@gmail.com");
-        user.setUsername("admin");
         user.setPassword("pass");
         user.setRoles("ADMIN");
         return user;
@@ -86,7 +85,6 @@ class AcceptanceTest {
         User user = new User();
         user.setDisplayName("user");
         user.setEmail("user@gmail.com");
-        user.setUsername("user");
         user.setPassword("pass");
         user.setRoles("USER");
         return user;

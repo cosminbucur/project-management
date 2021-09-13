@@ -23,7 +23,7 @@ public class HomeController {
     public String showHomePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User user = userService.findByUsername(username);
+        User user = userService.findByEmail(username);
         model.addAttribute("loggedUser", user.getDisplayName());
         return "index";
     }

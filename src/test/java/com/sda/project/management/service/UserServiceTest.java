@@ -20,11 +20,9 @@ class UserServiceTest {
         //TODO use these if user is modified
 //        user.setFirstName("alex");
 //        user.setLastName("andru");
-        user.setUsername("alex");
         user.setDisplayName("alexandru");
         user.setPassword("pass");
         user.setEmail("email@awesome.com");
-        user.setRoles("USER");
 
         userService.save(user);
 

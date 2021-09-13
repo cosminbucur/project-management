@@ -27,15 +27,15 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
 
         return new UserPrincipal(user);
@@ -51,12 +51,8 @@ public class UserService implements UserDetailsService {
 
     public void save(User user) {
         log.info("save user {}", user);
-        if(!user.getRoles().equals("ADMIN")){
-            log.info("user" + user + "is being saved");
-            userRepository.save(user);
-        }else{
-            throw new RuntimeException("cannot save admin user");
-        }
+        user.setRoles("USER");
+        userRepository.save(user);
     }
 
     public List<User> findAll() {

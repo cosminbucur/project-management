@@ -28,7 +28,7 @@ class ProjectServiceTest {
         project.setName("project");
         projectService.save(project);
 
-        User user = new User("user", "test", "test@gmail.com", "Alex Vasile", "USER");
+        User user = new User("test@gmail.com", "test", "Alex Vasile", "USER");
         userService.save(user);
 
         // when
