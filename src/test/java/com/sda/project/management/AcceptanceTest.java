@@ -1,9 +1,6 @@
 package com.sda.project.management;
 
-import com.sda.project.management.model.Project;
-import com.sda.project.management.model.Sprint;
-import com.sda.project.management.model.Task;
-import com.sda.project.management.model.User;
+import com.sda.project.management.model.*;
 import com.sda.project.management.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +73,7 @@ class AcceptanceTest {
         User user = new User();
         user.setEmail("admin@gmail.com");
         user.setPassword("pass");
-        user.setRoles("ADMIN");
+        user.addRole(new Role(RoleType.ADMIN));
         return user;
     }
 
@@ -84,7 +81,7 @@ class AcceptanceTest {
         User user = new User();
         user.setEmail("user@gmail.com");
         user.setPassword("pass");
-        user.setRoles("USER");
+        user.addRole(new Role(RoleType.USER));
         return user;
     }
 
