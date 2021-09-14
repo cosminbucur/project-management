@@ -19,14 +19,12 @@ public class HomeController {
         this.userService = userService;
     }
 
-    //TODO-alex: replace getDisplayName with getEmail?
     @GetMapping("/")
     public String showHomePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userService.findByEmail(username);
-        model.addAttribute("loggedUser", user.getDisplayName());
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+        model.addAttribute("loggedUser", user.getEmail());
         return "index";
     }
-
 }
