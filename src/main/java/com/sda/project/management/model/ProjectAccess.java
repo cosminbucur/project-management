@@ -63,7 +63,7 @@ public class ProjectAccess {
                 "id=" + id +
                 ", createdAt=" + createdAt +
                 ", project=" + project.getName() +
-                ", user=" + user.getUsername() +
+                ", user=" + user.getEmail() +
                 '}';
     }
 }

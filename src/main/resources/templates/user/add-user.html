@@ -11,20 +11,21 @@
 <form action="#" th:action="@{/user/add}" th:object="${user}" method="post">
     <table>
         <tr>
-            <td><label>Username:</label></td>
-            <td><input type="text" th:field="*{username}"/></td>
-        </tr>
-        <tr>
-            <td><label>Password:</label></td>
-            <td><input type="password" th:field="*{password}"/></td>
-        </tr>
-        <tr>
             <td><label>Email:</label></td>
             <td><input type="text" th:field="*{email}"/></td>
         </tr>
+        <div class="col-md-12">
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First name" th:field="*{firstName}">
+        </div>
+
+        <div class="col-md-12">
+            <label for="lastName" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last name" th:field="*{lastName}">
+        </div>
         <tr>
-            <td><label>Display name:</label></td>
-            <td><input type="text" th:field="*{displayName}"/></td>
+            <td><label>Password:</label></td>
+            <td><input type="password" th:field="*{password}"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Save"/></td>

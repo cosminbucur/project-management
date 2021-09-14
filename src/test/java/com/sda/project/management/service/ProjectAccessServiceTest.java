@@ -1,7 +1,6 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.model.Project;
-import com.sda.project.management.model.ProjectAccess;
 import com.sda.project.management.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +29,10 @@ class ProjectAccessServiceTest {
         project.setName("project");
         projectService.save(project);
 
-        User user1 = new User("user1", "pass", "user1@gmail.com", "Alex Vasile", "USER");
+        User user1 = new User("user1@gmail.com", "pass", "alex", "vasile", "Alex Vasile", "USER");
         userService.save(user1);
 
-        User user2 = new User("user2", "pass", "user2@gmail.com", "Alex Vasile", "USER");
+        User user2 = new User( "user2@gmail.com", "pass", "alex", "vasile", "Alex Vasile", "USER");
         userService.save(user2);
 
         // when

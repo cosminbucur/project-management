@@ -40,18 +40,12 @@ public class UserController {
         return "user/register";
     }
 
-    @GetMapping("users")
-    public String showUsersPage(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "user/users";
-    }
-
-    @PostMapping("register/add")
-    public String register(@ModelAttribute User user) {
-        userService.saveCustomer(user);
-        return "redirect:/login";
-    }
-
+//
+//    @PostMapping("register/add")
+//    public String register(@ModelAttribute User user) {
+//        userService.saveCustomer(user);
+//        return "redirect:/login";
+//    }
     @PostMapping(value = "/register/add", params = "save")
     public String add(Model model, @ModelAttribute User user) {
         try {
@@ -69,10 +63,10 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping(path = "user/add")
-    public String addUser(@ModelAttribute User user) {
-        userService.save(user);
-        return "redirect:/users";
+    @GetMapping("users")
+    public String showUsersPage(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "user/users";
     }
 
     @GetMapping(path = "edit-user/{id}")

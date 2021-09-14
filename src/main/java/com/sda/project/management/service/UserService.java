@@ -27,30 +27,24 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
 
         return new UserPrincipal(user);
     }
 
-    public void saveCustomer(User user) {
-        user.setRoles("ROLE_CUSTOMER");
-        String password = user.getPassword();
-        String encodePassword = passwordEncoder.encode(password);
-        user.setPassword(encodePassword);
-        userRepository.save(user);
-    }
-
     public void save(User user) {
         log.info("save user {}", user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles("USER");
         userRepository.save(user);
     }
 
