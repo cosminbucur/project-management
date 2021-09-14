@@ -33,10 +33,10 @@ public class DbInit {
     public CommandLineRunner initialData() {
         return args -> {
             log.info("create admin user");
-            User admin = new User("admin", "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi", "admin@gmail.com", "Jon Snow", "ADMIN");
+            User admin = new User("admin@gmail.com","{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi", "jon", "snow", "Jon Snow", "ADMIN");
             userRepository.save(admin);
 
-            User user = new User("user", "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi", "user@gmail.com", "Alex Vasile", "USER");
+            User user = new User( "user@gmail.com","{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi", "alex", "vasile", "Alex Vasile", "USER");
             userRepository.save(user);
 
             Project project = new Project();

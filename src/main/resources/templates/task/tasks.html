@@ -45,7 +45,7 @@
                 <p class="card-text" th:text="${task.weight}"/>
                 <p class="card-text" th:text="${task.storyPoints}"/>
                 <p class="card-text" th:text="${task.progress}"/>
-                <p class="card-text" th:text="${task.user.displayName}"/></p>
+                <p class="card-text" th:text="|${task.user.firstName} ${task.user.lastName}|"/></p>
                 <a th:href="@{/delete-task/{id}(id = ${task.id})}" class="btn btn-danger">Delete</a>
                 <a th:href="@{/edit-task/{id}(id = ${task.id})}" class="btn btn-primary">Edit</a>
             </div>

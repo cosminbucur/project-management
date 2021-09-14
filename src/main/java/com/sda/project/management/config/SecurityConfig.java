@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         // TODO: uncomment this in production
-//        http.formLogin();
+        http.formLogin();
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

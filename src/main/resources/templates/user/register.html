@@ -11,10 +11,9 @@
 <h2>Register your user</h2>
 
 <form class="row g-3" action="#" th:action="@{/register/add}" th:object="${user}" method="post">
-
     <div class="col-md-12">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
     </div>
 
     <div class="col-md-12">
@@ -23,13 +22,13 @@
     </div>
 
     <div class="col-md-12">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
+        <label for="firstName" class="form-label">First name</label>
+        <input type="text" class="form-control" id="firstName" placeholder="First name" th:field="*{firstName}">
     </div>
 
     <div class="col-md-12">
-        <label for="displayName" class="form-label">Display name</label>
-        <input type="text" class="form-control" id="displayName" placeholder="Display name" th:field="*{displayName}">
+        <label for="lastName" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Last name" th:field="*{lastName}">
     </div>
 
     <div class="col-12">

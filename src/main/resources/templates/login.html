@@ -7,14 +7,14 @@
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<p th:if="${loginError}" class="error">Wrong user or password</p>
+<p th:if="${loginError}" class="error">Wrong email or password</p>
 
 <form action="#" th:action="@{/login}" method="post">
     <table border="1">
         <tr>
-            <td><label>Username:</label>
+            <td><label>Email</label>
             </td>
-            <td><input type="text" name="username"/></td>
+            <td><input type="text" name="email"/></td>
         </tr>
         <tr>
             <td><label>Password:</label></td>
