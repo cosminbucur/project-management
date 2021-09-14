@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -46,7 +47,10 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
-                .map(user -> new UserPrincipal(user, user.getRoles()))
+                .map(user -> {
+                    Set<Role> roles = roleRepository.getRoles(user.getId());
+                    return new UserPrincipal(user, roles);
+                })
                 .orElseThrow(() -> new UsernameNotFoundException(email + " not found"));
     }
 
@@ -61,13 +65,6 @@ public class UserService implements UserDetailsService {
         } else {
             saveUser(user);
         }
-    }
-
-    private User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByType(RoleType.USER);
-        user.addRole(userRole);
-        return userRepository.save(user);
     }
 
     public List<User> findAll() {
@@ -87,5 +84,12 @@ public class UserService implements UserDetailsService {
     public void delete(Long id) {
         log.info("delete user {}", id);
         userRepository.deleteById(id);
+    }
+
+    private User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role userRole = roleRepository.findByType(RoleType.USER);
+        user.addRole(userRole);
+        return userRepository.save(user);
     }
 }
