@@ -1,28 +1,29 @@
 package com.sda.project.management.config;
 
+import com.sda.project.management.model.Role;
 import com.sda.project.management.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class UserPrincipal implements UserDetails {
 
-    private User user;
+    private final User user;
+    private final Set<Role> roles;
 
-    public UserPrincipal(User user) {
+    public UserPrincipal(User user, Set<Role> roles) {
         this.user = user;
+        this.roles = roles;
     }
 
+    // prefix each role name with "ROLE_"
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        final List<GrantedAuthority> authorities = new ArrayList<>();
-        // get roles and for each append ROLE_
-        user.getRoleList().forEach(role -> {
-            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
+        final Set<GrantedAuthority> authorities = new HashSet<>();
+        this.roles.forEach(role -> {
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getType().name());
             authorities.add(authority);
         });
 

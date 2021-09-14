@@ -1,6 +1,7 @@
 package com.sda.project.management.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "task")
@@ -121,12 +122,16 @@ public class Task {
                 '}';
     }
 
-    public enum TaskType {
-        TASK, BUG
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id);
     }
 
-    public enum TaskStatus {
-        TODO, IN_PROGRESS, DONE
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
-
 }

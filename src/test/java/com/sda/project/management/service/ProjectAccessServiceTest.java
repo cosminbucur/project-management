@@ -29,10 +29,10 @@ class ProjectAccessServiceTest {
         project.setName("project");
         projectService.save(project);
 
-        User user1 = new User("user1@gmail.com", "pass", "alex", "vasile", "USER");
+        User user1 = new User("user1@gmail.com", "pass", "alex", "vasile");
         userService.save(user1);
 
-        User user2 = new User( "user2@gmail.com", "pass", "alex", "vasile", "USER");
+        User user2 = new User( "user2@gmail.com", "pass", "alex", "vasile");
         userService.save(user2);
 
         // when

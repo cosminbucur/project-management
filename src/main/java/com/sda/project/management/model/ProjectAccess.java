@@ -2,6 +2,7 @@ package com.sda.project.management.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "project_access")
@@ -65,5 +66,18 @@ public class ProjectAccess {
                 ", project=" + project.getName() +
                 ", user=" + user.getEmail() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectAccess that = (ProjectAccess) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

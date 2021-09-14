@@ -15,15 +15,15 @@ class UserServiceTest {
     UserService userService;
 
     @Test
-    void whenUserIsNotAdmin_shouldSaveUser() {
-        User user = new User();
-        user.setFirstName("alex");
-        user.setLastName("andru");
-        user.setPassword("pass");
-        user.setEmail("email@awesome.com");
+    void whenSave_shouldSaveUser() {
+        // given
+        User user = new User("test@gmail.com", "pass", "jon", "snow");
 
+        // when
         userService.save(user);
 
-        assertThat(userService.findAll()).isNotNull();
+        // then
+        User actualUser = userService.findByEmail("test@gmail.com");
+        assertThat(actualUser.getEmail()).isEqualTo("test@gmail.com");
     }
 }

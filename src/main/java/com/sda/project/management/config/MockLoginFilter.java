@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Bypasses spring security login form with in memory authentication
  */
-//@Component
+@Component
 public class MockLoginFilter implements Filter {
 
     @Override

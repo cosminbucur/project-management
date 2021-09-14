@@ -14,7 +14,15 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String roles = "";
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
@@ -25,12 +33,11 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, String roles) {
+    public User(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.roles = roles;
     }
 
     public Long getId() {
@@ -73,20 +80,16 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
-    // helper method, roles will be separated by ','
-    public List<String> getRoleList() {
-        if (this.roles.length() > 0) {
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
+    public void addRole(Role role) {
+        this.roles.add(role);
     }
 
     public Set<ProjectAccess> getProjectAccessList() {
@@ -106,5 +109,18 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

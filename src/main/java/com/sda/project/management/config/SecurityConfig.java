@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -28,7 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
-        // TODO: uncomment this in production
         http.formLogin(form -> form.loginPage("/login").permitAll());
         http.formLogin().usernameParameter("email");
         http.formLogin().defaultSuccessUrl("/", true);
@@ -52,13 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(createDaoAuthentication());
-
-        // TODO: remove this in production
-        // bypass login form
-        auth.inMemoryAuthentication()
-                .withUser("admin@gmail.com")
-                .password(passwordEncoder().encode("pass"))
-                .roles("ADMIN");
     }
 
     @Bean
@@ -72,10 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(passwordEncoder());
 
-        // TODO: remove this after generating the password
-        System.out.println("encoded admin pass: " + passwordEncoder().encode("pass"));
-
         return provider;
+    }
+
+    // notifies the session registry that the session is destroyed on logout
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
     @Bean
