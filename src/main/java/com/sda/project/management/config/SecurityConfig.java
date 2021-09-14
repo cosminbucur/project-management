@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // TODO: uncomment this in production
         http.formLogin(form -> form.loginPage("/login").permitAll());
+        http.formLogin().usernameParameter("email");
         http.formLogin().defaultSuccessUrl("/", true);
 
         http.logout()
@@ -55,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // TODO: remove this in production
         // bypass login form
         auth.inMemoryAuthentication()
-                .withUser("admin")
+                .withUser("admin@gmail.com")
                 .password(passwordEncoder().encode("pass"))
                 .roles("ADMIN");
     }

@@ -10,7 +10,8 @@
 
 <h2>Register your user</h2>
 
-<form class="row g-3" action="#" th:action="@{/register/add}" th:object="${user}" method="post">
+<form class="row g-3" action="#" th:action="@{/register/add}" th:object="${user}" method="post"
+      oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match." : "")'>
     <div class="col-md-12">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
@@ -19,6 +20,11 @@
     <div class="col-md-12">
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}">
+    </div>
+
+    <div class="col-md-12">
+    <label for="confirmPassword" class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password"/>
     </div>
 
     <div class="col-md-12">

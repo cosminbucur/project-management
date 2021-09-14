@@ -17,10 +17,8 @@ class UserServiceTest {
     @Test
     void whenUserIsNotAdmin_shouldSaveUser() {
         User user = new User();
-        //TODO use these if user is modified
-//        user.setFirstName("alex");
-//        user.setLastName("andru");
-        user.setDisplayName("alexandru");
+        user.setFirstName("alex");
+        user.setLastName("andru");
         user.setPassword("pass");
         user.setEmail("email@awesome.com");
 

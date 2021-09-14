@@ -14,7 +14,6 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String displayName;
     private String roles = "";
 
     @OneToMany(
@@ -26,12 +25,11 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, String displayName, String roles) {
+    public User(String email, String password, String firstName, String lastName, String roles) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.displayName = displayName;
         this.roles = roles;
     }
 
@@ -75,14 +73,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
     public String getRoles() {
         return roles;
     }
@@ -115,9 +105,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", roles='" + roles + '\'' +
-                ", projectAccessList=" + projectAccessList +
                 '}';
     }
 }

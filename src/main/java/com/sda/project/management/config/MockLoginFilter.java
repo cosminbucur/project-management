@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Bypasses spring security login form with in memory authentication
  */
-@Component
+//@Component
 public class MockLoginFilter implements Filter {
 
     @Override
@@ -27,7 +27,7 @@ public class MockLoginFilter implements Filter {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getName().equals("anonymousUser")) {
-            request.login("ADMIN", "pass");
+            request.login("admin@gmail.com", "pass");
             response.sendRedirect("/");
         }
 
