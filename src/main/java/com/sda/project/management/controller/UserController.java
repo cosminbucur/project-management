@@ -23,16 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
-    }
-
-    @GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
-    }
+    // register
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
@@ -40,12 +31,6 @@ public class UserController {
         return "user/register";
     }
 
-//
-//    @PostMapping("register/add")
-//    public String register(@ModelAttribute User user) {
-//        userService.saveCustomer(user);
-//        return "redirect:/login";
-//    }
     @PostMapping(value = "/register/add", params = "save")
     public String add(Model model, @ModelAttribute User user) {
         try {
@@ -62,6 +47,21 @@ public class UserController {
     public String cancelRegister() {
         return "redirect:/";
     }
+
+    // login
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @GetMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
+    }
+
+    // crud
 
     @GetMapping("users")
     public String showUsersPage(Model model) {
