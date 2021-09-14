@@ -23,13 +23,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/register", "/register/add", "/login").permitAll()
+                .antMatchers("/register", "/register/add").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         // TODO: uncomment this in production
-//        http.formLogin();
+        http.formLogin(form -> form.loginPage("/login").permitAll());
+        http.formLogin().defaultSuccessUrl("/", true);
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

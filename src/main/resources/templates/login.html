@@ -7,26 +7,39 @@
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
+<h2>Sign in</h2>
+<!--<img th:src="@{/img/icon-192x192.png}"/>-->
+
 <p th:if="${loginError}" class="error">Wrong user or password</p>
 
-<form action="#" th:action="@{/login}" method="post">
-    <table border="1">
-        <tr>
-            <td><label>Username:</label>
-            </td>
-            <td><input type="text" name="username"/></td>
-        </tr>
-        <tr>
-            <td><label>Password:</label></td>
-            <td><input type="password" name="password"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Login"/></td>
-        </tr>
-    </table>
+<div th:if="${param.error}" class="alert alert-danger">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}" class="alert alert-success">
+    You have been logged out.
+</div>
 
-    <p><a href="../index.html" th:href="@{/index.html}">Back to home page</a></p>
+<form class="row g-3" th:action="@{/login}" method="POST">
+
+    <div class="col-md-12">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+    </div>
+
+    <div class="col-md-12">
+        <label for="password" class="form-label">Username</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary" id="login" name="login">Sign in</button>
+    </div>
+
+    <p><a th:href="@{/}">Back to home</a><p>
+
 </form>
+
+<div th:replace="fragments/footer :: footer-js"/>
 
 </body>
 </html>
