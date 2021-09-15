@@ -19,12 +19,17 @@ public class HomeController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", "/index"})
+    public String showLandingPage() {
+        return "index";
+    }
+
+    @GetMapping("/home")
     public String showHomePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findByEmail(email);
         model.addAttribute("loggedUser", user.getEmail());
-        return "index";
+        return "home";
     }
 }

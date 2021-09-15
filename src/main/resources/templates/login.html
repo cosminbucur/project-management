@@ -8,7 +8,7 @@
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
 <h2>Sign in</h2>
-<!--<img th:src="@{/img/icon-192x192.png}"/>-->
+<!--<img th:src="@{/images/icon-192x192.png}"/>-->
 
 <p th:if="${loginError}" class="error">Wrong email or password</p>
 
@@ -35,7 +35,7 @@
         <button type="submit" class="btn btn-primary" id="login" name="login">Sign in</button>
     </div>
 
-    <p><a th:href="@{/}">Back to home</a><p>
+    <p><a th:href="@{/index}">Back to home</a><p>
 
 </form>
 
