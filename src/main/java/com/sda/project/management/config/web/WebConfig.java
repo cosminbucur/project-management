@@ -1,4 +1,4 @@
-package com.sda.project.management.config;
+package com.sda.project.management.config.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

@@ -1,4 +1,4 @@
-package com.sda.project.management.config;
+package com.sda.project.management.config.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

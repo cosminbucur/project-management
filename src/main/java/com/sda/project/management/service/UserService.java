@@ -1,6 +1,6 @@
 package com.sda.project.management.service;
 
-import com.sda.project.management.config.UserPrincipal;
+import com.sda.project.management.config.security.UserPrincipal;
 import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
 import com.sda.project.management.model.Role;
 import com.sda.project.management.model.RoleType;
@@ -59,12 +59,12 @@ public class UserService implements UserDetailsService {
         log.info("save user {}", user);
 
         String email = user.getEmail();
-        Optional<User> userOptional = userRepository.findByEmail(email.toLowerCase());
-        if (userOptional.isPresent()) {
-            throw new ResourceAlreadyExistsException("user with email " + email + " already exists");
-        } else {
-            saveUser(user);
-        }
+        userRepository.findByEmail(email.toLowerCase())
+                .map((existingUser) -> {
+                    log.error("user with email {} already exists", email);
+                    throw new ResourceAlreadyExistsException("user with email " + email + " already exists");
+                })
+                .orElseGet(() -> saveUser(user));
     }
 
     public List<User> findAll() {

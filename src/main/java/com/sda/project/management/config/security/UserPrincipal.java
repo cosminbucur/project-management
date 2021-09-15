@@ -1,4 +1,4 @@
-package com.sda.project.management.config;
+package com.sda.project.management.config.security;
 
 import com.sda.project.management.model.Role;
 import com.sda.project.management.model.User;
