@@ -1,41 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <div th:replace="fragments/header :: header-css"/>
-    <title>Home</title>
+    <title>Landing page</title>
 </head>
-<body>
 
-<div th:replace="fragments/header :: header"/>
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<div class="container" style="width:500px;">
-    <img th:src="@{/img/users.png}"/>
-    <div>Start your awesome journey today!</div>
+<h2>Agile</h2>
+<h4>start starting your business here</h4>
 
-    <!-- button to initialize toast -->
-    <button type="button" class="btn btn-primary" id="toast-btn">Initialize toast</button>
-    <a th:href="@{/register}">
-        <button type="button" class="btn btn-primary" id="register">Register user</button>
+<!--TODO-alex: this is not working-->
+<img th:src="@{images/users.png}" />
+
+<div class="col-12">
+    <a th:href="@{/login}">
+        <button type="submit" class="btn btn-primary" id="login" name="login">Log in</button>
     </a>
 </div>
 
-<!-- Toast -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Project created! </strong>
-            <small></small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            <a th:href="@{/projects}">Open!</a>
-        </div>
-    </div>
+<div class="col-12">
+    <a th:href="@{/register}">
+        <button type="submit" class="btn btn-primary" id="register" name="register">Sign up</button>
+    </a>
 </div>
 
-<div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer :: footer-js"/>
 
 </body>
 </html>

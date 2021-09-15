@@ -35,7 +35,7 @@ public class UserController {
     public String add(Model model, @ModelAttribute User user) {
         try {
             userService.save(user);
-            return "redirect:/";
+            return "redirect:/login";
         } catch (ResourceAlreadyExistsException e) {
             String errorMessage = e.getMessage();
             model.addAttribute("errorMessage", errorMessage);
@@ -45,7 +45,7 @@ public class UserController {
 
     @PostMapping(value = "/register/add", params = "cancel")
     public String cancelRegister() {
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     // login
