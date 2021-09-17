@@ -12,7 +12,7 @@
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
-<form class="row g-3" action="#" th:action="@{/sprints/add}" th:object="${sprint}" method="post">
+<form class="row g-3" th:action="@{/sprints/add}" th:object="${sprint}" method="post">
 
     <div class="col-md-12">
         <label for="name" class="form-label">Name</label>

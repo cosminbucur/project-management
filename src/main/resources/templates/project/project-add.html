@@ -13,7 +13,7 @@
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
-<form class="row g-3" action="#" th:action="@{/projects/add}" th:object="${project}" method="post">
+<form class="row g-3" th:action="@{/projects/add}" th:object="${project}" method="post">
 
     <div class="col-md-12">
         <label for="name" class="form-label">Name</label>
@@ -29,7 +29,7 @@
 
     <div class="col-md-12">
         <label for="projectKey" class="form-label">Key</label>
-        <input type="text" class="form-control" id="projectKey" th:field="*{projectKey}">
+        <input type="text" class="form-control" id="projectKey" placeholder="Project key" th:field="*{projectKey}">
     </div>
 
     <div class="col-12">

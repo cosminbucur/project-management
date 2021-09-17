@@ -7,21 +7,33 @@
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<h2>Agile</h2>
-<h4>start starting your business here</h4>
-
-<img th:src="@{images/icon-192x192.png}" />
-
-<div class="col-12">
-    <a th:href="@{/login}">
-        <button type="submit" class="btn btn-primary" id="login" name="login">Log in</button>
-    </a>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="row">
+            <h2>Agile</h2>
+        </div>
+        <div class="row">
+            <h4>start starting your business here</h4>
+        </div>
+    </div>
 </div>
 
-<div class="col-12">
-    <a th:href="@{/register}">
-        <button type="submit" class="btn btn-primary" id="register" name="register">Sign up</button>
-    </a>
+<img th:src="@{images/icon-192x192.png}" class="rounded mx-auto d-block"/>
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+            <a th:href="@{/login}">
+                <button type="submit" class="btn btn-primary" id="login" name="login">Log in</button>
+            </a>
+        </div>
+
+        <div class="col col-lg-2">
+            <a th:href="@{/register}">
+                <button type="submit" class="btn btn-primary" id="register" name="register">Sign up</button>
+            </a>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments/footer :: footer-js"/>

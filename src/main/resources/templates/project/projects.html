@@ -9,12 +9,11 @@
 <div th:replace="fragments/header :: header"/>
 
 <div class="container">
-    <div class="d-flex flex-row align-items-center">
-        <div>
-            <h1>
-                <i class="fas fa-address-book"></i> Projects</h1>
+    <div class="d-flex mb-3">
+        <div class="me-auto p-2">
+            <h1>Projects</h1>
         </div>
-        <div>
+        <div class="p-2">
             <a th:href="@{/projects/add}">
                 <button type="button" class="btn btn-primary">Create project</button>
             </a>
@@ -22,23 +21,27 @@
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="row align-items-start">
+            <h6 class="col text-muted">Project name</h6>
+            <h6 class="col text-muted">Key</h6>
+            <h6 class="col text-muted">Lead</h6>
+        </div>
+        <div class="row" th:each="project: ${projects}">
             <div class="col-sm-4 col-12">
-                <h6 class="text-muted">Project name</h6>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:each="project: ${projects}" th:text="${project.name}"></li>
+                    <a th:href="@{/project-edit/{id}(id = ${project.id})}">
+                        <li class="list-group-item" th:text="${project.name}"></li>
+                    </a>
                 </ul>
             </div>
             <div class="col-sm-4 col-12">
-                <h6 class="text-muted">Key</h6>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:each="project: ${projects}" th:text="${project.projectKey}"></li>
+                    <li class="list-group-item" th:text="${project.projectKey}"></li>
                 </ul>
             </div>
             <div class="col-sm-4 col-12">
-                <h6 class="text-muted">Lead</h6>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:each="project: ${projects}"
+                    <li class="list-group-item"
                         th:text="|${project.projectLead.firstName} ${project.projectLead.lastName}|"></li>
                 </ul>
             </div>
