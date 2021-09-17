@@ -9,23 +9,42 @@
 <div th:replace="fragments/header :: header"/>
 
 <div class="container">
-    <a th:href="@{/projects/add}">
-        <button type="button" class="btn btn-primary">Create project</button>
-    </a>
-    <h1><i class="fas fa-address-book"></i> Projects</h1>
-    <div th:each="project: ${projects}">
-        <div class="card project-card">
-            <img src="https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h3 class="card-title" th:text="${project.name}"></h3>
-                <p class="card-text" th:text="|Description ${project.projectKey}|"></p>
-                <p class="card-text" th:text="|Project lead ${project.projectLead.firstName} ${project.projectLead.lastName}|"></p>
-                <a th:href="@{/projects/{id}/delete(id = ${project.id})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/projects/{id}/edit(id = ${project.id})}" class="btn btn-primary">Edit</a>
+    <div class="d-flex flex-row align-items-center">
+        <div>
+            <h1>
+                <i class="fas fa-address-book"></i> Projects</h1>
+        </div>
+        <div>
+            <a th:href="@{/projects/add}">
+                <button type="button" class="btn btn-primary">Create project</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-12">
+                <h6 class="text-muted">Project name</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="project: ${projects}" th:text="${project.name}"></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-12">
+                <h6 class="text-muted">Key</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="project: ${projects}" th:text="${project.projectKey}"></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-12">
+                <h6 class="text-muted">Lead</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="project: ${projects}"
+                        th:text="|${project.projectLead.firstName} ${project.projectLead.lastName}|"></li>
+                </ul>
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- Check if errorMessage is not null and not empty -->
