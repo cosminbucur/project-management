@@ -13,23 +13,41 @@
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
-<form class="row g-3" action="#" th:action="@{/projects/add}" th:object="${project}" method="post">
+<form class="row g-3 needs-validation" novalidate action="#" th:action="@{/projects/add}" th:object="${project}" method="post">
 
-    <div class="col-md-12">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Project name" th:field="*{name}">
-    </div>
+    <div>
+        <div class="col-md-4">
+            <label for="name" class="form-label">Name<a style="color:red">*</a></label>
+            <input type="text" class="form-control" id="name" placeholder="Name your awesome team, or set your goals..." th:field="*{name}" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="col-md-12 text-muted">
+                <dt>Access</dt>
+                <dd>Anyone with access to freeminions can access and aminister this project. <a href="#" class="link-primary">Upgrade your plan</a> to customize project permissions.</dd>
+            </div>
 
-    <div class="col-md-12">
-        <select class="form-select" th:field="${project.projectLead.id}">
-            <option selected th:value="null">Choose a project lead</option>
-            <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
-        </select>
-    </div>
+        </div>
 
-    <div class="col-md-12">
-        <label for="projectKey" class="form-label">Key</label>
-        <input type="text" class="form-control" id="projectKey" th:field="*{projectKey}">
+        <div class="col-md-2">
+            <label for="projectKey" class="form-label">Key<a style="color:red">*</a></label>
+            <input type="text" class="form-control" id="projectKey" placeholder="Think of a cool key..." th:field="*{projectKey}" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label for="projectLead" class="form-label">Project lead<a style="color:red">*</a></label>
+            <select class="form-select" id="projectLead" th:field="${project.projectLead.id}" required>
+                <option selected th:value="null">Pick your project lead</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
+            </select>
+            <div class="invalid-feedback">
+                Oops! You missed your lead.
+            </div>
+        </div>
+
     </div>
 
     <div class="col-12">
