@@ -1,5 +1,6 @@
 package com.sda.project.management.config;
 
+import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
 import com.sda.project.management.model.*;
 import com.sda.project.management.repository.*;
 import org.slf4j.Logger;
@@ -69,7 +70,7 @@ public class DbInit {
                 "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi",
                 "jon",
                 "snow");
-        Role adminRole = roleRepository.findByType(RoleType.ADMIN);
+        Role adminRole = roleRepository.findByType(RoleType.ADMIN).orElseThrow();
         admin.addRole(adminRole);
         userRepository.save(admin);
         return admin;
@@ -81,29 +82,30 @@ public class DbInit {
                 "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi",
                 "alex",
                 "vasile");
-        Role userRole = roleRepository.findByType(RoleType.USER);
+        Role userRole = roleRepository.findByType(RoleType.USER).orElseThrow();;
         user.addRole(userRole);
         userRepository.save(user);
     }
 
     @Transactional
-    Role createRoleIfNotFound(RoleType name, Set<Privilege> privileges) {
-        Role role = roleRepository.findByType(name);
-        if (role == null) {
-            role = new Role(name);
-            role.setPrivileges(privileges);
-            roleRepository.save(role);
-        }
-        return role;
+    Role createRoleIfNotFound(RoleType type, Set<Privilege> privileges) {
+        return (Role) roleRepository.findByType(type)
+                .map((existingPrivilege) -> {
+                    throw new ResourceAlreadyExistsException("role already exists");
+                })
+                .orElseGet(() -> {
+                    Role role = new Role(type);
+                    role.setPrivileges(privileges);
+                    return roleRepository.save(role);
+                });
     }
 
     @Transactional
     Privilege createPrivilegeIfNotFound(PrivilegeType name) {
-        Privilege privilege = privilegeRepository.findByType(name);
-        if (privilege == null) {
-            privilege = new Privilege(name);
-            privilegeRepository.save(privilege);
-        }
-        return privilege;
+        return (Privilege) privilegeRepository.findByType(name)
+                .map((existingPrivilege) -> {
+                    throw new ResourceAlreadyExistsException("privilege already exists");
+                })
+                .orElseGet(() -> privilegeRepository.save(new Privilege(name)));
     }
 }

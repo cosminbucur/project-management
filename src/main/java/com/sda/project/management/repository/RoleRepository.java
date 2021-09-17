@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Role findByType(RoleType type);
+    Optional<Role> findByType(RoleType type);
 
     // select entity join with collection
     @Query("FROM Role r join r.users u WHERE u.id = :userId")

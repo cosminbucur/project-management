@@ -5,8 +5,10 @@ import com.sda.project.management.model.PrivilegeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
 
-    Privilege findByType(PrivilegeType type);
+    Optional<Privilege> findByType(PrivilegeType type);
 }
