@@ -7,8 +7,8 @@
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<h2>Sign in</h2>
-<!--<img th:src="@{/images/icon-192x192.png}"/>-->
+
+<img th:src="@{/images/icon-192x192.png}" class="rounded mx-auto d-block"/>
 
 <p th:if="${loginError}" class="error">Wrong email or password</p>
 
@@ -19,25 +19,36 @@
     You have been logged out.
 </div>
 
-<form class="row g-3" th:action="@{/login}" method="POST">
-
-    <div class="col-md-12">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <h2>Sign in</h2>
     </div>
 
-    <div class="col-md-12">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-    </div>
+    <form th:action="@{/login}" method="post">
+        <div class="col">
+            <div class="col">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
+            </div>
 
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary" id="login" name="login">Sign in</button>
-    </div>
+            <div class="col">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
 
-    <p><a th:href="@{/index}">Back to home</a><p>
+            <div class="col">
+                <button type="submit" class="btn btn-primary" id="login" name="login">Sign in</button>
+            </div>
 
-</form>
+            <div class="col">
+                New to Agile? <a th:href="@{/register}">Sign up</a>
+            </div>
+
+            <a th:href="@{/}">Back to home</a>
+        </div>
+    </form>
+</div>
+
 
 <div th:replace="fragments/footer :: footer-js"/>
 

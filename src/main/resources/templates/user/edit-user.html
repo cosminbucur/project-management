@@ -9,7 +9,7 @@
 <div th:replace="fragments/header :: header"/>
 
 <p>Edit User</p>
-<form action="#" th:action="@{/user/edit}" th:object="${userToBeEdit}" method="post">
+<form class="row g-3" th:action="@{/user/edit}" th:object="${userToBeEdit}" method="post">
     <table border="1">
         <tr>
             <td><label>Email:</label></td>

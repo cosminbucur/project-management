@@ -9,7 +9,7 @@
 <div th:replace="fragments/header :: header"/>
 
 <h2>Edit sprint</h2>
-<form class="row g-3" action="#" th:action="@{/sprints/{id}/edit(id=${sprint.id})}" th:object="${sprint}" method="post">
+<form class="row g-3" th:action="@{/sprints/{id}/edit(id=${sprint.id})}" th:object="${sprint}" method="post">
 
     <div class="col-md-12">
         <label for="name" class="form-label">Name</label>

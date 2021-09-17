@@ -9,7 +9,7 @@
 <div th:replace="fragments/header :: header"/>
 
 <p>Edit task</p>
-<form action="#" th:action="@{/task/edit}" th:object="${task}" method="post">
+<form class="row g-3" th:action="@{/task/edit}" th:object="${task}" method="post">
     <table>
         <tr>
             <td><label>Id:</label>

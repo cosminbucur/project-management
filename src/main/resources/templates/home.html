@@ -10,15 +10,12 @@
 
 <div th:replace="fragments/header :: header"/>
 
-<div class="container" style="width:500px;">
+<div class="container img-fluid" style="width:500px;">
     <img th:src="@{/images/users.png}"/>
     <div>Start your awesome journey today!</div>
 
     <!-- button to initialize toast -->
     <button type="button" class="btn btn-primary" id="toast-btn">Initialize toast</button>
-    <a th:href="@{/register}">
-        <button type="button" class="btn btn-primary" id="register">Register user</button>
-    </a>
 </div>
 
 <!-- Toast -->
