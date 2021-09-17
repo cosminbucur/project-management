@@ -1,4 +1,4 @@
-package com.sda.project.management.config;
+package com.sda.project.management.config.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
