@@ -1,4 +1,4 @@
-package com.sda.project.management.config;
+package com.sda.project.management.config.security;
 
 import com.sda.project.management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/index" ,"/register", "/register/add").permitAll()
-                .antMatchers("/images/**").permitAll()
+                .antMatchers("/favicon.ico", "/images/**").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
                 .anyRequest().authenticated();
 

@@ -10,7 +10,7 @@
         <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.0/css/bootstrap.min.css}"/>
 
         <!-- load custom css -->
-<!--        <link th:rel="stylesheet" th:href="@{/css/main.css}"/>-->
+        <link th:rel="stylesheet" th:href="@{/css/main.css}"/>
 
         <!-- load font awesome icons -->
         <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.min.css}"/>
@@ -23,7 +23,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light text-white">
         <div class="container-fluid">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <a class="navbar-brand" href="#">Orange</a>
+            <a class="navbar-brand" href="/home">Orange</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,9 +31,6 @@
 
                 <!-- left side -->
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/home}">Home</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/projects}">Projects</a>
                     </li>
@@ -63,6 +60,7 @@
                            data-bs-toggle="tooltip" tabindex="-1" th:href="@{/logout}"
                            title="Tooltip on bottom">Log out</a>
                     </li>
+
                     <div class="flex-shrink-0 dropdown">
                         <a aria-expanded="false" class="d-block link-dark text-decoration-none dropdown-toggle"
                            data-bs-toggle="dropdown" href="#" id="dropdownUser">

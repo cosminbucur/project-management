@@ -2,6 +2,7 @@ package com.sda.project.management.service;
 
 import com.sda.project.management.config.security.UserPrincipal;
 import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
+import com.sda.project.management.controller.exception.ResourceNotFoundException;
 import com.sda.project.management.model.Role;
 import com.sda.project.management.model.RoleType;
 import com.sda.project.management.model.User;
@@ -88,7 +89,8 @@ public class UserService implements UserDetailsService {
 
     private User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByType(RoleType.USER);
+        Role userRole = roleRepository.findByType(RoleType.USER)
+                .orElseThrow(() -> new ResourceNotFoundException("role not found"));
         user.addRole(userRole);
         return userRepository.save(user);
     }

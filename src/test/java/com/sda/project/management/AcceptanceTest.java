@@ -7,11 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class AcceptanceTest {
+
+    @Autowired
+    PrivilegeService privilegeService;
+
+    @Autowired
+    RoleService roleService;
 
     @Autowired
     UserService userService;
@@ -30,9 +37,18 @@ class AcceptanceTest {
 
     @Test
     void acceptanceFlow() {
+        // create privileges
+        Privilege writePrivilege = privilegeService.save(PrivilegeType.WRITE_PRIVILEGE);
+        Privilege readPrivilege = privilegeService.save(PrivilegeType.READ_PRIVILEGE);
+
+        // create roles
+        Role adminRole = roleService.save(RoleType.ADMIN, Set.of(writePrivilege));
+
+        Role userRole = roleService.save(RoleType.USER, Set.of(readPrivilege));
+
         // create users
-        User projectLead = createAdmin();
-        User user = createUser();
+        User projectLead = createAdmin(adminRole);
+        User user = createUser(userRole);
         userService.save(projectLead);
         userService.save(user);
 
@@ -69,19 +85,19 @@ class AcceptanceTest {
 //        assertThat(sprint.getStoryPoints()).isEqualTo(8);
     }
 
-    private User createAdmin() {
+    private User createAdmin(Role role) {
         User user = new User();
-        user.setEmail("admin@gmail.com");
+        user.setEmail("test-admin@gmail.com");
         user.setPassword("pass");
-        user.addRole(new Role(RoleType.ADMIN));
+        user.addRole(role);
         return user;
     }
 
-    private User createUser() {
+    private User createUser(Role role) {
         User user = new User();
-        user.setEmail("user@gmail.com");
+        user.setEmail("test-user@gmail.com");
         user.setPassword("pass");
-        user.addRole(new Role(RoleType.USER));
+        user.addRole(role);
         return user;
     }
 
@@ -92,7 +108,6 @@ class AcceptanceTest {
         return project;
     }
 
-    //TODO-Alex: not working
     private Sprint createSprint() {
         Sprint sprint = new Sprint();
         sprint.setName("PRO 20-1");

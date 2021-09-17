@@ -8,6 +8,17 @@ public class ProjectManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectManagementApplication.class, args);
+		System.out.println(banner());
 	}
 
+	private static String banner() {
+		return "\n" +
+				" █████╗ ██████╗ ██████╗ \n" +
+				"██╔══██╗██╔══██╗██╔══██╗\n" +
+				"███████║██████╔╝██████╔╝\n" +
+				"██╔══██║██╔═══╝ ██╔═══╝ \n" +
+				"██║  ██║██║     ██║     \n" +
+				"╚═╝  ╚═╝╚═╝     ╚═╝     \n" +
+				"is now running.";
+	}
 }
