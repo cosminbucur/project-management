@@ -29,8 +29,8 @@
 
         </div>
 
-        <div class="col-md-2">
-            <label for="projectKey" class="form-label">Key<a style="color:red">*</a></label>
+        <div class="col-md-2 form-group required">
+            <label for="projectKey" class="form-label">Key</label>
             <input type="text" class="form-control" id="projectKey" placeholder="Think of a cool key..." th:field="*{projectKey}" required>
             <div class="valid-feedback">
                 Looks good!
@@ -58,6 +58,25 @@
 </form>
 
 <div th:replace="fragments/footer :: footer"/>
+
+<script th:inline="javascript">
+      /*<![CDATA[*/
+        window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+        }, false);
+       /*]]>*/
+</script>
 
 </body>
 </html>
