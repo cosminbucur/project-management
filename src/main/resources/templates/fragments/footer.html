@@ -1,6 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
 
@@ -11,14 +9,6 @@
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <span class="text-muted">© 2021 SDA, All rights reserved.</span>
-            </div>
-
-            <div class="col-md-4 justify-content-end d-flex">
-                <!-- user info -->
-                <span class="text-muted" sec:authorize="isAuthenticated()">
-                    Logged user: <span sec:authentication="name"></span>
-                    Roles: <span sec:authentication="principal.authorities"></span>
-                </span>
             </div>
         </footer>
     </div>
