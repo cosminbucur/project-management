@@ -15,38 +15,33 @@
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
-<form class="row g-3 needs-validation" novalidate action="#" th:action="@{/projects/add}" th:object="${project}" method="post">
+<form class="row g-3 needs-validation" novalidate th:action="@{/projects/add}" th:object="${project}" method="post">
 
     <div>
-        <div class="col-md-4">
-            <label for="name" class="form-label">Name<a style="color:red">*</a></label>
-            <input type="text" class="form-control" id="name" placeholder="Name your awesome team, or set your goals..." th:field="*{name}" required>
-            <div class="valid-feedback">
-                Looks good!
+        <div class="col-md-4 form-group required">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Project name" th:field="*{name}" required>
+            <div class="invalid-feedback">
+                A project name can't be empty.
             </div>
-            <div class="col-md-12 text-muted">
-                <dt>Access</dt>
-                <dd>Anyone with access to freeminions can access and aminister this project. <a href="#" class="link-primary">Upgrade your plan</a> to customize project permissions.</dd>
-            </div>
-
         </div>
 
         <div class="col-md-2 form-group required">
             <label for="projectKey" class="form-label">Key</label>
-            <input type="text" class="form-control" id="projectKey" placeholder="Think of a cool key..." th:field="*{projectKey}" required>
-            <div class="valid-feedback">
-                Looks good!
+            <input type="text" class="form-control" id="projectKey" placeholder="Project key" th:field="*{projectKey}" required>
+            <div class="invalid-feedback">
+                Use 2 or 3 uppercase letters.
             </div>
         </div>
 
-        <div class="col-md-4">
-            <label for="projectLead" class="form-label">Project lead<a style="color:red">*</a></label>
+        <div class="col-md-4 form-group required">
+            <label for="projectLead" class="form-label">Project lead</label>
             <select class="form-select" id="projectLead" th:field="${project.projectLead.id}" required>
-                <option selected th:value="null">Pick your project lead</option>
+                <option selected th:value="null">Pick a project lead</option>
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
             </select>
             <div class="invalid-feedback">
-                Oops! You missed your lead.
+                You need a lead for your project.
             </div>
         </div>
 
@@ -60,25 +55,6 @@
 </form>
 
 <div th:replace="fragments/footer :: footer"/>
-
-<script th:inline="javascript">
-      /*<![CDATA[*/
-        window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          }, false);
-        });
-        }, false);
-       /*]]>*/
-</script>
 
 </body>
 </html>
