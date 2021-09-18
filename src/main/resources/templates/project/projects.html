@@ -20,33 +20,37 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row align-items-start">
-            <h6 class="col text-muted">Project name</h6>
-            <h6 class="col text-muted">Key</h6>
-            <h6 class="col text-muted">Lead</h6>
-        </div>
-        <div class="row" th:each="project: ${projects}">
-            <div class="col-sm-4 col-12">
-                <ul class="list-group list-group-flush">
-                    <a th:href="@{/project-edit/{id}(id = ${project.id})}">
-                        <li class="list-group-item" th:text="${project.name}"></li>
-                    </a>
-                </ul>
-            </div>
-            <div class="col-sm-4 col-12">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:text="${project.projectKey}"></li>
-                </ul>
-            </div>
-            <div class="col-sm-4 col-12">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"
-                        th:text="|${project.projectLead.firstName} ${project.projectLead.lastName}|"></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Key</th>
+            <th scope="col">Lead</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project: ${projects}">
+            <td>
+                <a th:href="@{/projects/{id}/edit(id = ${project.id})}" th:text="${project.name}"></a>
+            </td>
+            <td>
+                <p th:text="${project.projectKey}"></p>
+            </td>
+            <td>
+                <p th:text="|${project.projectLead.firstName} ${project.projectLead.lastName}|"></p>
+            </td>
+            <td>
+                <a th:href="@{/projects/{id}/edit(id = ${project.id})}">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a th:href="@{/projects/{id}/delete(id = ${project.id})}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
