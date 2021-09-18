@@ -6,3 +6,9 @@
     width: 300px;
     max-height: 500px;
 }
+
+/* add required * to form labels */
+.form-group.required .form-label:after {
+  content: " *";
+  color: red;
+}
