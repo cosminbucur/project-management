@@ -8,24 +8,41 @@
 
 <div th:replace="fragments/header :: header"/>
 
-<h2>Edit project</h2>
-<form class="row g-3"  th:action="@{/projects/{id}/edit(id=${project.id})}" th:object="${project}" method="post">
+<script th:src="@{/js/validation.js}"></script>
 
-    <div class="col-md-12">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Project name" th:field="*{name}">
-    </div>
+<h2>Edit project details</h2>
 
-    <div class="col-md-12">
-        <select class="form-select" th:field="${project.projectLead.id}">
-            <option selected th:value="null">Choose a project lead</option>
-            <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
-        </select>
-    </div>
+<form class="row g-3 needs-validation" novalidate th:action="@{/projects/{id}/edit(id=${project.id})}" th:object="${project}" method="post">
 
-    <div class="col-md-12">
-        <label for="projectKey" class="form-label">Key</label>
-        <input type="text" class="form-control" id="projectKey" th:field="*{projectKey}">
+    <div>
+
+        <div class="col-md-4 form-group required">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Project name" th:field="*{name}" required>
+            <div class="invalid-feedback">
+                A project name can't be empty.
+            </div>
+        </div>
+
+        <div class="col-md-2 form-group required">
+            <label for="projectKey" class="form-label">Key</label>
+            <input type="text" class="form-control" id="projectKey" placeholder="Project key" th:field="*{projectKey}" required>
+            <div class="invalid-feedback">
+                Use 2 or 3 uppercase letters.
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group required">
+            <label for="projectLead" class="form-label">Project lead</label>
+            <select class="form-select" id="projectLead" th:field="${project.projectLead.id}" required>
+                <option selected th:value="null">Pick a project lead</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
+            </select>
+            <div class="invalid-feedback">
+                You need a lead for your project.
+            </div>
+        </div>
+        
     </div>
 
     <div class="col-12">
@@ -34,10 +51,6 @@
     </div>
 
 </form>
-
-<br/>
-<!-- Check if errorMessage is not null and not empty -->
-<div th:if="${errorMessage}" th:utext="${errorMessage}" class="error" />
 
 <div th:replace="fragments/footer :: footer"/>
 

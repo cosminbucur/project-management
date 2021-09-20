@@ -13,11 +13,10 @@
 <h2>Add project details</h2>
 <p>You can change these details anytime in your project settings.</p>
 
-<div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
-
 <form class="row g-3 needs-validation" novalidate th:action="@{/projects/add}" th:object="${project}" method="post">
 
     <div>
+        
         <div class="col-md-4 form-group required">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" placeholder="Project name" th:field="*{name}" required>
