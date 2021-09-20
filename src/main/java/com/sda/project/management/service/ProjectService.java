@@ -38,12 +38,12 @@ public class ProjectService {
         log.info("save project {}", project);
         String name = project.getName();
 
-        Optional<Project> projectOptional = projectRepository.findByName(name.toLowerCase());
-        if (projectOptional.isPresent()) {
-            throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
-        } else {
-            projectRepository.save(project);
-        }
+        projectRepository.findByName(name.toLowerCase())
+                .map((existingProject) -> {
+                    log.error("project with name {} already exists", name);
+                    throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
+                })
+                .orElseGet(() -> projectRepository.save(project));
     }
 
     public List<Project> findAll() {
@@ -59,7 +59,16 @@ public class ProjectService {
 
     public void update(Project project) {
         log.info("update project {}", project);
-        projectRepository.save(project);
+        String name = project.getName();
+
+        Optional<Project> existingProjectOptional = projectRepository.findByName(name.toLowerCase())
+                .filter(existingProject -> existingProject.getId().equals(project.getId()));
+        if (existingProjectOptional.isPresent()) {
+            projectRepository.save(project);
+        } else {
+            log.error("project with name {} already exists", name);
+            throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
+        }
     }
 
     public void setProjectLead(Long projectId, Long userId) {
