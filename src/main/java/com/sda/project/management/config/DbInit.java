@@ -34,6 +34,9 @@ public class DbInit {
     @Autowired
     private SprintRepository sprintRepository;
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     @Bean
     public CommandLineRunner initialData() {
         return args -> {
@@ -61,6 +64,23 @@ public class DbInit {
             sprint.setDateTo(sprint.getDateFrom().plusDays(14));
             sprint.setStoryPoints(20);
             sprintRepository.save(sprint);
+
+            Task task1 = new Task();
+            task1.setProject(project);
+            task1.setSummary("summary");
+            task1.setStoryPoints(5);
+            task1.setDescription("description");
+            task1.setStatus(TaskStatus.TODO);
+            task1.setTaskType(TaskType.TASK);
+            taskRepository.save(task1);
+
+            Task task2 = new Task();
+            task2.setProject(project);
+            task2.setSummary("bug summary");
+            task2.setDescription("bug description");
+            task2.setStatus(TaskStatus.IN_PROGRESS);
+            task2.setTaskType(TaskType.BUG);
+            taskRepository.save(task2);
         };
     }
 

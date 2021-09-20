@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="project: ${projects}">
+        <tr th:each="project : ${projects}">
             <td>
                 <a th:href="@{/projects/{id}/edit(id = ${project.id})}" th:text="${project.name}"></a>
             </td>
