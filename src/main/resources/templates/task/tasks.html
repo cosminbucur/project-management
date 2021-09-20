@@ -4,53 +4,43 @@
     <title>Tasks</title>
 </head>
 
-<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
-
+<body>
 <div th:replace="fragments/header :: header"/>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <h2>Search task:</h2>
-        <form th:object="${tasks}" th:action="@{/getTasks}" method="get">
-            <input type="number" name="search" id="search" th:value="${search}"/>
-            <input type="submit" value="Search"/>
-            <div th:if="${not #lists.isEmpty(search)}">
-                <h2>Task list:</h2>
-                <table class="table table-striped">
-                    <tr>
-                        <th>Id</th>
-                    </tr>
-                    <tr th:each="task: ${search}">
-                        <td th:text="'Id:' + ${tasks.id}"><a href="/task/${task.id}">Task Id</a></td>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-</nav>
+<h2>Backlog</h2>
 
 <div class="container">
-    <a th:href="@{/add-task}">
-        <button type="button" class="btn btn-success">Add Tasks</button>
-    </a>
-    <h1>My tasks:</h1>
-    <div th:each="task: ${tasks}">
-        <div class="card" style="width:250px; max-height:500px;">
-            <img src="data:data:image/png;base64,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"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${task.name}"></h5>
-                <p class="card-text" th:text="${task.description}"/>
-                <p class="card-text" th:text="${task.sprint}"/>
-                <p class="card-text" th:text="${task.weight}"/>
-                <p class="card-text" th:text="${task.storyPoints}"/>
-                <p class="card-text" th:text="${task.progress}"/>
-                <p class="card-text" th:text="|${task.user.firstName} ${task.user.lastName}|"/></p>
-                <a th:href="@{/delete-task/{id}(id = ${task.id})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/edit-task/{id}(id = ${task.id})}" class="btn btn-primary">Edit</a>
+    <ul class="list-group" th:each="task : ${tasks}">
+        <li class="list-group-item d-flex mb-3"
+            th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+            <div class="me-auto p-2">
+                <span th:text="${task.taskType}"></span>
+
+                <span th:text="|${task.project.projectKey}-${task.id}|"></span>
+
+                <span th:text="${task.summary}"></span>
             </div>
-        </div>
-    </div>
+
+            <div class="p-2">
+                <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
+
+                <span th:text="${task.status}"></span>
+
+                <span th:text="${task.assignee}"></span>
+
+                <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                    <i class="fas fa-edit"></i>
+                </a>
+
+                <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </li>
+    </ul>
+    <a th:href="@{/tasks/add}">
+        <button type="button" class="btn btn-primary">Create task</button>
+    </a>
 </div>
 
 <div th:replace="fragments/footer :: footer"/>
