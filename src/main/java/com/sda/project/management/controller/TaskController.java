@@ -20,9 +20,12 @@ public class TaskController {
     private final SprintService sprintService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService, UserService userService1, ProjectService projectService, SprintService sprintService) {
+    public TaskController(TaskService taskService,
+                          UserService userService,
+                          ProjectService projectService,
+                          SprintService sprintService) {
         this.taskService = taskService;
-        this.userService = userService1;
+        this.userService = userService;
         this.projectService = projectService;
         this.sprintService = sprintService;
     }

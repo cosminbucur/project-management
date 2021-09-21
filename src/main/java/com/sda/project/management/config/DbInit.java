@@ -49,8 +49,7 @@ public class DbInit {
             createRoleIfNotFound(RoleType.USER, Set.of(readPrivilege, writePrivilege));
 
             User admin = createAdmin();
-
-            createUser();
+            User user = createUser();
 
             Project project = new Project();
             project.setName("Sakura");
@@ -63,6 +62,7 @@ public class DbInit {
             sprint.setDateFrom(LocalDate.now());
             sprint.setDateTo(sprint.getDateFrom().plusDays(14));
             sprint.setStoryPoints(20);
+            sprint.setSprintGoal("goal");
             sprintRepository.save(sprint);
 
             Task task1 = new Task();
@@ -72,6 +72,7 @@ public class DbInit {
             task1.setDescription("description");
             task1.setStatus(TaskStatus.TODO);
             task1.setTaskType(TaskType.TASK);
+            task1.setAssignee(user);
             taskRepository.save(task1);
 
             Task task2 = new Task();
@@ -96,7 +97,7 @@ public class DbInit {
         return admin;
     }
 
-    private void createUser() {
+    private User createUser() {
         User user = new User(
                 "user@gmail.com",
                 "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi",
@@ -104,7 +105,7 @@ public class DbInit {
                 "vasile");
         Role userRole = roleRepository.findByType(RoleType.USER).orElseThrow();;
         user.addRole(userRole);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Transactional
