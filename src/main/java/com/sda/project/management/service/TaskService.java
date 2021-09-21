@@ -32,7 +32,7 @@ public class TaskService {
 
     public Task findById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("project not found"));
+                .orElseThrow(() -> new RuntimeException("task not found"));
     }
 
     public List<Task> getTasks(Long sprintId) {
