@@ -2,6 +2,8 @@ package com.sda.project.management.controller;
 
 import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
 import com.sda.project.management.model.Task;
+import com.sda.project.management.service.ProjectService;
+import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
 import com.sda.project.management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,15 @@ public class TaskController {
 
     private final TaskService taskService;
     private final UserService userService;
+    private final ProjectService projectService;
+    private final SprintService sprintService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService, UserService userService1) {
+    public TaskController(TaskService taskService, UserService userService, UserService userService1, ProjectService projectService, SprintService sprintService) {
         this.taskService = taskService;
         this.userService = userService1;
+        this.projectService = projectService;
+        this.sprintService = sprintService;
     }
 
     @GetMapping("/tasks")
@@ -31,6 +37,8 @@ public class TaskController {
     public String showAddForm(Model model) {
         model.addAttribute("task", new Task());
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("sprints", sprintService.findAll());
         return "task/task-add";
     }
 
@@ -55,6 +63,8 @@ public class TaskController {
     public String showEditForm(Model model, @PathVariable("id") Long id) {
         model.addAttribute("task", taskService.findById(id));
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("sprints", sprintService.findAll());
         return "task/task-edit";
     }
 
