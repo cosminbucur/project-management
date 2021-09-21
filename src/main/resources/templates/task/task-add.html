@@ -8,44 +8,86 @@
 
 <div th:replace="fragments/header :: header"/>
 
-<h1>Add task</h1>
-<form class="row g-3" th:action="@{/task/add}" th:object="${task}" method="post">
-    <table>
-        <tr>
-            <td><label>Project</label></td>
-            <td><input type="text" th:field="*{project}"/></td>
-        </tr>
-        <tr>
-            <td><label>Summary</label></td>
-            <td><input type="text" th:field="*{summary}"/></td>
-        </tr>
-        <tr>
-            <td><label>Description</label></td>
-            <td><input type="text" th:field="*{description}"/></td>
-        </tr>
-        <tr>
-            <td><label>Sprint</label></td>
-            <td><input type="number" th:field="*{sprint}"/></td>
-        </tr>
-        <tr>
-            <td><label>Story points</label></td>
-            <td><input type="number" th:field="*{storyPoints}"/></td>
-        </tr>
+<h2>Add task details</h2>
+<p>You can change these details anytime in your task settings.</p>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="userSelect">User</label>
+<div>
+    <form class="row g-3" th:action="@{/tasks/add}" th:object="${task}" method="post">
+
+    </form>
+</div>
+
+<form class="row g-3 needs-validation" novalidate th:action="@{/tasks/add}" th:object="${task}" method="post">
+    <div>
+        <div class="col-md-4 form-group required">
+            <label for="project" class="form-label">Project</label>
+            <select class="form-select" id="project" th:field="${task.project.id}" required>
+                <option selected th:value="null">Pick a project</option>
+                <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}"></option>
+            </select>
+            <div class="invalid-feedback">
+                You need a project for your task.
             </div>
-            <select id="userSelect" class="custom-select" th:field="${task.user.id}">
-                <option selected th:value="null">Choose</option>
+        </div>
+
+        <div class="col-md-4 form-group required">
+            <label for="taskType" class="form-label">Task type</label>
+            <select class="form-select" id="taskType" th:field="${task.taskType}" required>
+                <option selected th:value="null">Select type of task</option>
+                <option th:each="taskType : ${T(com.sda.project.management.model.TaskType).values()}" th:value="${taskType}" th:text="${taskType}"></option>
+            </select>
+
+        </div>
+
+        <div class="col-md-4 form-group required">
+            <div class="mb-3">
+                <label for="summary" class="form-label">Task summary</label>
+                <textarea class="form-control" id="summary" rows="3"
+                          placeholder="Write your summary of the task here" th:field="*{summary}"></textarea>
+                <div class="invalid-feedback">
+                    This summary is useful to assignees, include descriptions and/or acceptance criteria...
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group">
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3"
+                          placeholder="Write your description of the task here" th:field="*{description}"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group d-flex">
+            <label for="assignee" class="form-label">Assignee</label>
+            <select class="form-select" id="assignee" th:field="${task.assignee.id}">
+                <option selected th:value="null">Select your favorite minion</option>
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
+            </select>
+            <label for="storyPoints" class="form-label">Story points value</label>
+            <input class="form-control" id="storyPoints" type="text" placeholder="1, 3, 5..." th:field="*{storyPoints}">
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label for="sprint" class="form-label">Sprint</label>
+            <select class="form-select" id="sprint" th:field="${task.sprint.name}">
+                <option selected th:value="null">Add this task to a sprint</option>
+                <option th:each="sprint : ${sprints}" th:value="${sprint.name}" th:text="${sprint.name}"></option>
             </select>
         </div>
 
-        <tr>
-            <td><input type="submit" value="Save"/></td>
-        </tr>
-    </table>
+        <div class="col-md-4 form-group">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" th:field="${task.taskType}">
+                <option selected th:value="null">Select task status</option>
+                <option th:each="status : ${T(com.sda.project.management.model.TaskStatus).values()}" th:value="${status}" th:text="${status}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="save" name="save">Create task</button>
+    </div>
 </form>
 
 <div th:replace="fragments/footer :: footer"/>
