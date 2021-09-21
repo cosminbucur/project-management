@@ -21,9 +21,9 @@
     <div>
         <div class="col-md-4 form-group required">
             <label for="project" class="form-label">Project</label>
-            <select class="form-select" id="project" th:field="${task.project.name}" required>
+            <select class="form-select" id="project" th:field="${task.project.id}" required>
                 <option selected th:value="null">Pick a project</option>
-                <option th:each="project : ${projects}" th:value="${project.name}" th:text="${project.name}"></option>
+                <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}"></option>
             </select>
             <div class="invalid-feedback">
                 You need a project for your task.
@@ -34,17 +34,8 @@
             <label for="taskType" class="form-label">Task type</label>
             <select class="form-select" id="taskType" th:field="${task.taskType}" required>
                 <option selected th:value="null">Select type of task</option>
-                <option th:each="taskTypeOpt : ${T(com.sda.project.management.model.TaskType).values()}" th:value="${taskTypeOpt}" th:text="${taskTypeOpt}"></option>
+                <option th:each="taskType : ${T(com.sda.project.management.model.TaskType).values()}" th:value="${taskType}" th:text="${taskType}"></option>
             </select>
-            <div class="invalid-feedback">
-                You need a type for your task.
-            </div>
-
-            <hr class="bg-danger border-2 border-top border-danger">
-
-            <h6>Task description will be automatically generated</h6>
-
-            <hr class="bg-danger border-2 border-top border-danger">
 
         </div>
 
@@ -59,9 +50,17 @@
             </div>
         </div>
 
-        <div class="col-md-4 form-group d-flex required">
+        <div class="col-md-4 form-group">
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3"
+                          placeholder="Write your description of the task here" th:field="*{description}"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group d-flex">
             <label for="assignee" class="form-label">Assignee</label>
-            <select class="form-select" id="assignee" th:field="${task.assignee.id}" required>
+            <select class="form-select" id="assignee" th:field="${task.assignee.id}">
                 <option selected th:value="null">Select your favorite minion</option>
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
             </select>
@@ -69,26 +68,20 @@
             <input class="form-control" id="storyPoints" type="text" placeholder="1, 3, 5..." th:field="*{storyPoints}">
         </div>
 
-        <div class="col-md-4 form-group required">
+        <div class="col-md-4 form-group">
             <label for="sprint" class="form-label">Sprint</label>
-            <select class="form-select" id="sprint" th:field="${task.sprint.name}" required>
+            <select class="form-select" id="sprint" th:field="${task.sprint.name}">
                 <option selected th:value="null">Add this task to a sprint</option>
                 <option th:each="sprint : ${sprints}" th:value="${sprint.name}" th:text="${sprint.name}"></option>
             </select>
-            <div class="invalid-feedback">
-                The task has to be assigned to a sprint.
-            </div>
         </div>
 
-        <div class="col-md-4 form-group required">
+        <div class="col-md-4 form-group">
             <label for="status" class="form-label">Status</label>
-            <select class="form-select" id="status" th:field="${task.taskType}" required>
-                <option selected th:value="null">Select type of task</option>
-                <option th:each="statusOpt : ${T(com.sda.project.management.model.TaskStatus).values()}" th:value="${statusOpt}" th:text="${statusOpt}"></option>
+            <select class="form-select" id="status" th:field="${task.taskType}">
+                <option selected th:value="null">Select task status</option>
+                <option th:each="status : ${T(com.sda.project.management.model.TaskStatus).values()}" th:value="${status}" th:text="${status}"></option>
             </select>
-            <div class="invalid-feedback">
-                Place a status on your task.
-            </div>
         </div>
     </div>
     <div class="col-12">
