@@ -29,6 +29,7 @@ class TaskServiceTest {
 
     @Test
     void shouldSaveTask() {
+        // given
         Project project = createProject();
 
         Task task = new Task();
@@ -36,13 +37,16 @@ class TaskServiceTest {
         task.setTaskType(TaskType.TASK);
         task.setSummary("summary");
 
+        // when
         taskService.save(task);
 
+        // then
         assertThat(taskService.findAll()).isNotNull();
     }
 
     @Test
     void shouldUpdateTask() {
+        // given
         Project project = createProject();
 
         Task task = new Task();
@@ -57,13 +61,16 @@ class TaskServiceTest {
         taskUpdate.setTaskType(TaskType.TASK);
         taskUpdate.setSummary("summary2");
 
+        // when
         Task updatedTask = taskService.update(task.getId(), taskUpdate);
 
+        // then
         assertThat(updatedTask.getSummary()).isEqualTo(taskUpdate.getSummary());
     }
 
     @Test
-    void shouldDeleteTaks() {
+    void shouldDeleteTask() {
+        // given
         Project project = createProject();
 
         Task task = new Task();
@@ -73,8 +80,10 @@ class TaskServiceTest {
 
         Task savedTask = taskService.save(task);
 
+        // when
         taskService.delete(savedTask.getId());
 
+        // then
         assertThat(taskService.findAll()).isEmpty();
     }
 
