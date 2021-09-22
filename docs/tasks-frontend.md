@@ -76,7 +76,7 @@
 ### add local images
 - create src/main/resources/static/img/image.png
 ```html
-<img th:src="@{/img/users.png}"/>
+<img th:src="@{/images/users.png}"/>
 ```
 
 ### add remote images
