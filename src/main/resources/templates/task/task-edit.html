@@ -1,0 +1,101 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>Edit task</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<script th:src="@{/js/validation.js}"></script>
+
+<h2>Edit task details</h2>
+
+<form class="row g-3 needs-validation" method="post" novalidate th:action="@{/tasks/{id}/edit(id=${task.id})}"
+      th:object="${task}">
+    <div>
+        <div class="col-md-4 form-group required">
+            <label class="form-label" for="project">Project</label>
+            <select class="form-select" id="project" required th:field="${task.project}">
+                <option selected th:value="null">Pick a project</option>
+                <option th:each="project : ${projects}" th:text="${project.name}" th:value="${project.id}"></option>
+            </select>
+            <div class="invalid-feedback">
+                You need a project for your task.
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group required">
+            <label class="form-label" for="taskType">Task type</label>
+            <select class="form-select" id="taskType" required th:field="${task.taskType}">
+                <option selected th:value="null">Select type of task</option>
+                <option th:each="taskType : ${T(com.sda.project.management.model.TaskType).values()}"
+                        th:text="${taskType}" th:value="${taskType}"></option>
+            </select>
+        </div>
+
+        <div class="col-md-4 form-group required">
+            <div class="mb-3">
+                <label class="form-label" for="summary">Task summary</label>
+                <textarea class="form-control" id="summary" rows="3"
+                          th:field="*{summary}">
+                </textarea>
+                <div class="invalid-feedback">
+                    Please provide a summary of the task.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group">
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" id="description" rows="3"
+                          th:field="*{description}">
+                </textarea>
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group d-flex">
+            <label class="form-label" for="assignee">Assignee</label>
+            <select class="form-select" id="assignee" th:field="${task.assignee}">
+                <option selected th:value="null">Select your favorite minion</option>
+                <option th:each="user : ${users}" th:text="|${user.firstName} ${user.lastName}|"
+                        th:value="${user.id}"></option>
+            </select>
+            <label class="form-label" for="storyPoints">Story points value</label>
+            <input class="form-control" id="storyPoints" placeholder="1, 2, 3, 5..." th:field="*{storyPoints}"
+                   type="text">
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label class="form-label" for="sprint">Sprint</label>
+            <select class="form-select" id="sprint" th:field="${task.sprint}">
+                <option selected th:value="null">Add this task to a sprint</option>
+                <option th:each="sprint : ${sprints}" th:text="${sprint.name}" th:value="${sprint.id}"></option>
+            </select>
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label class="form-label" for="status">Status</label>
+            <select class="form-select" id="status" th:field="${task.status}">
+                <option selected th:value="null">Select task status</option>
+                <option th:each="status : ${T(com.sda.project.management.model.TaskStatus).values()}"
+                        th:text="${status}" th:value="${status}"></option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-secondary" id="cancel" name="cancel" type="submit">Cancel</button>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Save</button>
+    </div>
+
+</form>
+
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
