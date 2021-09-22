@@ -20,9 +20,9 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public void save(Task task) {
+    public Task save(Task task) {
         log.info("save task {}", task);
-        taskRepository.save(task);
+        return taskRepository.save(task);
     }
 
     public List<Task> findAll() {
