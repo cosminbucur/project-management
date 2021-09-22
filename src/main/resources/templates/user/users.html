@@ -1,12 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/head-css :: head-css"/>
     <title>Users</title>
 </head>
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: navbar"/>
 
 <div class="container">
     <h1>Assigned users</h1>
@@ -37,6 +37,7 @@
 </div>
 
 <div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
 
 </body>
 </html>
