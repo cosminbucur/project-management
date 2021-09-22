@@ -3,6 +3,7 @@ package com.sda.project.management.service;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.model.TaskType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,14 @@ class TaskServiceTest {
 
     @Autowired
     ProjectService projectService;
+
+    @BeforeEach
+    void setUp() {
+        taskService.findAll()
+                .forEach(task -> taskService.delete(task.getId()));
+        projectService.findAll()
+                .forEach(project -> projectService.delete(project.getId()));
+    }
 
     @Test
     void shouldSaveTask() {
@@ -51,6 +60,22 @@ class TaskServiceTest {
         Task updatedTask = taskService.update(task.getId(), taskUpdate);
 
         assertThat(updatedTask.getSummary()).isEqualTo(taskUpdate.getSummary());
+    }
+
+    @Test
+    void shouldDeleteTaks() {
+        Project project = createProject();
+
+        Task task = new Task();
+        task.setProject(project);
+        task.setTaskType(TaskType.TASK);
+        task.setSummary("summary");
+
+        Task savedTask = taskService.save(task);
+
+        taskService.delete(savedTask.getId());
+
+        assertThat(taskService.findAll()).isEmpty();
     }
 
     private Project createProject() {
