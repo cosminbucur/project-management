@@ -39,8 +39,8 @@ public class TaskService {
         return taskRepository.getTasks(sprintId);
     }
 
-    public void update(Task task) {
-        taskRepository.save(task);
+    public Task update(Long id, Task task) {
+        return taskRepository.save(task);
     }
 
     public void delete(Long id) {
