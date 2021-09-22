@@ -32,6 +32,27 @@ class TaskServiceTest {
         assertThat(taskService.findAll()).isNotNull();
     }
 
+    @Test
+    void shouldUpdateTask() {
+        Project project = createProject();
+
+        Task task = new Task();
+        task.setProject(project);
+        task.setTaskType(TaskType.TASK);
+        task.setSummary("summary");
+
+        taskService.save(task);
+
+        Task taskUpdate = new Task();
+        taskUpdate.setProject(project);
+        taskUpdate.setTaskType(TaskType.TASK);
+        taskUpdate.setSummary("summary2");
+
+        Task updatedTask = taskService.update(task.getId(), taskUpdate);
+
+        assertThat(updatedTask.getSummary()).isEqualTo(taskUpdate.getSummary());
+    }
+
     private Project createProject() {
         Project project = new Project();
         project.setName("project");
