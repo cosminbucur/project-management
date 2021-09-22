@@ -8,8 +8,7 @@ DbInit
 ### error handler
 
 ### access denied handler
-CustomAccessDeniedHandler
-accessDenied.html
+CustomAccessDeniedHandler access-denied.html
 - add to security config
 
 ### use webjars for bootstrap5

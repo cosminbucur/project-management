@@ -1,12 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/head-css :: head-css"/>
     <title>Edit sprint</title>
 </head>
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: navbar"/>
 
 <h2>Edit sprint</h2>
 <form class="row g-3" th:action="@{/sprints/{id}/edit(id=${sprint.id})}" th:object="${sprint}" method="post">
@@ -44,6 +44,7 @@
 </form>
 
 <div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
 
 </body>
 </html>
