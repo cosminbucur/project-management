@@ -12,10 +12,12 @@
 
     <h2>Backlog</h2>
 
-    <!-- Button trigger modal -->
-    <button class="btn btn-primary" data-target="#personModal" data-toggle="modal" id="modal-btn" type="button">Add
-        people
-    </button>
+    <div>
+        <!-- Button trigger modal -->
+        <button class="btn btn-primary" data-target="#personModal" data-toggle="modal" id="modal-btn" type="button">Add
+            people
+        </button>
+    </div>
 
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="personModal" class="modal fade" id="personModal" tabindex="-1">
@@ -64,10 +66,16 @@
             </div>
         </li>
     </ul>
+
     <a th:href="@{/tasks/add}">
-        <button class="btn btn-primary" type="button">Create task</button>
+        <button class="btn btn-primary" type="button">Create issue</button>
     </a>
+
 </div>
+
+<!-- error -->
+<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
+
 
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>
