@@ -33,7 +33,7 @@
         <div class="col-md-4 form-group required">
             <label for="projectLead" class="form-label">Project lead</label>
             <select class="form-select" id="projectLead" required th:field="${project.projectLead}">
-                <option selected th:value="null">Pick a project lead</option>
+                <option selected th:value="null">Select a project lead</option>
                 <option th:each="user : ${users}" th:value="${user.id}"
                         th:text="|${user.firstName} ${user.lastName}|"></option>
             </select>

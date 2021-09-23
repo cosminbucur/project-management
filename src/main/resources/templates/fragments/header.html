@@ -21,7 +21,7 @@
                 <img th:src="@{/images/icon-32x32.png}"/>
                 Agile
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+            <button class="navbar-toggler" data-bs-target="#navbarScroll" data-bs-toggle="collapse" type="button"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,7 +34,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/tasks}">Tasks</a>
+                        <a class="nav-link" th:href="@{/backlog}">Backlog</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/tasks}">Issues</a>
                     </li>
 
                     <li class="nav-item">
