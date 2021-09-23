@@ -22,7 +22,61 @@ class ProjectServiceTest {
     ProjectService projectService;
 
     @Test
-    void shouldSetLeadToProject() {
+    void whenSaveNewProjectName_shouldReturnProject() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenSaveExistingProjectName_shouldNotSaveProject() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenFindAll_shouldReturnList() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenFindById_shouldReturnOne() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenUpdate_shouldUpdateProject() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenUpdateExistingName_shouldNotUpdateProject() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenSetProjectLead_shouldHaveAProjectLead() {
         // given
         Project project = new Project();
         project.setName("project");
@@ -40,7 +94,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void shouldAddSprintToProject() {
+    void whenAddSprintToProject_shouldHaveProjectWithSprint() {
         // given
         Project project = new Project();
         project.setName("project");
@@ -55,12 +109,24 @@ class ProjectServiceTest {
         Project projectWithSprint = projectService.findById(project.getId());
 
         // then
-//        assertThat(projectWithSprint.getSprints()).contains(sprint);
+        assertThat(projectWithSprint.getSprints()).contains(sprint);
     }
 
     @Test
-    void shouldRemoveSprintFromProject() {
+    void whenRemoveSprintFromProject_shouldHaveProjectWithoutSprint() {
+        // given
 
+        // when
+
+        // then
     }
 
+    @Test
+    void whenDelete_shouldHaveNoProjects() {
+        // given
+
+        // when
+
+        // then
+    }
 }
