@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -39,7 +39,27 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
+    public void save(User user) {
+        log.info("save user {}", user);
+
+        String email = user.getEmail();
+        userRepository.findByEmail(email)
+                .map(existingUser -> {
+                    log.error("user with email {} already exists", email);
+                    throw new ResourceAlreadyExistsException("user with email " + email + " already exists");
+                })
+                .orElseGet(() -> saveUser(user));
+    }
+
+    public List<User> findAll() {
+        log.info("find users");
+        return userRepository.findAll();
+    }
+
     public User findByEmail(String email) {
+        log.info("find user by email {}", email);
+
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email + " not found"));
     }
@@ -55,35 +75,22 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(email + " not found"));
     }
 
-    @Transactional
-    public void save(User user) {
-        log.info("save user {}", user);
-
-        String email = user.getEmail();
-        userRepository.findByEmail(email.toLowerCase())
-                .map((existingUser) -> {
-                    log.error("user with email {} already exists", email);
-                    throw new ResourceAlreadyExistsException("user with email " + email + " already exists");
-                })
-                .orElseGet(() -> saveUser(user));
-    }
-
-    public List<User> findAll() {
-        log.info("find users");
-        return userRepository.findAll();
-    }
-
     public User findById(long id) {
+        log.info("find user {}", id);
+
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("not found"));
     }
 
     public void update(User user) {
+        log.info("update user {}", user);
+
         userRepository.save(user);
     }
 
     public void delete(Long id) {
         log.info("delete user {}", id);
+
         userRepository.deleteById(id);
     }
 
