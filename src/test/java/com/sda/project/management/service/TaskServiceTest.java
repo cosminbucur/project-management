@@ -28,9 +28,11 @@ class TaskServiceTest {
     }
 
     @Test
-    void shouldSaveTask() {
+    void whenSaveTask_shouldReturnTask() {
         // given
-        Project project = createProject();
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
 
         Task task = new Task();
         task.setProject(project);
@@ -45,15 +47,34 @@ class TaskServiceTest {
     }
 
     @Test
-    void shouldUpdateTask() {
+    void whenFindAll_shouldReturnList() {
         // given
-        Project project = createProject();
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenFindById_shouldReturnOne() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenUpdate_shouldUpdateTask() {
+        // given
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
 
         Task task = new Task();
         task.setProject(project);
         task.setTaskType(TaskType.TASK);
         task.setSummary("summary");
-
         taskService.save(task);
 
         Task taskUpdate = new Task();
@@ -62,16 +83,18 @@ class TaskServiceTest {
         taskUpdate.setSummary("summary2");
 
         // when
-        Task updatedTask = taskService.update(task.getId(), taskUpdate);
+        Task updatedTask = taskService.update(taskUpdate);
 
         // then
         assertThat(updatedTask.getSummary()).isEqualTo(taskUpdate.getSummary());
     }
 
     @Test
-    void shouldDeleteTask() {
+    void whenDelete_shouldHaveProjectWithoutTask() {
         // given
-        Project project = createProject();
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
 
         Task task = new Task();
         task.setProject(project);
@@ -85,12 +108,5 @@ class TaskServiceTest {
 
         // then
         assertThat(taskService.findAll()).isEmpty();
-    }
-
-    private Project createProject() {
-        Project project = new Project();
-        project.setName("project");
-        projectService.save(project);
-        return project;
     }
 }

@@ -1,11 +1,12 @@
 package com.sda.project.management.controller;
 
-import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
 import com.sda.project.management.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class TaskController {
+
+    private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
     private final TaskService taskService;
     private final UserService userService;
@@ -48,25 +51,21 @@ public class TaskController {
         return "task/task-add";
     }
 
-    @PostMapping(value = "/tasks/add", params = "save")
+    @PostMapping("/tasks/add")
     public String add(Model model, @ModelAttribute Task task) {
         try {
             taskService.save(task);
-            return "redirect:/tasks";
-        } catch (ResourceAlreadyExistsException e) {
+            return "redirect:/backlog";
+        } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
+            log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
             return "task/task-add";
         }
     }
 
-    @PostMapping(value = "/tasks/add", params = "cancel")
-    public String cancelAdd() {
-        return "redirect:/tasks";
-    }
-
     @GetMapping("/tasks/{id}/edit")
-    public String showEditForm(Model model, @PathVariable("id") Long id) {
+    public String showEditForm(Model model, @PathVariable Long id) {
         model.addAttribute("task", taskService.findById(id));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
@@ -74,27 +73,30 @@ public class TaskController {
         return "task/task-edit";
     }
 
-    @PostMapping(value = "/tasks/{id}/edit", params = "save")
+    @PostMapping("/tasks/{id}/edit")
     public String edit(
             Model model,
             @PathVariable("id") Long id,
             @ModelAttribute Task task) {
-        taskService.update(task.getId(), task);
-        return "redirect:/tasks";
-    }
-
-    @PostMapping(value = "/tasks/{id}/edit", params = "cancel")
-    public String cancelEdit() {
-        return "redirect:/tasks";
+        try {
+            taskService.update(task);
+            return "redirect:/backlog";
+        } catch (RuntimeException e) {
+            String errorMessage = e.getMessage();
+            log.error(errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/tasks/" + id + "/edit";
+        }
     }
 
     @GetMapping("/tasks/{id}/delete")
-    public String delete(Model model, @PathVariable("id") Long id) {
+    public String delete(Model model, @PathVariable Long id) {
         try {
             taskService.delete(id);
             return "redirect:/tasks";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
+            log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
             return "task/tasks";
         }

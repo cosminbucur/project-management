@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="fragments/head-css :: head-css"/>
-    <title>Tasks</title>
+    <title>Issues</title>
 </head>
 
 <body>
@@ -10,27 +10,15 @@
 
 <div class="container">
 
-    <h2>Backlog</h2>
+    <h2>Search issues</h2>
 
-    <!-- Button trigger modal -->
-    <button class="btn btn-primary" data-target="#personModal" data-toggle="modal" id="modal-btn" type="button">Add
-        people
-    </button>
-
-    <!-- Modal -->
-    <div aria-hidden="true" aria-labelledby="personModal" class="modal fade" id="personModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="personModalLabel">Add people</h5>
-                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                </div>
-                <div class="modal-body">
-                    Woohoo, you're reading this text in a modal!
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
-                    <button class="btn btn-primary" type="button">Add</button>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input class="form-control" placeholder="Looking for an issue?" type="text">
+                    <button class="btn btn-primary">Search</button>
                 </div>
             </div>
         </div>
@@ -64,14 +52,14 @@
             </div>
         </li>
     </ul>
-    <a th:href="@{/tasks/add}">
-        <button type="button" class="btn btn-primary">Create task</button>
-    </a>
+
 </div>
+
+<!-- error -->
+<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
 
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>
-<script th:src="@{/js/modal.js}"></script>
 
 </body>
 </html>

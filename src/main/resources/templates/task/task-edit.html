@@ -8,7 +8,7 @@
 
 <div th:replace="fragments/header :: navbar"/>
 
-<h2>Edit task details</h2>
+<h2>Edit issue details</h2>
 
 <form class="row g-3 needs-validation" method="post" novalidate th:action="@{/tasks/{id}/edit(id=${task.id})}"
       th:object="${task}">
@@ -16,7 +16,7 @@
         <div class="col-md-4 form-group required">
             <label class="form-label" for="project">Project</label>
             <select class="form-select" id="project" required th:field="${task.project}">
-                <option selected th:value="null">Pick a project</option>
+                <option selected th:value="null">Select a project</option>
                 <option th:each="project : ${projects}" th:text="${project.name}" th:value="${project.id}"></option>
             </select>
             <div class="invalid-feedback">
@@ -36,9 +36,7 @@
         <div class="col-md-4 form-group required">
             <div class="mb-3">
                 <label class="form-label" for="summary">Task summary</label>
-                <textarea class="form-control" id="summary" rows="3"
-                          th:field="*{summary}">
-                </textarea>
+                <input class="form-control" id="summary" th:field="*{summary}">
                 <div class="invalid-feedback">
                     Please provide a summary of the task.
                 </div>
@@ -62,8 +60,11 @@
                         th:value="${user.id}"></option>
             </select>
             <label class="form-label" for="storyPoints">Story points value</label>
-            <input class="form-control" id="storyPoints" placeholder="1, 2, 3, 5..." th:field="*{storyPoints}"
-                   type="text">
+            <input class="form-control" id="storyPoints" min="0" placeholder="1, 2, 3, 5..."
+                   th:field="*{storyPoints}" type="number">
+            <div class="invalid-feedback">
+                Must be greater than 0.
+            </div>
         </div>
 
         <div class="col-md-4 form-group">
@@ -86,11 +87,16 @@
     </div>
 
     <div class="col-12">
-        <button class="btn btn-secondary" id="cancel" name="cancel" type="submit">Cancel</button>
+        <a th:href="@{/backlog}">
+            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
+        </a>
         <button class="btn btn-primary" id="save" name="save" type="submit">Save</button>
     </div>
 
 </form>
+
+<!-- error -->
+<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
 
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>

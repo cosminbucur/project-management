@@ -14,7 +14,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Optional<Task> findById(Long id);
 
+    // TODO: convert to hql
     @Query(value = "SELECT * FROM task t WHERE t.sprint_id = :sprintId ", nativeQuery = true)
-    List<Task> getTasks(@Param("sprintId") Long sprintId);
+    List<Task> getTasksInSprint(@Param("sprintId") Long sprintId);
 }
 
