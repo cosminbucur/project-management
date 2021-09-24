@@ -20,37 +20,84 @@ class SprintServiceTest {
     @Autowired
     TaskService taskService;
 
-    // FIXME: not working
     @Test
-    void shouldAddTaskToSprint() {
+    void whenSaveTask_shouldReturnTask() {
         // given
         Sprint sprint = new Sprint();
-        sprint.setName("sprint");
+        sprint.setName("name");
+        sprint.setDateFrom(LocalDate.now());
+        sprint.setDateTo(LocalDate.now().plusDays(14));
+        sprint.setStoryPoints(2);
+        sprint.setSprintGoal("sprint goal");
+
+        // when
+        Sprint savedSprint = sprintService.save(sprint);
+
+        // then
+        assertThat(savedSprint).isNotNull();
+    }
+
+    @Test
+    void whenFindAll_shouldReturnList() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenFindById_shouldReturnOne() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenUpdate_shouldUpdateProject() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenAddTaskToSprint_shouldHaveSprintWithTask() {
+        // given
+        Sprint sprint = new Sprint();
+        sprint.setName("name");
         sprintService.save(sprint);
 
         Task task = new Task();
-        task.setSummary("task");
+        task.setSummary("summary");
         taskService.save(task);
 
         // when
         sprintService.addTaskToSprint(sprint.getId(), task.getId());
-        List<Task> tasks = taskService.getTasks(sprint.getId());
+        List<Task> tasks = taskService.getTasksInSprint(sprint.getId());
 
         // then
         assertThat(tasks).hasSize(2);
     }
 
     @Test
-    void shouldCreateSprint(){
-        Sprint sprint = new Sprint();
-        sprint.setName("sprint 1");
-        sprint.setDateFrom(LocalDate.now());
-        sprint.setDateTo(LocalDate.now().plusDays(14));
-        sprint.setStoryPoints(2);
-        sprint.setSprintGoal("terminate");
+    void whenRemoveTaskFromSprint_shouldHaveSprintWithoutTask() {
+        // given
 
-        Sprint savedSprint = sprintService.save(sprint);
+        // when
 
-        assertThat(savedSprint).isNotNull();
+        // then
+    }
+
+    @Test
+    void whenDelete_shouldHaveProjectWithoutSprints() {
+        // given
+
+        // when
+
+        // then
     }
 }

@@ -1,50 +1,71 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/head-css :: head-css"/>
     <title>Register</title>
 </head>
 
-<body>
+<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<div th:replace="fragments/header :: header"/>
+<h2>Create an account</h2>
 
-<h2>Register your user</h2>
-
-<form class="row g-3" th:action="@{/register/add}" th:object="${user}" method="post"
+<form class="row g-3 needs-validation" method="post" novalidate th:action="@{/register/add}" th:object="${user}"
       oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match." : "")'>
-    <div class="col-md-12">
+
+    <div class="col-md-12 form-group required">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}">
+        <input autofocus class="form-control" id="email" placeholder="Email" required th:field="*{email}" type="email">
+        <div class="invalid-feedback">
+            Invalid email.
+        </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 form-group required">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}">
+        <input class="form-control" id="password" placeholder="Password" required th:field="*{password}"
+               type="password">
+        <div class="invalid-feedback">
+            Invalid password. At least 8 chars and 1 uppercase letter.
+        </div>
     </div>
 
-    <div class="col-md-12">
-    <label for="confirmPassword" class="form-label">Confirm Password</label>
-    <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password"/>
+    <div class="col-md-12 form-group required">
+        <label class="form-label" for="confirmPassword">Confirm Password</label>
+        <input class="form-control" id="confirmPassword" placeholder="Confirm password" required type="password">
+        <div class="invalid-feedback">
+            Password not matching.
+        </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 form-group required">
         <label for="firstName" class="form-label">First name</label>
-        <input type="text" class="form-control" id="firstName" placeholder="First name" th:field="*{firstName}">
+        <input class="form-control" id="firstName" placeholder="First name" required th:field="*{firstName}"
+               type="text">
+        <div class="invalid-feedback">
+            First name can't be empty.
+        </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 form-group required">
         <label for="lastName" class="form-label">Last name</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Last name" th:field="*{lastName}">
+        <input class="form-control" id="lastName" placeholder="Last name" required th:field="*{lastName}" type="text">
+        <div class="invalid-feedback">
+            Last name can't be empty.
+        </div>
     </div>
 
     <div class="col-12">
-        <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Back</button>
-        <button type="submit" class="btn btn-primary" id="save" name="save">Create account</button>
+        <a th:href="@{/}">
+            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Back</button>
+        </a>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Create account</button>
     </div>
 
 </form>
 
-<div th:replace="fragments/footer :: footer-js"/>
+<div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
+<script th:src="@{/js/validation.js}"></script>
 
 </body>
 </html>

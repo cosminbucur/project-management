@@ -16,6 +16,7 @@ import java.util.List;
 public class SprintService {
 
     private static final Logger log = LoggerFactory.getLogger(SprintService.class);
+
     private final SprintRepository sprintRepository;
     private final TaskRepository taskRepository;
 
@@ -27,11 +28,32 @@ public class SprintService {
 
     public Sprint save(Sprint sprint){
         log.info("save sprint {}", sprint);
+
         return sprintRepository.save(sprint);
     }
 
-    public void addTaskToSprint(Long sprintId, Long taskId){
+    public List<Sprint> findAll(){
+        log.info("find sprints");
+
+        return sprintRepository.findAll();
+    }
+
+    public Sprint findById(Long id) {
+        log.info("find sprint {}", id);
+
+        return sprintRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+    }
+
+    public void update(Sprint sprint) {
+        log.info("update sprint {}", sprint);
+
+        sprintRepository.save(sprint);
+    }
+
+    public void addTaskToSprint(Long sprintId, Long taskId) {
         log.info("add task {} to sprint {}", taskId, sprintId);
+
         Sprint sprint = sprintRepository.findById(sprintId)
                 .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
         Task task = taskRepository.findById(taskId)
@@ -40,27 +62,9 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
-    public List<Sprint> findAll(){
-        log.info("find sprints");
-        return sprintRepository.findAll();
-    }
-
-    public Sprint findById(Long id) {
-        log.info("find sprint {}", id);
-        return sprintRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
-    }
-
-    public void update(Sprint sprint) {
-       sprintRepository.save(sprint);
-    }
-
     public void delete(Long id) {
         log.info("delete sprint {}", id);
-        sprintRepository.deleteById(id);
-    }
 
-    public List<Task> getTasks(Long sprintId) {
-        return sprintRepository.getTasks(sprintId);
+        sprintRepository.deleteById(id);
     }
 }

@@ -1,9 +1,7 @@
 package com.sda.project.management.controller;
 
 import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
-import com.sda.project.management.model.Project;
 import com.sda.project.management.model.User;
-import com.sda.project.management.service.TaskService;
 import com.sda.project.management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +29,7 @@ public class UserController {
         return "user/register";
     }
 
-    @PostMapping(value = "/register/add", params = "save")
+    @PostMapping("/register/add")
     public String add(Model model, @ModelAttribute User user) {
         try {
             userService.save(user);
@@ -41,11 +39,6 @@ public class UserController {
             model.addAttribute("errorMessage", errorMessage);
             return "user/register";
         }
-    }
-
-    @PostMapping(value = "/register/add", params = "cancel")
-    public String cancelRegister() {
-        return "redirect:/index";
     }
 
     // login
@@ -69,21 +62,21 @@ public class UserController {
         return "user/users";
     }
 
-    @GetMapping(path = "edit-user/{id}")
-    public String showEditForm(Model model, @PathVariable("id") Long id) {
+    @GetMapping("edit-user/{id}")
+    public String showEditForm(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "user/edit-user";
     }
 
-    @PostMapping(path = "user/edit")
+    @PostMapping("user/edit")
     public String editUser(@ModelAttribute User user) {
         userService.update(user);
         return "redirect:/users";
     }
 
-    @GetMapping(path = "delete-user/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    @GetMapping("delete-user/{id}")
+    public String delete(@PathVariable Long id) {
         userService.delete(id);
         return "redirect:/users";
     }

@@ -1,12 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/head-css :: head-css"/>
     <title>Projects</title>
 </head>
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: navbar"/>
 
 <div class="container">
     <div class="d-flex mb-3">
@@ -15,7 +15,7 @@
         </div>
         <div class="p-2">
             <a th:href="@{/projects/add}">
-                <button type="button" class="btn btn-primary">Create project</button>
+                <button class="btn btn-primary" type="button">Create project</button>
             </a>
         </div>
     </div>
@@ -54,10 +54,11 @@
 
 </div>
 
-<!-- Check if errorMessage is not null and not empty -->
+<!-- error -->
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
 <div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
 
 </body>
 </html>

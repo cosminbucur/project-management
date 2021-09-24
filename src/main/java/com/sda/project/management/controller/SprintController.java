@@ -44,7 +44,7 @@ public class SprintController {
     }
 
     @GetMapping("/sprints/{id}/edit")
-    public String showEditForm(Model model, @PathVariable("id") Long id){
+    public String showEditForm(Model model, @PathVariable Long id) {
         Sprint sprint = sprintService.findById(id);
         model.addAttribute("sprint", sprint);
         return "sprint/sprint-edit";
@@ -62,7 +62,7 @@ public class SprintController {
     }
 
     @GetMapping("/sprints/{id}/delete")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable Long id) {
         sprintService.delete(id);
         return "redirect:/sprints";
     }

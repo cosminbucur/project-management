@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/head-css :: head-css"/>
     <title>Home</title>
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: navbar"/>
 
 <div class="container img-fluid" style="width:500px;">
     <img th:src="@{/images/users.png}"/>
     <div>Start your awesome journey today!</div>
 
     <!-- button to initialize toast -->
-    <button type="button" class="btn btn-primary" id="toast-btn">Initialize toast</button>
+    <button class="btn btn-primary" id="toast-btn" type="button">Initialize toast</button>
 </div>
 
 <!-- Toast -->
@@ -22,7 +22,7 @@
         <div class="toast-header">
             <strong class="me-auto">Project created! </strong>
             <small></small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="toast" type="button"></button>
         </div>
         <div class="toast-body">
             <a th:href="@{/projects}">Open!</a>
@@ -31,7 +31,7 @@
 </div>
 
 <div th:replace="fragments/footer :: footer"/>
-
+<div th:replace="fragments/footer-js :: footer-js"/>
 <script th:src="@{/js/toast.js}"></script>
 
 </body>

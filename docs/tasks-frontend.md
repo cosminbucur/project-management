@@ -76,7 +76,7 @@
 ### add local images
 - create src/main/resources/static/img/image.png
 ```html
-<img th:src="@{/img/users.png}"/>
+<img th:src="@{/images/users.png}"/>
 ```
 
 ### add remote images
@@ -96,22 +96,35 @@
 ```
 
 ### add font-awesome icons with cdn
+
 - add in header
+
 ```html
+
 <script src="https://kit.fontawesome.com/7c632ec9b0.js" crossorigin="anonymous"></script>
 ```
 
 - use in html
+
 ```html
 <i class="fas fa-address-book"></i>
 ```
 
+### add google fonts
+
+```html
+<!-- google fonts -->
+<link th:rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap}"/>
+```
+
 ### add dates
+
 ```html
 <p th:text="${#temporals.format(localDate, 'MM-yyyy')}"></p>
 ```
 
 ### add favicon
+
 - generate [favicon](https://favicon.io/favicon-generator/)
 - add icon [example](https://www.baeldung.com/spring-boot-favicon)
   src/main/resources/static/favicon.ico

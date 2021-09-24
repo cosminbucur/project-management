@@ -21,6 +21,7 @@ import java.util.Optional;
 public class ProjectService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectService.class);
+
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final SprintRepository sprintRepository;
@@ -34,44 +35,48 @@ public class ProjectService {
         this.sprintRepository = sprintRepository;
     }
 
-    public void save(Project project) {
+    public Project save(Project project) {
         log.info("save project {}", project);
-        String name = project.getName();
 
-        projectRepository.findByName(name.toLowerCase())
-                .map((existingProject) -> {
-                    log.error("project with name {} already exists", name);
-                    throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
-                })
-                .orElseGet(() -> projectRepository.save(project));
+        String name = project.getName();
+        Optional<Project> existingProjectOptional = projectRepository.findByNameIgnoreCase(name);
+        if (existingProjectOptional.isPresent()) {
+            log.error("project with name {} already exists", name);
+            throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
+        } else {
+            return projectRepository.save(project);
+        }
     }
 
     public List<Project> findAll() {
         log.info("find projects");
+
         return projectRepository.findAll();
     }
 
     public Project findById(Long id) {
         log.info("find project id {}", id);
+
         return projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
     }
 
     public void update(Project project) {
         log.info("update project {}", project);
-        String name = project.getName();
 
-        Optional<Project> existingProjectOptional = projectRepository.findByName(name.toLowerCase())
-                .filter(existingProject -> existingProject.getId().equals(project.getId()));
-        if (existingProjectOptional.isPresent()) {
-            projectRepository.save(project);
-        } else {
-            log.error("project with name {} already exists", name);
-            throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
-        }
+        String name = project.getName();
+        projectRepository.findByNameIgnoreCase(name)
+                .filter(existingProject -> existingProject.getId().equals(project.getId()))
+                .map(existingProject -> projectRepository.save(project))
+                .orElseThrow(() -> {
+                    log.error("project with name {} already exists", name);
+                    throw new ResourceAlreadyExistsException("project with name " + name + " already exists");
+                });
     }
 
     public void setProjectLead(Long projectId, Long userId) {
+        log.info("save project lead {}", userId);
+
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
         User user = userRepository.findById(userId)
@@ -92,6 +97,7 @@ public class ProjectService {
 
     public void delete(Long id) {
         log.info("delete project {}", id);
+
         projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
         projectRepository.deleteById(id);

@@ -23,7 +23,7 @@ class ProjectAccessServiceTest {
     ProjectAccessService projectAccessService;
 
     @Test
-    void shouldAddUserToProject() {
+    void whenAddUserToProject_shouldHaveProjectWithUser() {
         // given
         Project project = new Project();
         project.setName("project");
@@ -32,7 +32,7 @@ class ProjectAccessServiceTest {
         User user1 = new User("user1@gmail.com", "pass", "alex", "vasile");
         userService.save(user1);
 
-        User user2 = new User( "user2@gmail.com", "pass", "alex", "vasile");
+        User user2 = new User("user2@gmail.com", "pass", "alex", "vasile");
         userService.save(user2);
 
         // when
@@ -43,5 +43,23 @@ class ProjectAccessServiceTest {
 
         // then
         assertThat(usersInProject).hasSize(2);
+    }
+
+    @Test
+    void whenRemoveUserFromProject_shouldHaveProjectWithoutUser() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenGetUsersInProject_shouldReturnUserList() {
+        // given
+
+        // when
+
+        // then
     }
 }

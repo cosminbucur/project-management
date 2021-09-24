@@ -16,9 +16,3 @@ hibernate:
   show_sql: true
   format_sql: false
 
-logging:
-  level:
-    root: INFO
-    org.springframework.web: ERROR
-    org.hibernate: ERROR
-    com.sda.project.management: ERROR

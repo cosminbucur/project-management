@@ -14,11 +14,3 @@ hibernate:
   format_sql: false
 #  naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 #  use-new-id-generator-mappings: false
-
-logging:
-  file: app.log
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.hibernate: INFO
-    com.sda.project.management: DEBUG

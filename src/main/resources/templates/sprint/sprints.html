@@ -1,16 +1,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
+    <div th:replace="fragments/head-css :: head-css"/>
     <title>Sprints</title>
 </head>
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: navbar"/>
 
 <div class="container">
+
     <a th:href="@{/sprints/add}">
-        <button type="button" class="btn btn-primary">Add Sprint</button>
+        <button class="btn btn-primary" type="button">Add Sprint</button>
     </a>
     <h1>My sprints</h1>
     <div th:each="sprint: ${sprints}">
@@ -26,9 +27,11 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
 
 </body>
 </html>

@@ -1,53 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
-    <title>Login page</title>
+    <div th:replace="fragments/head-css :: head-css"/>
+    <title>Login</title>
 </head>
 
 <body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
 
+<header>
 
-<img th:src="@{/images/icon-192x192.png}" class="rounded mx-auto d-block"/>
+</header>
 
-<p th:if="${loginError}" class="error">Wrong email or password</p>
+<div class="container-fluid">
 
-<div th:if="${param.error}" class="alert alert-danger">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}" class="alert alert-success">
-    You have been logged out.
-</div>
+    <img class="rounded mx-auto d-block" th:src="@{/images/icon-192x192.png}"/>
 
-<div class="container">
-    <div class="row justify-content-md-center">
-        <h2>Sign in</h2>
+    <p class="error" th:if="${loginError}">Wrong email or password</p>
+
+    <div class="alert alert-danger" th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div class="alert alert-success" th:if="${param.logout}">
+        You have been logged out.
     </div>
 
-    <form th:action="@{/login}" method="post">
-        <div class="col">
-            <div class="col">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
-            </div>
-
-            <div class="col">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-            </div>
-
-            <div class="col">
-                <button type="submit" class="btn btn-primary" id="login" name="login">Sign in</button>
-            </div>
-
-            <div class="col">
-                New to Agile? <a th:href="@{/register}">Sign up</a>
-            </div>
-
-            <a th:href="@{/}">Back to home</a>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <h2>Sign in</h2>
         </div>
-    </form>
+
+        <!-- login form -->
+        <form class="row g-3 needs-validation" method="post" novalidate th:action="@{/login}">
+            <div class="col">
+
+                <div class="col form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input autofocus class="form-control" id="email" name="email" placeholder="Email" required
+                           type="email">
+                </div>
+
+                <div class="col form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" id="password" name="password" placeholder="Password" required
+                           type="password">
+                </div>
+
+                <div class="col">
+                    <button class="btn btn-primary" id="login" name="login" type="submit">Sign in</button>
+                </div>
+
+                <div class="col">
+                    New to Agile? <a th:href="@{/register}">Sign up</a>
+                </div>
+
+                <a th:href="@{/}">Back to home</a>
+            </div>
+        </form>
+    </div>
+
 </div>
 
+<footer>
+
+</footer>
+
+<div th:replace="fragments/footer-js :: footer-js"/>
 </body>
 </html>

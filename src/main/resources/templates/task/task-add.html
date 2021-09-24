@@ -1,12 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>
-    <title>Add issue</title>
+    <div th:replace="fragments/head-css :: head-css"/>
+    <title>Issue add</title>
 </head>
 
 <body>
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: navbar"/>
 
 <h2>Create issue</h2>
 
@@ -14,8 +14,8 @@
     <div>
         <div class="col-md-4 form-group required">
             <label for="project" class="form-label">Project</label>
-            <select class="form-select" id="project" th:field="${task.project}" required>
-                <option selected th:value="null">Pick a project</option>
+            <select class="form-select" id="project" required th:field="${task.project}">
+                <option selected th:value="null">Select a project</option>
                 <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}"></option>
             </select>
             <div class="invalid-feedback">
@@ -25,8 +25,8 @@
 
         <div class="col-md-4 form-group required">
             <label for="taskType" class="form-label">Task type</label>
-            <select class="form-select" id="taskType" th:field="${task.taskType}" required>
-                <option selected th:value="null">Select type of task</option>
+            <select class="form-select" id="taskType" required th:field="${task.taskType}">
+                <option selected th:value="null">Select type of issue</option>
                 <option th:each="taskType : ${T(com.sda.project.management.model.TaskType).values()}"
                         th:value="${taskType}" th:text="${taskType}"></option>
             </select>
@@ -35,9 +35,7 @@
         <div class="col-md-4 form-group required">
             <div class="mb-3">
                 <label for="summary" class="form-label">Task summary</label>
-                <textarea class="form-control" id="summary" rows="3"
-                          th:field="*{summary}">
-                </textarea>
+                <input class="form-control" id="summary" required th:field="*{summary}">
                 <div class="invalid-feedback">
                     Please provide a summary of the task.
                 </div>
@@ -60,8 +58,12 @@
                 <option th:each="user : ${users}" th:value="${user.id}"
                         th:text="|${user.firstName} ${user.lastName}|"></option>
             </select>
-            <label for="storyPoints" class="form-label">Story points value</label>
-            <input class="form-control" id="storyPoints" type="text" placeholder="1, 2, 3, 5..." th:field="*{storyPoints}">
+            <label class="form-label" for="storyPoints">Story points value</label>
+            <input class="form-control" id="storyPoints" min="0" placeholder="1, 2, 3, 5..." th:field="*{storyPoints}"
+                   type="number">
+            <div class="invalid-feedback">
+                Must be greater than 0.
+            </div>
         </div>
 
         <div class="col-md-4 form-group">
@@ -84,13 +86,20 @@
     </div>
 
     <div class="col-12">
-        <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Cancel</button>
-        <button type="submit" class="btn btn-primary" id="save" name="save">Create task</button>
+        <a th:href="@{/backlog}">
+            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
+        </a>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Create issue</button>
     </div>
 
 </form>
 
+<!-- error -->
+<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
+
 <div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
+<script th:src="@{/js/validation.js}"></script>
 
 </body>
 </html>

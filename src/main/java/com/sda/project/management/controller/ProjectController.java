@@ -1,9 +1,10 @@
 package com.sda.project.management.controller;
 
-import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ProjectController {
+
+    private static final Logger log = LoggerFactory.getLogger(ProjectController.class);
 
     private final ProjectService projectService;
     private final UserService userService;
@@ -37,51 +40,51 @@ public class ProjectController {
         return "project/project-add";
     }
 
-    @PostMapping(value = "/projects/add", params = "save")
+    @PostMapping(value = "/projects/add")
     public String add(Model model, @ModelAttribute Project project) {
         try {
             projectService.save(project);
             return "redirect:/projects";
-        } catch (ResourceAlreadyExistsException e) {
+        } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
+            log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
-            return "project/project-add";
+            model.addAttribute("project", project);
+            return "redirect:/projects/add";
         }
     }
 
-    @PostMapping(value = "/projects/add", params = "cancel")
-    public String cancelAdd() {
-        return "redirect:/projects";
-    }
-
     @GetMapping("/projects/{id}/edit")
-    public String showEditForm(Model model, @PathVariable("id") Long id) {
+    public String showEditForm(Model model, @PathVariable Long id) {
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("users", userService.findAll());
         return "project/project-edit";
     }
 
-    @PostMapping(value = "/projects/{id}/edit", params = "save")
+    @PostMapping("/projects/{id}/edit")
     public String edit(
             Model model,
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @ModelAttribute Project project) {
-        projectService.update(project);
-        return "redirect:/projects";
-    }
-
-    @PostMapping(value = "/projects/{id}/edit", params = "cancel")
-    public String cancelEdit() {
-        return "redirect:/projects";
+        try {
+            projectService.update(project);
+            return "redirect:/projects";
+        } catch (RuntimeException e) {
+            String errorMessage = e.getMessage();
+            log.error(errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/projects/" + id + "/edit";
+        }
     }
 
     @GetMapping("/projects/{id}/delete")
-    public String delete(Model model, @PathVariable("id") Long id) {
+    public String delete(Model model, @PathVariable Long id) {
         try {
             projectService.delete(id);
             return "redirect:/projects";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
+            log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
             return "project/projects";
         }
