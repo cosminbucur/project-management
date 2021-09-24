@@ -14,7 +14,7 @@
     <div>
         <div class="col-md-4 form-group required">
             <label for="project" class="form-label">Project</label>
-            <select class="form-select" id="project" th:field="${task.project}" required>
+            <select class="form-select" id="project" required th:field="${task.project}">
                 <option selected th:value="null">Select a project</option>
                 <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}"></option>
             </select>
@@ -25,8 +25,8 @@
 
         <div class="col-md-4 form-group required">
             <label for="taskType" class="form-label">Task type</label>
-            <select class="form-select" id="taskType" th:field="${task.taskType}" required>
-                <option selected th:value="null">Select type of task</option>
+            <select class="form-select" id="taskType" required th:field="${task.taskType}">
+                <option selected th:value="null">Select type of issue</option>
                 <option th:each="taskType : ${T(com.sda.project.management.model.TaskType).values()}"
                         th:value="${taskType}" th:text="${taskType}"></option>
             </select>
@@ -35,7 +35,7 @@
         <div class="col-md-4 form-group required">
             <div class="mb-3">
                 <label for="summary" class="form-label">Task summary</label>
-                <input class="form-control" id="summary" th:field="*{summary}">
+                <input class="form-control" id="summary" required th:field="*{summary}">
                 <div class="invalid-feedback">
                     Please provide a summary of the task.
                 </div>
@@ -59,8 +59,8 @@
                         th:text="|${user.firstName} ${user.lastName}|"></option>
             </select>
             <label class="form-label" for="storyPoints">Story points value</label>
-            <input class="form-control" id="storyPoints" min="0" placeholder="1, 2, 3, 5..."
-                   th:field="*{storyPoints}" type="number">
+            <input class="form-control" id="storyPoints" min="0" placeholder="1, 2, 3, 5..." th:field="*{storyPoints}"
+                   type="number">
             <div class="invalid-feedback">
                 Must be greater than 0.
             </div>

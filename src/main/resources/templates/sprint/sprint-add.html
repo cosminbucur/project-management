@@ -16,7 +16,7 @@
 
     <div class="col-md-12">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Sprint name" th:field="*{name}">
+        <input class="form-control" id="name" placeholder="Sprint name" th:field="*{name}" type="text">
     </div>
 
     <div class="col-md-12">
@@ -31,12 +31,14 @@
 
     <div class="col-md-12">
         <label for="storyPoints" class="form-label">Story points</label>
-        <input type="text" class="form-control" id="storyPoints" placeholder="1 2 3 5 ..." th:field="*{storyPoints}">
+        <input class="form-control" id="storyPoints" placeholder="1 2 3 5 ..." th:field="*{storyPoints}" type="text">
     </div>
 
     <div class="col-12">
-        <button type="submit" class="btn btn-secondary" id="cancel" name="cancel">Cancel</button>
-        <button type="submit" class="btn btn-primary" id="save" name="save">Save</button>
+        <a th:href="@{/sprints}">
+            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
+        </a>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Save</button>
     </div>
 
 </form>

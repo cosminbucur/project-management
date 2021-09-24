@@ -76,7 +76,7 @@ public class TaskController {
     @PostMapping("/tasks/{id}/edit")
     public String edit(
             Model model,
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @ModelAttribute Task task) {
         try {
             taskService.update(task);

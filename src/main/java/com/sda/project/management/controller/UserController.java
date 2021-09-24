@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @GetMapping("edit-user/{id}")
-    public String showEditForm(Model model, @PathVariable("id") Long id) {
+    public String showEditForm(Model model, @PathVariable Long id) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "user/edit-user";
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @GetMapping("delete-user/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public String delete(@PathVariable Long id) {
         userService.delete(id);
         return "redirect:/users";
     }

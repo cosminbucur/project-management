@@ -17,7 +17,7 @@
         
         <div class="col-md-4 form-group required">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Project name" th:field="*{name}" required>
+            <input class="form-control" id="name" placeholder="Project name" required th:field="*{name}" type="text">
             <div class="invalid-feedback">
                 A project name can't be empty.
             </div>
@@ -25,7 +25,8 @@
 
         <div class="col-md-2 form-group required">
             <label for="projectKey" class="form-label">Key</label>
-            <input type="text" class="form-control" id="projectKey" placeholder="Project key" th:field="*{projectKey}" required>
+            <input class="form-control" id="projectKey" placeholder="Project key" required th:field="*{projectKey}"
+                   type="text">
             <div class="invalid-feedback">
                 Use 2 or 3 uppercase letters.
             </div>
@@ -33,9 +34,10 @@
 
         <div class="col-md-4 form-group required">
             <label for="projectLead" class="form-label">Project lead</label>
-            <select class="form-select" id="projectLead" th:field="${project.projectLead}" required>
+            <select class="form-select" id="projectLead" required th:field="${project.projectLead}">
                 <option selected th:value="null">Select a project lead</option>
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="|${user.firstName} ${user.lastName}|"></option>
+                <option th:each="user : ${users}" th:value="${user.id}"
+                        th:text="|${user.firstName} ${user.lastName}|"></option>
             </select>
             <div class="invalid-feedback">
                 You need a lead for your project.
@@ -48,7 +50,7 @@
         <a th:href="@{/projects}">
             <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
         </a>
-        <button type="submit" class="btn btn-primary" id="save" name="save">Create project</button>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Create project</button>
     </div>
 
 </form>
