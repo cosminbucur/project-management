@@ -1,8 +1,24 @@
 package com.sda.project.management.config;
 
 import com.sda.project.management.controller.exception.ResourceAlreadyExistsException;
-import com.sda.project.management.model.*;
-import com.sda.project.management.repository.*;
+import com.sda.project.management.model.Privilege;
+import com.sda.project.management.model.PrivilegeType;
+import com.sda.project.management.model.Project;
+import com.sda.project.management.model.ProjectAccess;
+import com.sda.project.management.model.Role;
+import com.sda.project.management.model.RoleType;
+import com.sda.project.management.model.Sprint;
+import com.sda.project.management.model.Task;
+import com.sda.project.management.model.TaskStatus;
+import com.sda.project.management.model.TaskType;
+import com.sda.project.management.model.User;
+import com.sda.project.management.repository.PrivilegeRepository;
+import com.sda.project.management.repository.ProjectAccessRepository;
+import com.sda.project.management.repository.ProjectRepository;
+import com.sda.project.management.repository.RoleRepository;
+import com.sda.project.management.repository.SprintRepository;
+import com.sda.project.management.repository.TaskRepository;
+import com.sda.project.management.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +52,9 @@ public class DbInit {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private ProjectAccessRepository projectAccessRepository;
 
     @Bean
     public CommandLineRunner initialData() {
@@ -82,6 +101,18 @@ public class DbInit {
             task2.setStatus(TaskStatus.IN_PROGRESS);
             task2.setTaskType(TaskType.BUG);
             taskRepository.save(task2);
+
+            ProjectAccess projectAccess1 = new ProjectAccess();
+            projectAccess1.setUser(user);
+            projectAccess1.setProject(project);
+            projectAccess1.setCreatedAt(LocalDate.now());
+            projectAccessRepository.save(projectAccess1);
+
+//            ProjectAccess projectAccess2 = new ProjectAccess();
+//            projectAccess2.setUser(admin);
+//            projectAccess2.setProject(project);
+//            projectAccess2.setCreatedAt(LocalDate.now());
+//            projectAccessRepository.save(projectAccess2);
         };
     }
 

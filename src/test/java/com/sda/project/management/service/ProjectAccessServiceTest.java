@@ -1,65 +1,59 @@
 package com.sda.project.management.service;
 
-import com.sda.project.management.model.Project;
+import com.sda.project.management.model.ProjectAccess;
 import com.sda.project.management.model.User;
+import com.sda.project.management.repository.ProjectAccessRepository;
+import com.sda.project.management.repository.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ProjectAccessServiceTest {
 
-    @Autowired
-    UserService userService;
+    @Mock
+    UserRepository userRepository;
 
-    @Autowired
-    ProjectService projectService;
+    @Mock
+    ProjectAccessRepository projectAccessRepository;
 
-    @Autowired
+    @InjectMocks
     ProjectAccessService projectAccessService;
 
     @Test
-    void whenAddUserToProject_shouldHaveProjectWithUser() {
+    void whenGetUnassignedUsers_shouldReturnOk() {
         // given
-        Project project = new Project();
-        project.setName("project");
-        projectService.save(project);
+        User user1 = new User("e", "p", "f", "l");
+        user1.setId(1L);
+        User user2 = new User("e", "p", "f", "l");
+        user2.setId(2L);
+        User user3 = new User("e", "p", "f", "l");
+        user3.setId(3L);
 
-        User user1 = new User("user1@gmail.com", "pass", "alex", "vasile");
-        userService.save(user1);
+        ProjectAccess projectAccess1 = new ProjectAccess();
+        projectAccess1.setUser(user1);
+        ProjectAccess projectAccess2 = new ProjectAccess();
+        projectAccess2.setUser(user2);
 
-        User user2 = new User("user2@gmail.com", "pass", "alex", "vasile");
-        userService.save(user2);
+        when(projectAccessRepository.getUsersInProject(anyLong()))
+                .thenReturn(List.of(projectAccess1, projectAccess2));
+        when(userRepository.findAll())
+                .thenReturn(List.of(user1, user2, user3));
 
         // when
-        projectAccessService.addUserToProject(user1, project);
-        projectAccessService.addUserToProject(user2, project);
-
-        List<User> usersInProject = projectAccessService.getUsersInProject(project);
+        Set<User> unassignedUsers = projectAccessService.getUnassignedUsers(1L);
 
         // then
-        assertThat(usersInProject).hasSize(2);
-    }
-
-    @Test
-    void whenRemoveUserFromProject_shouldHaveProjectWithoutUser() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    void whenGetUsersInProject_shouldReturnUserList() {
-        // given
-
-        // when
-
-        // then
+        assertThat(unassignedUsers).hasSize(1);
+        assertThat(unassignedUsers.contains(user3)).isTrue();
     }
 }

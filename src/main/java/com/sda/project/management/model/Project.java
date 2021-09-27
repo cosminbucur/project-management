@@ -97,6 +97,10 @@ public class Project {
         this.projectAccessList = projectAccessList;
     }
 
+    public void setProjectAccess(ProjectAccess projectAccess) {
+        this.projectAccessList.add(projectAccess);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

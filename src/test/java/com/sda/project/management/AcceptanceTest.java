@@ -1,15 +1,27 @@
 package com.sda.project.management;
 
-import com.sda.project.management.model.*;
-import com.sda.project.management.service.*;
+import com.sda.project.management.dto.ProjectAccessInfo;
+import com.sda.project.management.model.Privilege;
+import com.sda.project.management.model.PrivilegeType;
+import com.sda.project.management.model.Project;
+import com.sda.project.management.model.Role;
+import com.sda.project.management.model.RoleType;
+import com.sda.project.management.model.Sprint;
+import com.sda.project.management.model.Task;
+import com.sda.project.management.model.User;
+import com.sda.project.management.service.PrivilegeService;
+import com.sda.project.management.service.ProjectAccessService;
+import com.sda.project.management.service.ProjectService;
+import com.sda.project.management.service.RoleService;
+import com.sda.project.management.service.SprintService;
+import com.sda.project.management.service.TaskService;
+import com.sda.project.management.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class AcceptanceTest {
@@ -69,8 +81,12 @@ class AcceptanceTest {
         taskService.save(task1);
         taskService.save(task2);
 
+        ProjectAccessInfo projectAccessInfo = new ProjectAccessInfo();
+        projectAccessInfo.setUserId(user.getId());
+        projectAccessInfo.setProjectId(project.getId());
+
         // add user to project
-        projectAccessService.addUserToProject(user, project);
+        projectAccessService.addUserToProject(projectAccessInfo);
         Project projectWithUsers = projectService.findById(project.getId());
 //        assertThat(projectWithUsers.getProjectAccessList()).hasSize(1);
 

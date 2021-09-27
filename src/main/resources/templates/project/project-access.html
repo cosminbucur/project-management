@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/head-css :: head-css"/>
+    <title>Project access</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: navbar"/>
+
+<h2>Add people</h2>
+
+<form class="row g-3 needs-validation" method="post" novalidate
+      th:action="@{/projects/{projectId}/access(projectId = ${project.id})}" th:object="${projectAccess}">
+
+    <div>
+        <p th:text="|Add people to the project: ${project.name}|"></p>
+
+        <div class="col-md-4 form-group">
+            <label class="form-label" for="user">User</label>
+            <select class="form-select" id="user" th:field="*{userId}">
+                <option selected th:value="null">Which user should have access?</option>
+                <option th:each="user : ${users}"
+                        th:text="|${user.firstName} ${user.lastName}|"
+                        th:value="${user.id}">
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <a th:href="@{/projects/{projectId}/backlog(projectId = ${project.id})}">
+            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
+        </a>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Update</button>
+    </div>
+
+</form>
+
+<div th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/footer-js :: footer-js"/>
+<script th:src="@{/js/validation.js}"></script>
+
+</body>
+</html>
