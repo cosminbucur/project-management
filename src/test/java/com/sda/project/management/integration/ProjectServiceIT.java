@@ -1,8 +1,11 @@
-package com.sda.project.management.service;
+package com.sda.project.management.integration;
 
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.User;
+import com.sda.project.management.service.ProjectService;
+import com.sda.project.management.service.SprintService;
+import com.sda.project.management.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class ProjectServiceTest {
+class ProjectServiceIT {
 
     @Autowired
     SprintService sprintService;

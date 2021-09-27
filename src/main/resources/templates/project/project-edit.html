@@ -10,7 +10,8 @@
 
 <h2>Edit project details</h2>
 
-<form class="row g-3 needs-validation" novalidate th:action="@{/projects/{id}/edit(id=${project.id})}" th:object="${project}" method="post">
+<form class="row g-3 needs-validation" method="post" novalidate th:action="@{/projects/{id}/edit(id = ${project.id})}"
+      th:object="${project}">
 
     <div>
 
@@ -35,8 +36,10 @@
             <label for="projectLead" class="form-label">Project lead</label>
             <select class="form-select" id="projectLead" required th:field="${project.projectLead}">
                 <option selected th:value="null">Select a project lead</option>
-                <option th:each="user : ${users}" th:value="${user.id}"
-                        th:text="|${user.firstName} ${user.lastName}|"></option>
+                <option th:each="user : ${users}"
+                        th:text="|${user.firstName} ${user.lastName}|"
+                        th:value="${user.id}">
+                </option>
             </select>
             <div class="invalid-feedback">
                 You need a lead for your project.
@@ -49,7 +52,7 @@
         <a th:href="@{/projects}">
             <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
         </a>
-        <button class="btn btn-primary" id="save" name="save" type="submit">Save</button>
+        <button class="btn btn-primary" id="save" name="save" type="submit">Update</button>
     </div>
 
 </form>

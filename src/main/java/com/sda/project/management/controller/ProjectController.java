@@ -40,7 +40,7 @@ public class ProjectController {
         return "project/project-add";
     }
 
-    @PostMapping(value = "/projects/add")
+    @PostMapping("/projects/add")
     public String add(Model model, @ModelAttribute Project project) {
         try {
             projectService.save(project);
