@@ -16,7 +16,9 @@
         <div class="m-1 p-2 bg-primary">
             <div class="d-grid gap-2" th:each="sprint : ${sprints}">
                 <div class="d-flex mb-3 p-2 bg-light border">
-                    <div class="me-auto p-2"><h5 th:text="${sprint.name}"></h5></div>
+                    <div class="me-auto p-2" th:text="${sprint.name}">
+                        <h6 th:text="${sprint.sprintGoal}"></h6>
+                    </div>
                     <div class="p-2">
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
                         <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">
