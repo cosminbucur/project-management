@@ -16,8 +16,9 @@
         <div class="m-1 p-2 bg-primary">
             <div class="d-grid gap-2" th:each="sprint : ${sprints}">
                 <div class="d-flex mb-3 p-2 bg-light border">
-                    <div class="me-auto p-2" th:text="${sprint.name}">
-                        <h6 th:text="${sprint.sprintGoal}"></h6>
+                    <div class="d-flex me-auto p-2">
+                        <div class="p-2" th:text="${sprint.name}"></div>
+                        <div class="p-2" th:text="${sprint.sprintGoal}"></div>
                     </div>
                     <div class="p-2">
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
