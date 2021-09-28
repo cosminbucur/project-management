@@ -2,6 +2,7 @@ package com.sda.project.management.controller;
 
 import com.sda.project.management.service.ProjectAccessService;
 import com.sda.project.management.service.ProjectService;
+import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +20,17 @@ public class BacklogController {
     private final TaskService taskService;
     private final ProjectService projectService;
     private final ProjectAccessService projectAccessService;
+    private final SprintService sprintService;
 
     @Autowired
     public BacklogController(TaskService taskService,
                              ProjectService projectService,
-                             ProjectAccessService projectAccessService) {
+                             ProjectAccessService projectAccessService,
+                             SprintService sprintService) {
         this.taskService = taskService;
         this.projectService = projectService;
         this.projectAccessService = projectAccessService;
+        this.sprintService = sprintService;
     }
 
     @GetMapping("/projects/{id}/backlog")
@@ -35,6 +39,7 @@ public class BacklogController {
         model.addAttribute("tasks", taskService.findAll());
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("users", projectAccessService.getAssignedUsers(id));
+        model.addAttribute("sprints", sprintService.findAll());
         return "project/backlog";
     }
 }

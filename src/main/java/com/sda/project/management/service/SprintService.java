@@ -1,8 +1,10 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
+import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
+import com.sda.project.management.repository.ProjectRepository;
 import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.TaskRepository;
 import org.slf4j.Logger;
@@ -19,20 +21,27 @@ public class SprintService {
 
     private final SprintRepository sprintRepository;
     private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public SprintService(SprintRepository sprintRepository, TaskRepository taskRepository) {
+    public SprintService(SprintRepository sprintRepository, TaskRepository taskRepository, ProjectRepository projectRepository) {
         this.sprintRepository = sprintRepository;
         this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
     }
 
-    public Sprint save(Sprint sprint){
+    public Sprint save(Long projectId, Sprint sprint) {
         log.info("save sprint {}", sprint);
-
-        return sprintRepository.save(sprint);
+        long count = sprintRepository.count() + 1;
+        sprint.setName("Sprint " + count);
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
+        project.addSprint(sprint);
+        projectRepository.save(project);
+        return sprint;
     }
 
-    public List<Sprint> findAll(){
+    public List<Sprint> findAll() {
         log.info("find sprints");
 
         return sprintRepository.findAll();

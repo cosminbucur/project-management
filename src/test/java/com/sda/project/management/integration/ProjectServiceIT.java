@@ -105,7 +105,7 @@ class ProjectServiceIT {
 
         Sprint sprint = new Sprint();
         sprint.setName("sprint");
-        sprintService.save(sprint);
+        sprintService.save(1L, sprint);
 
         // when
         projectService.addSprintToProject(project.getId(), sprint.getId());

@@ -11,48 +11,75 @@
 <div class="container">
 
     <h2>Backlog</h2>
+    <!--        sprint list here-->
 
-    <div>
-        <a th:href="@{/projects/{projectId}/access(projectId = ${project.id})}">
-            <button class="btn btn-primary" id="addPeople" name="addPeople" type="button">Add people</button>
-        </a>
-        <span th:each="user : ${users}">
-            <span th:text="|${user.firstName} ${user.lastName}|"></span>
-        </span>
+    <div class="d-grid gap-1" th:each="sprint : ${sprints}">
+        <div class="p-2 bg-light border" th:text="${sprint.name}"></div>
     </div>
 
-    <ul class="list-group" th:each="task : ${tasks}">
-        <li class="list-group-item d-flex mb-3"
-            th:href="@{/tasks/{id}/edit(id = ${task.id})}">
-            <div class="me-auto p-2">
-                <span th:text="${task.taskType}"></span>
+    <div class="d-flex mb-3">
+        <div class="me-auto p-2">
+            <a th:href="@{/projects/{projectId}/access(projectId = ${project.id})}">
+                <button class="btn btn-primary" id="addPeople" name="addPeople" type="button">Add people</button>
+            </a>
+            <span th:each="user : ${users}">
+                <span th:text="|${user.firstName} ${user.lastName}|"></span>
+            </span>
+        </div>
+        <div class="p-2">
+            <a th:href="@{/tasks/add}">
+                <button class="btn btn-primary" type="button">Create issue</button>
+            </a>
+        </div>
+    </div>
 
-                <span th:text="|${task.project.projectKey}-${task.id}|"></span>
+    <div class="d-flex mb-3">
+        <div class="me-auto p-2">
+            <h3>Backlog</h3></div>
+        <div class="p-2">
+            <form method="post" th:action="@{/projects/{projectId}/sprints/add(projectId = ${project.id})}">
+                <button class="btn btn-primary" type="submit">Create sprint</button>
+            </form>
+        </div>
+    </div>
 
-                <span th:text="${task.summary}"></span>
-            </div>
+    <div>
+        <ul class="list-group" th:each="task : ${tasks}">
+            <li class="list-group-item d-flex mb-3"
+                th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                <div class="me-auto p-2">
+                    <span th:text="${task.taskType}"></span>
 
-            <div class="p-2">
-                <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
+                    <span th:text="|${task.project.projectKey}-${task.id}|"></span>
 
-                <span th:text="${task.status}"></span>
+                    <span th:text="${task.summary}"></span>
+                </div>
 
-                <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
+                <div class="p-2">
+                    <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
 
-                <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
-                    <i class="fas fa-edit"></i>
-                </a>
+                    <span th:text="${task.status}"></span>
 
-                <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
-                    <i class="fas fa-trash"></i>
-                </a>
-            </div>
-        </li>
-    </ul>
+                    <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
 
-    <a th:href="@{/tasks/add}">
-        <button class="btn btn-primary" type="button">Create issue</button>
-    </a>
+                    <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <!--    Backlog h2-->
+    <!--    add people          create issue-->
+    <!--    Sprint 1-->
+    <!--    backlog h3          create sprint-->
+    <!--    add backlog issues here-->
 
 </div>
 
@@ -62,7 +89,6 @@
 
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>
-<script th:src="@{/js/modal.js}"></script>
 
 </body>
 </html>

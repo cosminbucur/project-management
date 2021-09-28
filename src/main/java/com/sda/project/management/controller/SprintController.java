@@ -32,15 +32,11 @@ public class SprintController {
         return "sprint/sprint-add";
     }
 
-    @PostMapping(value = "/sprints/add", params = "save")
-    public String add(@ModelAttribute Sprint sprint){
-        sprintService.save(sprint);
-        return "redirect:/sprints";
-    }
-
-    @PostMapping(value = "/sprints/add", params = "cancel")
-    public String cancelAdd() {
-        return "redirect:/sprints";
+    @PostMapping("/projects/{projectId}/sprints/add")
+    public String add(@PathVariable Long projectId,
+                      @ModelAttribute Sprint sprint) {
+        sprintService.save(projectId, sprint);
+        return "redirect:/projects/" + projectId + "/backlog";
     }
 
     @GetMapping("/sprints/{id}/edit")
@@ -50,14 +46,9 @@ public class SprintController {
         return "sprint/sprint-edit";
     }
 
-    @PostMapping(value = "/sprints/{id}/edit", params = "save")
-    public String edit(@ModelAttribute Sprint sprint){
+    @PostMapping("/sprints/{id}/edit")
+    public String edit(@ModelAttribute Sprint sprint) {
         sprintService.update(sprint);
-        return "redirect:/sprints";
-    }
-
-    @PostMapping(value = "/sprints/{id}/edit", params = "cancel")
-    public String cancelEdit() {
         return "redirect:/sprints";
     }
 

@@ -73,7 +73,7 @@ class AcceptanceTest {
 
         // create sprint
         Sprint sprint = createSprint();
-        sprintService.save(sprint);
+        sprintService.save(1L, sprint);
 
         // create tasks
         Task task1 = createTask1();

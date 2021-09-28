@@ -33,7 +33,7 @@ class SprintServiceIT {
         sprint.setSprintGoal("sprint goal");
 
         // when
-        Sprint savedSprint = sprintService.save(sprint);
+        Sprint savedSprint = sprintService.save(1L, sprint);
 
         // then
         assertThat(savedSprint).isNotNull();
@@ -71,7 +71,7 @@ class SprintServiceIT {
         // given
         Sprint sprint = new Sprint();
         sprint.setName("name");
-        sprintService.save(sprint);
+        sprintService.save(1L, sprint);
 
         Task task = new Task();
         task.setSummary("summary");
