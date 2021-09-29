@@ -1,6 +1,7 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
+import com.sda.project.management.dto.SprintUpdate;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
@@ -36,7 +37,6 @@ public class SprintService {
         long nextSprintNumber = sprintRepository.count() + 1;
         String sprintName = "Sprint " + nextSprintNumber;
         Sprint sprint = new Sprint(sprintName);
-
         log.info("save sprint {}", sprint);
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
@@ -57,10 +57,22 @@ public class SprintService {
                 .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
     }
 
-    public void update(Sprint sprint) {
-        log.info("update sprint {}", sprint);
+    public void update(Long sprintId, SprintUpdate sprintData) {
+        log.info("update sprint {} with data {}", sprintId, sprintData);
 
-        sprintRepository.save(sprint);
+        sprintRepository.findById(sprintId)
+                .map(existingSprint -> updateEntity(sprintData, existingSprint))
+                .map(updatedSprint -> sprintRepository.save(updatedSprint))
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+    }
+
+    // TODO: extract in mapper
+    private Sprint updateEntity(SprintUpdate sprintData, Sprint existingSprint) {
+        existingSprint.setName(sprintData.getName());
+        existingSprint.setDateFrom(sprintData.getDateFrom());
+        existingSprint.setDateTo(sprintData.getDateTo());
+        existingSprint.setSprintGoal(sprintData.getSprintGoal());
+        return existingSprint;
     }
 
     @Transactional
