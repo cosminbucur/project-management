@@ -56,7 +56,7 @@ public class UserController {
 
     // crud
 
-    @GetMapping("users")
+    @GetMapping("/users")
     public String showUsersPage(Model model) {
         model.addAttribute("users", userService.findAll());
         return "user/users";
@@ -69,7 +69,7 @@ public class UserController {
         return "user/edit-user";
     }
 
-    @PostMapping("user/edit")
+    @PostMapping("/user/edit")
     public String editUser(@ModelAttribute User user) {
         userService.update(user);
         return "redirect:/users";

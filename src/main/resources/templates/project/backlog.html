@@ -55,7 +55,8 @@
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
 
                         <span class="actions">
-                            <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">
+<!--                            <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">-->
+                            <a th:href="@{/projects/7/sprints/8/edit}">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <a th:href="@{/sprints/{id}/delete(id = ${sprint.id})}">
@@ -72,6 +73,11 @@
 
                 <!-- tasks in sprint -->
                 <div class="sprint-task-list" th:if="${#lists.size(sprint.tasks) > 0}">
+
+                    <!--    <a class="btn btn-primary btn-sm" role="button" th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">-->
+                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/projects/7/sprints/8/edit}">
+                        <i class="fas fa-pencil-alt"></i> Add dates
+                    </a>
 
                     <ul class="list-group" th:each="task : ${sprint.tasks}">
 

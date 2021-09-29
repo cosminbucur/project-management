@@ -10,7 +10,8 @@
 
 <h2>Edit project details</h2>
 
-<form class="row g-3 needs-validation" method="post" novalidate th:action="@{/projects/{id}/edit(id = ${project.id})}"
+<form class="row g-3 needs-validation" method="post" novalidate
+      th:action="@{/projects/{id}/edit(id = ${project.id})}"
       th:object="${project}">
 
     <div>
@@ -50,9 +51,9 @@
 
     <div class="col-12">
         <a th:href="@{/projects}">
-            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
+            <button class="btn btn-secondary" id="cancel" type="button">Cancel</button>
         </a>
-        <button class="btn btn-primary" id="save" name="save" type="submit">Update</button>
+        <button class="btn btn-primary" id="save" type="submit">Update</button>
     </div>
 
 </form>

@@ -1,5 +1,6 @@
 package com.sda.project.management.controller;
 
+import com.sda.project.management.dto.SprintUpdate;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.service.SprintService;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class SprintController {
@@ -44,22 +47,42 @@ public class SprintController {
         }
     }
 
-    @GetMapping("/sprints/{id}/edit")
-    public String showEditForm(Model model, @PathVariable Long id) {
-        Sprint sprint = sprintService.findById(id);
+    @GetMapping("/projects/{projectId}/sprints/{sprintId}/edit")
+    public String showEditForm(Model model,
+                               @PathVariable Long projectId,
+                               @PathVariable Long sprintId) {
+        Sprint sprint = sprintService.findById(sprintId);
+        model.addAttribute("projectId", projectId);
         model.addAttribute("sprint", sprint);
         return "sprint/sprint-edit";
     }
 
-    @PostMapping("/sprints/{id}/edit")
-    public String edit(@ModelAttribute Sprint sprint) {
-        sprintService.update(sprint);
-        return "redirect:/sprints";
+    @PostMapping("/projects/{projectId}/sprints/{sprintId}/edit")
+    public String edit(Model model,
+                       @PathVariable Long projectId,
+                       @PathVariable Long sprintId,
+                       @Valid @ModelAttribute SprintUpdate sprintData) {
+        try {
+            sprintService.update(sprintId, sprintData);
+            return "redirect:/projects/{projectId}/backlog";
+        } catch (RuntimeException e) {
+            String errorMessage = e.getMessage();
+            log.error(errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/projects/" + projectId + "/sprints/" + sprintId + "/edit";
+        }
     }
 
     @GetMapping("/sprints/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        sprintService.delete(id);
-        return "redirect:/sprints";
+    public String delete(Model model, @PathVariable Long id) {
+        try {
+            sprintService.delete(id);
+            return "redirect:/projects/{id}/backlog";
+        } catch (RuntimeException e) {
+            String errorMessage = e.getMessage();
+            log.error(errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+            return "projects/backlog";
+        }
     }
 }

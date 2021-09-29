@@ -1,52 +1,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="fragments/head-css :: head-css"/>
-    <title>Edit sprint</title>
+    <title>Sprint edit</title>
 </head>
 
-<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+<body>
 
 <div th:replace="fragments/header :: navbar"/>
 
-<h2>Edit sprint</h2>
-<form class="row g-3" th:action="@{/sprints/{id}/edit(id=${sprint.id})}" th:object="${sprint}" method="post">
+<!-- TODO: add sprint name -->
+<h2 th:text="|Edit sprint: ${sprint.name}|"></h2>
 
-    <div class="col-md-12">
-        <label for="name" class="form-label">Name</label>
-        <input class="form-control" id="name" placeholder="Sprint name" th:field="*{name}" type="text">
-    </div>
+<form class="row g-3 needs-validation"
+      method="post"
+      th:action="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId=${projectId}, sprintId=${sprint.id})}"
+      th:object="${sprint}">
 
-    <div class="col-md-12">
-        <label for="dateFrom" class="form-label" id="dateFrom">Date from</label>
-        <input type="date" th:field="*{dateFrom}"/>
-    </div>
+    <div>
 
-    <div class="col-md-12">
-        <label for="dateTo" class="form-label" id="dateTo">Date to</label>
-        <input type="date" th:field="*{dateTo}"/>
-    </div>
+        <div class="col-md-4 form-group required">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" id="name" placeholder="Sprint name" required th:field="*{name}" type="text">
+            <div class="invalid-feedback">
+                A sprint name can't be empty.
+            </div>
+        </div>
 
-    <div class="col-md-12">
-        <label for="storyPoints" class="form-label">Story points</label>
-        <input class="form-control" id="storyPoints" placeholder="1 2 3 5 ..." th:field="*{storyPoints}" type="text">
-    </div>
+        <div class="col-md-4 form-group">
+            <label class="form-label" for="dateFrom">Date from</label>
+            <input id="dateFrom" th:field="*{dateFrom}" type="date"/>
+        </div>
 
-    <div class="mb-3">
-        <label for="sprintGoal" class="form-label">Sprint goal</label>
-        <textarea class="form-control" id="sprintGoal" rows="3"></textarea>
-    </div>
+        <div class="col-md-4 form-group">
+            <label class="form-label" for="dateTo">Date to</label>
+            <input id="dateTo" th:field="*{dateTo}" type="date"/>
+        </div>
 
-    <div class="col-12">
-        <a th:href="@{/sprints}">
-            <button class="btn btn-secondary" id="cancel" name="cancel" type="button">Cancel</button>
-        </a>
-        <button class="btn btn-primary" id="save" name="save" type="submit">Save</button>
+        <div class="col-md-4 form-group">
+            <label class="form-label" for="sprintGoal">Sprint goal</label>
+            <textarea class="form-control" id="sprintGoal" rows="3" th:field="*{sprintGoal}"></textarea>
+        </div>
+
+        <div class="col-12">
+            <a th:href="@{/projects/{projectId}/backlog(projectId=${projectId})}">
+                <button class="btn btn-secondary" id="cancel" type="button">Cancel</button>
+            </a>
+            <button class="btn btn-primary" id="save" type="submit">Save</button>
+        </div>
+
     </div>
 
 </form>
 
+<!-- error -->
+<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
+
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>
+<script th:src="@{/js/validation.js}"></script>
 
 </body>
 </html>

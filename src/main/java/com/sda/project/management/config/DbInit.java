@@ -117,11 +117,11 @@ public class DbInit {
             projectAccess1.setCreatedAt(LocalDate.now());
             projectAccessRepository.save(projectAccess1);
 
-//            ProjectAccess projectAccess2 = new ProjectAccess();
-//            projectAccess2.setUser(admin);
-//            projectAccess2.setProject(project);
-//            projectAccess2.setCreatedAt(LocalDate.now());
-//            projectAccessRepository.save(projectAccess2);
+            ProjectAccess projectAccess2 = new ProjectAccess();
+            projectAccess2.setUser(admin);
+            projectAccess2.setProject(project);
+            projectAccess2.setCreatedAt(LocalDate.now());
+            projectAccessRepository.save(projectAccess2);
         };
     }
 
