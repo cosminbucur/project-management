@@ -43,7 +43,10 @@
                 <div class="sprint-info d-flex">
                     <!-- sprint info left -->
                     <div class="sprint-info-left me-auto">
-                        <span th:text="${sprint.name}"></span>
+                        <b><span th:text="${sprint.name}"></span></b>
+                        <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span> - <span
+                            th:text="${#temporals.format(sprint.dateTo, 'd MMM')}"></span>
+                        <span>(<a th:text="${#lists.size(sprint.tasks)}"></a> assigned projects)</span>
                     </div>
 
                     <!-- sprint info right -->
