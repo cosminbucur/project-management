@@ -40,6 +40,7 @@ public class BacklogController {
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("users", projectAccessService.getAssignedUsers(id));
         model.addAttribute("sprints", sprintService.findAll());
+        model.addAttribute("backlogTasks", taskService.findProjectUnassignedTasks(id));
         return "project/backlog";
     }
 }

@@ -52,19 +52,58 @@
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
 
                         <span class="actions">
-                        <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a th:href="@{/sprints/{id}/delete(id = ${sprint.id})}">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </span>
+                            <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a th:href="@{/sprints/{id}/delete(id = ${sprint.id})}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </span>
                     </div>
                 </div>
 
+                <!-- no tasks -->
+                <div th:unless="${#lists.size(sprint.tasks) > 0}">
+                    <span>Plan a sprint by adding issues here.</span>
+                </div>
+
                 <!-- tasks in sprint -->
-                <div class="sprint-task-list">
-                    <p>sprint tasks go here</p>
+                <div class="sprint-task-list" th:if="${#lists.size(sprint.tasks) > 0}">
+
+                    <ul class="list-group" th:each="task : ${sprint.tasks}">
+
+                        <!-- issue -->
+                        <li class="issue-wrapper list-group-item d-flex mb-3"
+                            th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+
+                            <!-- issue info left -->
+                            <div class="issue-info-left me-auto p-2">
+                                <span th:text="${task.taskType}"></span>
+                                <span th:text="|${task.project.projectKey}-${task.id}|"></span>
+                                <span th:text="${task.summary}"></span>
+                            </div>
+
+                            <!-- issue info right -->
+                            <div class="issue-info-right p-2">
+                                <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
+                                <span th:text="${task.status}"></span>
+                                <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
+
+                                <!-- actions -->
+                                <span class="actions">
+                                    <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </div>
+
+                        </li>
+
+                    </ul>
                 </div>
 
             </li>
@@ -91,7 +130,7 @@
     <!-- backlog issues -->
     <div class="backlog-issues-wrapper">
 
-        <ul class="list-group" th:each="task : ${tasks}">
+        <ul class="list-group" th:each="task : ${backlogTasks}">
 
             <!-- issue -->
             <li class="issue-wrapper list-group-item d-flex mb-3"

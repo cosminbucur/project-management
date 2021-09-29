@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,15 +31,17 @@ public class SprintService {
         this.projectRepository = projectRepository;
     }
 
+    @Transactional
     public Sprint save(Long projectId, Sprint sprint) {
         log.info("save sprint {}", sprint);
         long count = sprintRepository.count() + 1;
-        sprint.setName("Sprint " + count);
+        String name = "Sprint " + count;
+        sprint.setName(name);
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
         project.addSprint(sprint);
         projectRepository.save(project);
-        return sprint;
+        return sprintRepository.getSprintIdsByName(name);
     }
 
     public List<Sprint> findAll() {
@@ -60,6 +63,7 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
+    @Transactional
     public void addTaskToSprint(Long sprintId, Long taskId) {
         log.info("add task {} to sprint {}", taskId, sprintId);
 

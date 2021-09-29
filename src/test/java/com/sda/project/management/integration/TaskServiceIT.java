@@ -1,14 +1,18 @@
 package com.sda.project.management.integration;
 
 import com.sda.project.management.model.Project;
+import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.model.TaskType;
 import com.sda.project.management.service.ProjectService;
+import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +24,9 @@ class TaskServiceIT {
 
     @Autowired
     ProjectService projectService;
+
+    @Autowired
+    SprintService sprintService;
 
     @BeforeEach
     void setUp() {
@@ -102,7 +109,6 @@ class TaskServiceIT {
         task.setProject(project);
         task.setTaskType(TaskType.TASK);
         task.setSummary("summary");
-
         Task savedTask = taskService.save(task);
 
         // when
@@ -110,5 +116,38 @@ class TaskServiceIT {
 
         // then
         assertThat(taskService.findAll()).isEmpty();
+    }
+
+    @Test
+    void whenFindProjectUnassignedTasks_shouldReturnList() {
+        // given
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
+
+        Task unassignedTask = new Task();
+        unassignedTask.setProject(project);
+        unassignedTask.setTaskType(TaskType.TASK);
+        unassignedTask.setSummary("summary 1");
+        taskService.save(unassignedTask);
+
+        Task assignedTask = new Task();
+        assignedTask.setProject(project);
+        assignedTask.setTaskType(TaskType.TASK);
+        assignedTask.setSummary("summary 2");
+        taskService.save(assignedTask);
+
+        Sprint sprint = new Sprint();
+        sprint.setName("test name");
+        Sprint savedSprint = sprintService.save(project.getId(), sprint);
+
+        sprintService.addTaskToSprint(savedSprint.getId(), assignedTask.getId());
+
+        // when
+        List<Task> projectUnassignedTasks = taskService.findProjectUnassignedTasks(project.getId());
+
+        // then
+        assertThat(projectUnassignedTasks).hasSize(1);
+        assertThat("summary 2").isEqualTo(assignedTask.getSummary());
     }
 }

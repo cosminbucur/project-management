@@ -60,4 +60,8 @@ public class TaskService {
                 .orElseThrow(() -> new ResourceNotFoundException("task not found"));
         taskRepository.deleteById(id);
     }
+
+    public List<Task> findProjectUnassignedTasks(Long id) {
+        return taskRepository.findProjectUnassignedTasks(id);
+    }
 }

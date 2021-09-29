@@ -108,6 +108,7 @@ public class Sprint {
 
     public void addTask(Task task) {
         this.tasks.add(task);
+        task.setSprint(this);
     }
 
     public String getSprintGoal() {
