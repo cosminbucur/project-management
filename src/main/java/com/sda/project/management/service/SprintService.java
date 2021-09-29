@@ -1,14 +1,17 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
+import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
+import com.sda.project.management.repository.ProjectRepository;
 import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,20 +22,29 @@ public class SprintService {
 
     private final SprintRepository sprintRepository;
     private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public SprintService(SprintRepository sprintRepository, TaskRepository taskRepository) {
+    public SprintService(SprintRepository sprintRepository, TaskRepository taskRepository, ProjectRepository projectRepository) {
         this.sprintRepository = sprintRepository;
         this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
     }
 
-    public Sprint save(Sprint sprint){
+    @Transactional
+    public Sprint save(Long projectId) {
+        long nextSprintNumber = sprintRepository.count() + 1;
+        String sprintName = "Sprint " + nextSprintNumber;
+        Sprint sprint = new Sprint(sprintName);
+
         log.info("save sprint {}", sprint);
-
-        return sprintRepository.save(sprint);
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
+        project.addSprint(sprint);
+        return sprintRepository.findByName(sprintName);
     }
 
-    public List<Sprint> findAll(){
+    public List<Sprint> findAll() {
         log.info("find sprints");
 
         return sprintRepository.findAll();
@@ -51,6 +63,7 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
+    @Transactional
     public void addTaskToSprint(Long sprintId, Long taskId) {
         log.info("add task {} to sprint {}", taskId, sprintId);
 

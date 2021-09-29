@@ -69,11 +69,11 @@ class AcceptanceTest {
 
         // set project lead
         project.setProjectLead(projectLead);
-        projectService.save(project);
+        Project savedProject = projectService.save(project);
 
         // create sprint
         Sprint sprint = createSprint();
-        sprintService.save(sprint);
+        sprintService.save(savedProject.getId());
 
         // create tasks
         Task task1 = createTask1();
