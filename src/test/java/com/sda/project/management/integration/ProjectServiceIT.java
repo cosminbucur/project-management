@@ -101,18 +101,16 @@ class ProjectServiceIT {
         // given
         Project project = new Project();
         project.setName("project");
-        projectService.save(project);
+        Project savedProject = projectService.save(project);
 
-        Sprint sprint = new Sprint();
-        sprint.setName("sprint");
-        sprintService.save(1L, sprint);
+        Sprint savedSprint = sprintService.save(savedProject.getId());
 
         // when
-        projectService.addSprintToProject(project.getId(), sprint.getId());
+        projectService.addSprintToProject(project.getId(), savedSprint.getId());
         Project projectWithSprint = projectService.findById(project.getId());
 
         // then
-        assertThat(projectWithSprint.getSprints()).contains(sprint);
+        assertThat(projectWithSprint.getSprints()).contains(savedSprint);
     }
 
     @Test

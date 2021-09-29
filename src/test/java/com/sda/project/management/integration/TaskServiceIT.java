@@ -137,9 +137,7 @@ class TaskServiceIT {
         assignedTask.setSummary("summary 2");
         taskService.save(assignedTask);
 
-        Sprint sprint = new Sprint();
-        sprint.setName("test name");
-        Sprint savedSprint = sprintService.save(project.getId(), sprint);
+        Sprint savedSprint = sprintService.save(project.getId());
 
         sprintService.addTaskToSprint(savedSprint.getId(), assignedTask.getId());
 

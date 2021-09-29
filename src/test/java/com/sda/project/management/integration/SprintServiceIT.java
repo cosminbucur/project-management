@@ -1,20 +1,24 @@
 package com.sda.project.management.integration;
 
+import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
+import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class SprintServiceIT {
+
+    @Autowired
+    ProjectService projectService;
 
     @Autowired
     SprintService sprintService;
@@ -25,15 +29,12 @@ class SprintServiceIT {
     @Test
     void whenSaveTask_shouldReturnTask() {
         // given
-        Sprint sprint = new Sprint();
-        sprint.setName("name");
-        sprint.setDateFrom(LocalDate.now());
-        sprint.setDateTo(LocalDate.now().plusDays(14));
-        sprint.setStoryPoints(2);
-        sprint.setSprintGoal("sprint goal");
+        Project project = new Project();
+        project.setName("project");
+        Project savedProject = projectService.save(project);
 
         // when
-        Sprint savedSprint = sprintService.save(1L, sprint);
+        Sprint savedSprint = sprintService.save(savedProject.getId());
 
         // then
         assertThat(savedSprint).isNotNull();
@@ -69,17 +70,19 @@ class SprintServiceIT {
     @Test
     void whenAddTaskToSprint_shouldHaveSprintWithTask() {
         // given
-        Sprint sprint = new Sprint();
-        sprint.setName("name");
-        sprintService.save(1L, sprint);
+        Project project = new Project();
+        project.setName("project");
+        Project savedProject = projectService.save(project);
+
+        Sprint savedSprint = sprintService.save(savedProject.getId());
 
         Task task = new Task();
         task.setSummary("summary");
         taskService.save(task);
 
         // when
-        sprintService.addTaskToSprint(sprint.getId(), task.getId());
-        List<Task> tasks = taskService.getTasksInSprint(sprint.getId());
+        sprintService.addTaskToSprint(savedSprint.getId(), task.getId());
+        List<Task> tasks = taskService.getTasksInSprint(savedSprint.getId());
 
         // then
         assertThat(tasks).hasSize(2);

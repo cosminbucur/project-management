@@ -32,16 +32,16 @@ public class SprintService {
     }
 
     @Transactional
-    public Sprint save(Long projectId, Sprint sprint) {
+    public Sprint save(Long projectId) {
+        long nextSprintNumber = sprintRepository.count() + 1;
+        String sprintName = "Sprint " + nextSprintNumber;
+        Sprint sprint = new Sprint(sprintName);
+
         log.info("save sprint {}", sprint);
-        long count = sprintRepository.count() + 1;
-        String name = "Sprint " + count;
-        sprint.setName(name);
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
         project.addSprint(sprint);
-        projectRepository.save(project);
-        return sprintRepository.getSprintIdsByName(name);
+        return sprintRepository.findByName(sprintName);
     }
 
     public List<Sprint> findAll() {

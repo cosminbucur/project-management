@@ -50,6 +50,10 @@ public class Sprint {
     public Sprint() {
     }
 
+    public Sprint(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

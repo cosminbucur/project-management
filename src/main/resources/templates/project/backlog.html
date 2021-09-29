@@ -44,9 +44,9 @@
                     <!-- sprint info left -->
                     <div class="sprint-info-left me-auto">
                         <b><span th:text="${sprint.name}"></span></b>
-                        <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span> - <span
-                            th:text="${#temporals.format(sprint.dateTo, 'd MMM')}"></span>
-                        <span>(<a th:text="${#lists.size(sprint.tasks)}"></a> issues to address)</span>
+                        <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span> -
+                        <span th:text="${#temporals.format(sprint.dateTo, 'd MMM')}"></span>
+                        <span>(<a th:text="${#lists.size(sprint.tasks)}"></a> issues)</span>
                     </div>
 
                     <!-- sprint info right -->
@@ -173,7 +173,6 @@
 
 <!-- error -->
 <div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
-
 
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>
