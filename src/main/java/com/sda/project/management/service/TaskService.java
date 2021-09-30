@@ -1,12 +1,15 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
+import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
+import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,10 +19,12 @@ public class TaskService {
     private static final Logger log = LoggerFactory.getLogger(TaskService.class);
 
     private final TaskRepository taskRepository;
+    private final SprintRepository sprintRepository;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, SprintRepository sprintRepository) {
         this.taskRepository = taskRepository;
+        this.sprintRepository = sprintRepository;
     }
 
     public Task save(Task task) {
@@ -64,4 +69,14 @@ public class TaskService {
     public List<Task> findProjectUnassignedTasks(Long id) {
         return taskRepository.findProjectUnassignedTasks(id);
     }
+
+    @Transactional
+    public void removeTaskFromSprint(Long sprintId, Long taskId) {
+        log.info("removed task {} from sprint {}", taskId, sprintId);
+
+        Sprint sprintInDb = sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+        sprintInDb.getTasks().remove(findById(taskId));
+    }
+
 }

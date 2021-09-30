@@ -89,15 +89,6 @@ class SprintServiceIT {
     }
 
     @Test
-    void whenRemoveTaskFromSprint_shouldHaveSprintWithoutTask() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
     void whenDelete_shouldHaveProjectWithoutSprints() {
         // given
 
