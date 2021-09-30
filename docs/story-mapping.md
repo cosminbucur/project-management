@@ -18,10 +18,12 @@
 
 # manage task
 - view backlog page
+- view task list
 - create task
 - update task info
 - delete task
 - add task to project
+- search task
 
 # manage sprint
 - create sprint
@@ -33,6 +35,7 @@
 - un-assign user from task
 - start sprint
 - view sprint total story points
+- view board
 
 # manage user
 - view users page

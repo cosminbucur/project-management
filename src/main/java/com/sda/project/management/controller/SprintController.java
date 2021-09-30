@@ -27,12 +27,6 @@ public class SprintController {
         this.sprintService = sprintService;
     }
 
-    @GetMapping("/sprints")
-    public String showSprintsPage(Model model) {
-        model.addAttribute("sprints", sprintService.findAll());
-        return "sprint/sprints";
-    }
-
     @PostMapping("/projects/{projectId}/sprints/add")
     public String add(Model model,
                       @PathVariable Long projectId) {
