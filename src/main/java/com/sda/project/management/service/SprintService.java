@@ -87,8 +87,14 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
+    @Transactional
     public void delete(Long id) {
         log.info("delete sprint {}", id);
+
+        List<Task> tasks = taskRepository.getTasksInSprint(id);
+        if (tasks != null) {
+            tasks.forEach(task -> task.setSprint(null));
+        }
 
         sprintRepository.deleteById(id);
     }
