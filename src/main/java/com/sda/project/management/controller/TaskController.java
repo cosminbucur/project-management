@@ -89,6 +89,22 @@ public class TaskController {
         }
     }
 
+    @GetMapping("/projects/{projectId}/sprints/{sprintId}/tasks/{taskId}/delete")
+    public String removeTaskFromSprint(Model model,
+                                       @PathVariable Long projectId,
+                                       @PathVariable Long sprintId,
+                                       @PathVariable Long taskId) {
+        try {
+            taskService.removeTaskFromSprint(sprintId, taskId);
+            return "redirect:/projects/" + projectId + "/backlog";
+        } catch (RuntimeException e) {
+            String errorMessage = e.getMessage();
+            log.error(errorMessage);
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/projects/" + projectId + "/backlog";
+        }
+    }
+
     @GetMapping("/tasks/{id}/delete")
     public String delete(Model model, @PathVariable Long id) {
         try {

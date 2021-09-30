@@ -74,9 +74,12 @@ public class TaskService {
     public void removeTaskFromSprint(Long sprintId, Long taskId) {
         log.info("removed task {} from sprint {}", taskId, sprintId);
 
-        Sprint sprintInDb = sprintRepository.findById(sprintId)
+        Sprint sprint = sprintRepository.findById(sprintId)
                 .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
-        sprintInDb.getTasks().remove(findById(taskId));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("task not found"));
+        sprint.removeTaskFromSprint(task);
     }
 
 }
