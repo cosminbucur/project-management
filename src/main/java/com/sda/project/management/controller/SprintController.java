@@ -67,16 +67,18 @@ public class SprintController {
         }
     }
 
-    @GetMapping("/sprints/{id}/delete")
-    public String delete(Model model, @PathVariable Long id) {
+    @GetMapping("/projects/{projectId}/sprints/{sprintId}/delete")
+    public String delete(Model model,
+                         @PathVariable Long projectId,
+                         @PathVariable Long sprintId) {
         try {
-            sprintService.delete(id);
-            return "redirect:/projects/{id}/backlog";
+            sprintService.delete(sprintId);
+            return "redirect:/projects/{projectId}/backlog";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
-            return "projects/backlog";
+            return "redirect:/projects/" + projectId + "/sprints/" + sprintId + "/delete";
         }
     }
 }

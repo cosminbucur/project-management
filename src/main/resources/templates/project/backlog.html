@@ -56,13 +56,25 @@
 
                         <span class="actions">
 <!--                            <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">-->
-                            <a th:href="@{/projects/7/sprints/8/edit}">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a th:href="@{/sprints/{id}/delete(id = ${sprint.id})}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </span>
+                                <a th:href="@{/projects/7/sprints/8/edit}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            <!--                            TODO: delete this when dropdown is fixed-->
+                                <a th:href="@{/projects/{projectId}/sprints/{sprintId}/delete(projectId = ${project.id}, sprintId = ${sprint.id})}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </span>
+                    </div>
+                    <!--                    TODO: use this dropdown button for sprint options (edit/delete) when dropdown is fixed-->
+                    <div class="dropdown">
+                        <button aria-expanded="false" class="btn" data-bs-toggle="dropdown" type="button">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                   th:href="@{/projects/{projectId}/sprints/{sprintId}/delete(projectId = ${project.id}, sprintId = ${sprint.id})}">Delete
+                                sprint</a></li>
+                        </ul>
                     </div>
                 </div>
 
