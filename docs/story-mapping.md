@@ -40,4 +40,4 @@
 # manage user
 - view users page
 - update user info
-- as admin, delete user
+- as admin, deactivate user

@@ -117,6 +117,10 @@ public class Sprint {
         tasks.forEach(task -> task.setSprint(null));
     }
 
+    public void removeTaskFromSprint(Task task) {
+        task.setSprint(null);
+    }
+
     public String getSprintGoal() {
         return sprintGoal;
     }
