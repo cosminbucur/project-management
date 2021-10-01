@@ -119,6 +119,9 @@
                                     <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
                                         <i class="fas fa-trash"></i>
                                     </a>
+                                    <a th:href="@{/projects/{projectId}/sprints/{sprintId}/tasks/{taskId}/delete(projectId = ${project.id}, sprintId = ${sprint.id}, taskId = ${task.id})}">
+                                        <i class="fas fa-eraser"></i>
+                                    </a>
                                 </span>
                             </div>
 

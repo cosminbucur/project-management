@@ -38,8 +38,9 @@ public class Sprint {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "sprint")
+    @OneToMany(
+            mappedBy = "sprint",
+            fetch = FetchType.LAZY)
     private Set<Task> tasks = new HashSet<>();
 
     private String sprintGoal;
