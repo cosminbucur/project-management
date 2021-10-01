@@ -2,7 +2,6 @@ package com.sda.project.management.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,8 +40,7 @@ public class Sprint {
 
     @OneToMany(
             mappedBy = "sprint",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            fetch = FetchType.LAZY)
     private Set<Task> tasks = new HashSet<>();
 
     private String sprintGoal;
@@ -113,6 +111,10 @@ public class Sprint {
     public void addTask(Task task) {
         this.tasks.add(task);
         task.setSprint(this);
+    }
+
+    public void removeTasksFromSprint(Set<Task> tasks) {
+        tasks.forEach(task -> task.setSprint(null));
     }
 
     public void removeTaskFromSprint(Task task) {

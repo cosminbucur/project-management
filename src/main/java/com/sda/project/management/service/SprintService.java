@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SprintService {
@@ -87,8 +88,15 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
+    @Transactional
     public void delete(Long id) {
         log.info("delete sprint {}", id);
+
+        Sprint sprint = sprintRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+
+        Set<Task> tasks = sprint.getTasks();
+        sprint.removeTasksFromSprint(tasks);
 
         sprintRepository.deleteById(id);
     }

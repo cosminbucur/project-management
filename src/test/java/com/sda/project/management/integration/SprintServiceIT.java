@@ -6,6 +6,7 @@ import com.sda.project.management.model.Task;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,16 @@ class SprintServiceIT {
 
     @Autowired
     TaskService taskService;
+
+    @BeforeEach
+    void setUp() {
+        projectService.findAll()
+                .forEach(project -> projectService.delete(project.getId()));
+        sprintService.findAll()
+                .forEach(sprint -> sprintService.delete(sprint.getId()));
+        taskService.findAll()
+                .forEach(task -> taskService.delete(task.getId()));
+    }
 
     @Test
     void whenSaveTask_shouldReturnTask() {
@@ -95,5 +106,27 @@ class SprintServiceIT {
         // when
 
         // then
+    }
+
+    @Test
+    void whenDelete_shouldRemoveTasksAndDeleteSprint() {
+        // given
+        Project project = new Project();
+        project.setName("project");
+        Project savedProject = projectService.save(project);
+
+        Sprint savedSprint = sprintService.save(savedProject.getId());
+
+        Task task = new Task();
+        task.setSummary("summary");
+        task.setSprint(savedSprint);
+        taskService.save(task);
+
+        // when
+        sprintService.delete(savedSprint.getId());
+
+        // then
+        assertThat(sprintService.findAll()).isEmpty();
+        assertThat(taskService.findAll()).isNotNull();
     }
 }

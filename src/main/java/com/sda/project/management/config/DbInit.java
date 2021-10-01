@@ -82,6 +82,8 @@ public class DbInit {
             sprint.setDateTo(sprint.getDateFrom().plusDays(14));
             sprint.setStoryPoints(20);
             sprint.setSprintGoal("goal");
+//            sprint.addTask(task1);
+            sprintRepository.save(sprint);
 
             Task task1 = new Task();
             task1.setProject(project);
@@ -91,9 +93,8 @@ public class DbInit {
             task1.setStatus(TaskStatus.TODO);
             task1.setTaskType(TaskType.TASK);
             task1.setAssignee(user);
-
-            sprint.addTask(task1);
-            sprintRepository.save(sprint);
+            task1.setSprint(sprint);
+            taskRepository.save(task1);
 
             Task task2 = new Task();
             task2.setProject(project);
