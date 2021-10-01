@@ -1,10 +1,8 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
-import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
-import com.sda.project.management.model.TaskType;
 import com.sda.project.management.repository.ProjectRepository;
 import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.TaskRepository;
@@ -34,21 +32,6 @@ public class TaskService {
 
     public Task save(Task task) {
         log.info("save task {}", task);
-
-        return taskRepository.save(task);
-    }
-
-    @Transactional
-    public Task saveTaskToProject(Long projectId) {
-
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
-
-        Task task = new Task();
-        task.setProject(project);
-        task.setTaskType(TaskType.TASK);
-        task.setSummary("write issue summary here");
-        log.info("save task {} to project {}", task, projectId);
 
         return taskRepository.save(task);
     }

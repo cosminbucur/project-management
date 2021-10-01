@@ -55,12 +55,12 @@ public class TaskController {
     public String add(Model model, @ModelAttribute Task task) {
         try {
             taskService.save(task);
-            return "redirect:/backlog";
+            return "redirect:/projects/" + task.getProject().getId() + "/backlog";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
-            return "task/task-add";
+            return "redirect:/projects/" + task.getProject().getId() + "/backlog";
         }
     }
 

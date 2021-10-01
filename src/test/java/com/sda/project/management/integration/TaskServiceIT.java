@@ -56,20 +56,6 @@ class TaskServiceIT {
     }
 
     @Test
-    void whenSaveTaskToProject_shouldReturnTask() {
-        // given
-        Project project = new Project();
-        project.setName("project");
-        projectService.save(project);
-
-        // when
-        taskService.saveTaskToProject(project.getId());
-
-        // then
-        assertThat(taskService.findAll()).isNotNull();
-    }
-
-    @Test
     void whenFindAll_shouldReturnList() {
         // given
 
