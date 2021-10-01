@@ -10,13 +10,14 @@
 
 <h2>Create issue</h2>
 
-<form class="row g-3 needs-validation" novalidate th:action="@{/tasks/add}" th:object="${task}" method="post">
+<form class="row g-3 needs-validation" method="post" novalidate
+      th:action="@{/projects/{projectId}/tasks/add(projectId = ${projectId})}" th:object="${task}">
     <div>
         <div class="col-md-4 form-group required">
             <label for="project" class="form-label">Project</label>
             <select class="form-select" id="project" required th:field="${task.project}">
-                <option selected th:value="null">Select a project</option>
                 <option th:each="project : ${projects}"
+                        th:selected="${selectedProject}"
                         th:text="${project.name}"
                         th:value="${project.id}">
                 </option>
@@ -98,7 +99,7 @@
     </div>
 
     <div class="col-12">
-        <a th:href="@{/backlog}">
+        <a th:href="@{/projects/{id}/backlog(id = ${projectId})}">
             <button class="btn btn-secondary" id="cancel" type="button">Cancel</button>
         </a>
         <button class="btn btn-primary" id="save" type="submit">Create issue</button>
