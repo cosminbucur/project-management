@@ -115,6 +115,10 @@ public class Sprint {
         task.setSprint(this);
     }
 
+    public void removeTaskFromSprint(Task task) {
+        task.setSprint(null);
+    }
+
     public String getSprintGoal() {
         return sprintGoal;
     }

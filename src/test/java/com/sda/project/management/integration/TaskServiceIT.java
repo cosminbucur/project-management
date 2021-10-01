@@ -148,4 +148,25 @@ class TaskServiceIT {
         assertThat(projectUnassignedTasks).hasSize(1);
         assertThat("summary 2").isEqualTo(assignedTask.getSummary());
     }
+
+    @Test
+    void whenRemoveTaskFromSprint_shouldHaveSprintWithoutTask() {
+        // given
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
+        Sprint savedSprint = sprintService.save(project.getId());
+
+        Task assignedTask = new Task();
+        assignedTask.setTaskType(TaskType.TASK);
+        assignedTask.setSummary("summary 2");
+        assignedTask.setSprint(savedSprint);
+        taskService.save(assignedTask);
+
+        // when
+        taskService.removeTaskFromSprint(savedSprint.getId(), assignedTask.getId());
+
+        // then
+        assertThat(taskService.getTasksInSprint(savedSprint.getId())).hasSize(0);
+    }
 }
