@@ -56,6 +56,20 @@ class TaskServiceIT {
     }
 
     @Test
+    void whenSaveTaskToProject_shouldReturnTask() {
+        // given
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
+
+        // when
+        taskService.saveTaskToProject(project.getId());
+
+        // then
+        assertThat(taskService.findAll()).isNotNull();
+    }
+
+    @Test
     void whenFindAll_shouldReturnList() {
         // given
 
@@ -167,6 +181,6 @@ class TaskServiceIT {
         taskService.removeTaskFromSprint(savedSprint.getId(), assignedTask.getId());
 
         // then
-        assertThat(taskService.getTasksInSprint(savedSprint.getId())).hasSize(0);
+        assertThat(taskService.getTasksInSprint(savedSprint.getId())).isEmpty();
     }
 }
