@@ -1,5 +1,6 @@
 package com.sda.project.management.controller;
 
+import com.sda.project.management.dto.TaskUpdate;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
@@ -46,7 +47,7 @@ public class TaskController {
     public String showAddForm(Model model,
                               @PathVariable Long projectId) {
         model.addAttribute("task", new Task());
-        model.addAttribute("projectId", projectService.findById(projectId));
+        model.addAttribute("project", projectService.findById(projectId));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("sprints", sprintService.findAll());
@@ -64,6 +65,7 @@ public class TaskController {
             String errorMessage = e.getMessage();
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
+            model.addAttribute("task", task);
             return "redirect:/projects/" + projectId + "/tasks/add";
         }
     }
@@ -83,9 +85,9 @@ public class TaskController {
             Model model,
             @PathVariable Long projectId,
             @PathVariable Long taskId,
-            @ModelAttribute Task task) {
+            @ModelAttribute TaskUpdate taskData) {
         try {
-            taskService.update(task);
+            taskService.update(taskId, taskData);
             return "redirect:/projects/" + projectId + "/backlog";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();

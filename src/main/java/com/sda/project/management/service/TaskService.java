@@ -1,6 +1,7 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
+import com.sda.project.management.dto.TaskUpdate;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.repository.ProjectRepository;
@@ -55,10 +56,27 @@ public class TaskService {
         return taskRepository.getTasksInSprint(sprintId);
     }
 
-    public Task update(Task task) {
-        log.info("update task {}", task);
+    //    TODO-Alex: extract in mapper
+    public void update(Long taskId, TaskUpdate taskData) {
+        log.info("update task {} with data {}", taskId, taskData);
 
-        return taskRepository.save(task);
+        taskRepository.findById(taskId)
+                .map(existingTask -> updateTask(taskData, existingTask))
+                .map(updatedTask -> taskRepository.save(updatedTask))
+                .orElseThrow(() -> new ResourceNotFoundException("task not found"));
+    }
+
+    private Task updateTask(TaskUpdate taskData, Task existingTask) {
+        existingTask.setProject(taskData.getProject());
+        existingTask.setTaskType(taskData.getTaskType());
+        existingTask.setSummary(taskData.getSummary());
+        existingTask.setDescription(taskData.getDescription());
+        existingTask.setAssignee(taskData.getAssignee());
+        existingTask.setStoryPoints(taskData.getStoryPoints());
+        existingTask.setSprint(taskData.getSprint());
+        existingTask.setStatus(taskData.getStatus());
+
+        return existingTask;
     }
 
     public void delete(Long id) {
