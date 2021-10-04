@@ -76,13 +76,18 @@ public class DbInit {
             project.setProjectLead(admin);
             projectRepository.save(project);
 
+            Project project2 = new Project();
+            project2.setName("Agile");
+            project2.setProjectKey("AGL");
+            project2.setProjectLead(user);
+            projectRepository.save(project2);
+
             Sprint sprint = new Sprint();
             sprint.setName("SAK-20-1");
             sprint.setDateFrom(LocalDate.now());
             sprint.setDateTo(sprint.getDateFrom().plusDays(14));
             sprint.setStoryPoints(20);
             sprint.setSprintGoal("goal");
-//            sprint.addTask(task1);
             sprintRepository.save(sprint);
 
             Task task1 = new Task();

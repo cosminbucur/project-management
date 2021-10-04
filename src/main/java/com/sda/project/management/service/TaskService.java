@@ -1,7 +1,8 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
-import com.sda.project.management.dto.TaskUpdate;
+import com.sda.project.management.dto.TaskEdit;
+import com.sda.project.management.mapper.TaskMapper;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.repository.ProjectRepository;
@@ -23,12 +24,17 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final SprintRepository sprintRepository;
     private final ProjectRepository projectRepository;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, SprintRepository sprintRepository, ProjectRepository projectRepository) {
+    public TaskService(TaskRepository taskRepository,
+                       SprintRepository sprintRepository,
+                       ProjectRepository projectRepository,
+                       TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.sprintRepository = sprintRepository;
         this.projectRepository = projectRepository;
+        this.taskMapper = taskMapper;
     }
 
     public Task save(Task task) {
@@ -56,27 +62,13 @@ public class TaskService {
         return taskRepository.getTasksInSprint(sprintId);
     }
 
-    //    TODO-Alex: extract in mapper
-    public void update(Long taskId, TaskUpdate taskData) {
+    public void update(Long taskId, TaskEdit taskData) {
         log.info("update task {} with data {}", taskId, taskData);
 
         taskRepository.findById(taskId)
-                .map(existingTask -> updateTask(taskData, existingTask))
+                .map(existingTask -> taskMapper.toEntity(existingTask, taskData))
                 .map(updatedTask -> taskRepository.save(updatedTask))
                 .orElseThrow(() -> new ResourceNotFoundException("task not found"));
-    }
-
-    private Task updateTask(TaskUpdate taskData, Task existingTask) {
-        existingTask.setProject(taskData.getProject());
-        existingTask.setTaskType(taskData.getTaskType());
-        existingTask.setSummary(taskData.getSummary());
-        existingTask.setDescription(taskData.getDescription());
-        existingTask.setAssignee(taskData.getAssignee());
-        existingTask.setStoryPoints(taskData.getStoryPoints());
-        existingTask.setSprint(taskData.getSprint());
-        existingTask.setStatus(taskData.getStatus());
-
-        return existingTask;
     }
 
     public void delete(Long id) {

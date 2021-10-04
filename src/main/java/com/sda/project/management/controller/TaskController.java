@@ -1,6 +1,6 @@
 package com.sda.project.management.controller;
 
-import com.sda.project.management.dto.TaskUpdate;
+import com.sda.project.management.dto.TaskEdit;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
@@ -47,6 +47,7 @@ public class TaskController {
     public String showAddForm(Model model,
                               @PathVariable Long projectId) {
         model.addAttribute("task", new Task());
+        model.addAttribute("selectedProjectId", projectId);
         model.addAttribute("project", projectService.findById(projectId));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
@@ -85,7 +86,7 @@ public class TaskController {
             Model model,
             @PathVariable Long projectId,
             @PathVariable Long taskId,
-            @ModelAttribute TaskUpdate taskData) {
+            @ModelAttribute TaskEdit taskData) {
         try {
             taskService.update(taskId, taskData);
             return "redirect:/projects/" + projectId + "/backlog";

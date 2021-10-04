@@ -2,20 +2,19 @@ package com.sda.project.management.dto;
 
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
-import com.sda.project.management.model.TaskStatus;
 import com.sda.project.management.model.TaskType;
 import com.sda.project.management.model.User;
 
-public class TaskUpdate {
+public class TaskEdit {
 
-    private String summary;
-    private String description;
     private Project project;
+    private TaskType taskType;
+    private String summary;
+
+    private String description;
     private Sprint sprint;
     private User assignee;
-    private TaskType taskType;
     private Integer storyPoints;
-    private TaskStatus status;
 
     public String getSummary() {
         return summary;
@@ -73,25 +72,16 @@ public class TaskUpdate {
         this.storyPoints = storyPoints;
     }
 
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TaskStatus status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
-        return "TaskUpdate{" +
-                "summary='" + summary + '\'' +
+        return "TaskEdit{" +
+                "project=" + project +
+                ", taskType=" + taskType +
+                ", summary='" + summary + '\'' +
                 ", description='" + description + '\'' +
-                ", project=" + project +
                 ", sprint=" + sprint +
                 ", assignee=" + assignee +
-                ", taskType=" + taskType +
                 ", storyPoints=" + storyPoints +
-                ", status=" + status +
                 '}';
     }
 }

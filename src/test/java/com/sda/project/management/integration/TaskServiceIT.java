@@ -1,6 +1,6 @@
 package com.sda.project.management.integration;
 
-import com.sda.project.management.dto.TaskUpdate;
+import com.sda.project.management.dto.TaskEdit;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
@@ -87,16 +87,16 @@ class TaskServiceIT {
         task.setSummary("summary");
         Task savedTask = taskService.save(task);
 
-        TaskUpdate taskUpdate = new TaskUpdate();
-        taskUpdate.setProject(project);
-        taskUpdate.setTaskType(TaskType.TASK);
-        taskUpdate.setSummary("summary2");
+        TaskEdit taskEdit = new TaskEdit();
+        taskEdit.setProject(project);
+        taskEdit.setTaskType(TaskType.TASK);
+        taskEdit.setSummary("summary2");
 
         // when
-        taskService.update(savedTask.getId(), taskUpdate);
+        taskService.update(savedTask.getId(), taskEdit);
 
         // then
-        assertThat(taskService.findById(savedTask.getId()).getSummary()).isEqualTo(taskUpdate.getSummary());
+        assertThat(taskService.findById(savedTask.getId()).getSummary()).isEqualTo(taskEdit.getSummary());
     }
 
     @Test
