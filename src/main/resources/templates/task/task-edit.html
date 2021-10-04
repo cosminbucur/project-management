@@ -10,7 +10,8 @@
 
 <h2>Edit issue details</h2>
 
-<form class="row g-3 needs-validation" method="post" novalidate th:action="@{/tasks/{id}/edit(id = ${task.id})}"
+<form class="row g-3 needs-validation" method="post" novalidate
+      th:action="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}"
       th:object="${task}">
     <div>
         <div class="col-md-4 form-group required">
@@ -99,7 +100,7 @@
     </div>
 
     <div class="col-12">
-        <a th:href="@{/backlog}">
+        <a th:href="@{/projects/{id}/backlog(id = ${task.project.id})}">
             <button class="btn btn-secondary" id="cancel" type="button">Cancel</button>
         </a>
         <button class="btn btn-primary" id="save" type="submit">Update</button>

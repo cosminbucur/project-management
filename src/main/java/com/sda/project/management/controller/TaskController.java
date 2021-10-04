@@ -1,5 +1,6 @@
 package com.sda.project.management.controller;
 
+import com.sda.project.management.dto.TaskEdit;
 import com.sda.project.management.model.Task;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
@@ -42,30 +43,37 @@ public class TaskController {
         return "task/tasks";
     }
 
-    @GetMapping("/tasks/add")
-    public String showAddForm(Model model) {
+    @GetMapping("/projects/{projectId}/tasks/add")
+    public String showAddForm(Model model,
+                              @PathVariable Long projectId) {
         model.addAttribute("task", new Task());
+        model.addAttribute("selectedProjectId", projectId);
+        model.addAttribute("project", projectService.findById(projectId));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("sprints", sprintService.findAll());
         return "task/task-add";
     }
 
-    @PostMapping("/tasks/add")
-    public String add(Model model, @ModelAttribute Task task) {
+    @PostMapping("/projects/{projectId}/tasks/add")
+    public String add(Model model,
+                      @PathVariable Long projectId,
+                      @ModelAttribute Task task) {
         try {
             taskService.save(task);
-            return "redirect:/backlog";
+            return "redirect:/projects/" + projectId + "/backlog";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
-            return "task/task-add";
+            model.addAttribute("task", task);
+            return "redirect:/projects/" + projectId + "/tasks/add";
         }
     }
 
     @GetMapping("/tasks/{id}/edit")
-    public String showEditForm(Model model, @PathVariable Long id) {
+    public String showEditForm(Model model,
+                               @PathVariable Long id) {
         model.addAttribute("task", taskService.findById(id));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
@@ -73,19 +81,20 @@ public class TaskController {
         return "task/task-edit";
     }
 
-    @PostMapping("/tasks/{id}/edit")
+    @PostMapping("/projects/{projectId}/tasks/{taskId}/edit")
     public String edit(
             Model model,
-            @PathVariable Long id,
-            @ModelAttribute Task task) {
+            @PathVariable Long projectId,
+            @PathVariable Long taskId,
+            @ModelAttribute TaskEdit taskData) {
         try {
-            taskService.update(task);
-            return "redirect:/backlog";
+            taskService.update(taskId, taskData);
+            return "redirect:/projects/" + projectId + "/backlog";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/tasks/" + id + "/edit";
+            return "redirect:/projects/" + projectId + "/tasks/" + taskId + "/edit";
         }
     }
 
@@ -105,11 +114,13 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/tasks/{id}/delete")
-    public String delete(Model model, @PathVariable Long id) {
+    @GetMapping("/projects/{projectId}/tasks/{taskId}/delete")
+    public String delete(Model model,
+                         @PathVariable Long projectId,
+                         @PathVariable Long taskId) {
         try {
-            taskService.delete(id);
-            return "redirect:/tasks";
+            taskService.delete(taskId);
+            return "redirect:/projects/" + projectId + "/backlog";
         } catch (RuntimeException e) {
             String errorMessage = e.getMessage();
             log.error(errorMessage);

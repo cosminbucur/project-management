@@ -23,10 +23,8 @@
                 <span th:text="|${user.firstName} ${user.lastName}|"></span>
             </span>
         </div>
-
-        <!-- create issue -->
         <div class="p-2">
-            <a th:href="@{/tasks/add}">
+            <a th:href="@{/projects/{projectId}/tasks/add(projectId = ${project.id})}">
                 <button class="btn btn-primary" type="button">Create issue</button>
             </a>
         </div>
@@ -55,26 +53,13 @@
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
 
                         <span class="actions">
-<!--                            <a th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">-->
-                                <a th:href="@{/projects/7/sprints/8/edit}">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            <!--  TODO: delete this when dropdown is fixed -->
-                                <a th:href="@{/projects/{projectId}/sprints/{sprintId}/delete(projectId = ${project.id}, sprintId = ${sprint.id})}">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </span>
-                    </div>
-                    <!-- TODO: use this dropdown button for sprint options (edit/delete) when dropdown is fixed -->
-                    <div class="dropdown">
-                        <button aria-expanded="false" class="btn" data-bs-toggle="dropdown" type="button">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item"
-                                   th:href="@{/projects/{projectId}/sprints/{sprintId}/delete(projectId = ${project.id}, sprintId = ${sprint.id})}">Delete
-                                sprint</a></li>
-                        </ul>
+                            <a th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${sprint.id})}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a th:href="@{/projects/{projectId}/sprints/{sprintId}/delete(projectId = ${project.id}, sprintId = ${sprint.id})}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </span>
                     </div>
                 </div>
 
@@ -86,8 +71,8 @@
                 <!-- tasks in sprint -->
                 <div class="sprint-task-list" th:if="${#lists.size(sprint.tasks) > 0}">
 
-                    <!--    <a class="btn btn-primary btn-sm" role="button" th:href="@{/sprints/{id}/edit(id = ${sprint.id})}">-->
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/projects/7/sprints/8/edit}">
+                    <a class="btn btn-primary btn-sm" role="button"
+                       th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${sprint.id})}">
                         <i class="fas fa-pencil-alt"></i> Add dates
                     </a>
 
@@ -116,7 +101,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
+                                    <a th:href="@{/projects/{projectId}/tasks/{taskId}/delete(projectId = ${project.id}, taskId = ${task.id})}">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                     <a th:href="@{/projects/{projectId}/sprints/{sprintId}/tasks/{taskId}/delete(projectId = ${project.id}, sprintId = ${sprint.id}, taskId = ${task.id})}">
@@ -179,7 +164,7 @@
                             <i class="fas fa-edit"></i>
                         </a>
 
-                        <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
+                        <a th:href="@{/projects/{projectId}/tasks/{taskId}/delete(projectId = ${project.id}, taskId = ${task.id})}">
                             <i class="fas fa-trash"></i>
                         </a>
                     </span>

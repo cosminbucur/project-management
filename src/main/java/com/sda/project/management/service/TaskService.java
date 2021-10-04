@@ -1,8 +1,11 @@
 package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
+import com.sda.project.management.dto.TaskEdit;
+import com.sda.project.management.mapper.TaskMapper;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
+import com.sda.project.management.repository.ProjectRepository;
 import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.TaskRepository;
 import org.slf4j.Logger;
@@ -20,11 +23,18 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final SprintRepository sprintRepository;
+    private final ProjectRepository projectRepository;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, SprintRepository sprintRepository) {
+    public TaskService(TaskRepository taskRepository,
+                       SprintRepository sprintRepository,
+                       ProjectRepository projectRepository,
+                       TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.sprintRepository = sprintRepository;
+        this.projectRepository = projectRepository;
+        this.taskMapper = taskMapper;
     }
 
     public Task save(Task task) {
@@ -52,10 +62,13 @@ public class TaskService {
         return taskRepository.getTasksInSprint(sprintId);
     }
 
-    public Task update(Task task) {
-        log.info("update task {}", task);
+    public void update(Long taskId, TaskEdit taskData) {
+        log.info("update task {} with data {}", taskId, taskData);
 
-        return taskRepository.save(task);
+        taskRepository.findById(taskId)
+                .map(existingTask -> taskMapper.toEntity(existingTask, taskData))
+                .map(updatedTask -> taskRepository.save(updatedTask))
+                .orElseThrow(() -> new ResourceNotFoundException("task not found"));
     }
 
     public void delete(Long id) {

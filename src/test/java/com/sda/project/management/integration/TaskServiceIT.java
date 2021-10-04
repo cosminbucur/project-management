@@ -1,5 +1,6 @@
 package com.sda.project.management.integration;
 
+import com.sda.project.management.dto.TaskEdit;
 import com.sda.project.management.model.Project;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
@@ -84,18 +85,18 @@ class TaskServiceIT {
         task.setProject(project);
         task.setTaskType(TaskType.TASK);
         task.setSummary("summary");
-        taskService.save(task);
+        Task savedTask = taskService.save(task);
 
-        Task taskUpdate = new Task();
-        taskUpdate.setProject(project);
-        taskUpdate.setTaskType(TaskType.TASK);
-        taskUpdate.setSummary("summary2");
+        TaskEdit taskEdit = new TaskEdit();
+        taskEdit.setProject(project);
+        taskEdit.setTaskType(TaskType.TASK);
+        taskEdit.setSummary("summary2");
 
         // when
-        Task updatedTask = taskService.update(taskUpdate);
+        taskService.update(savedTask.getId(), taskEdit);
 
         // then
-        assertThat(updatedTask.getSummary()).isEqualTo(taskUpdate.getSummary());
+        assertThat(taskService.findById(savedTask.getId()).getSummary()).isEqualTo(taskEdit.getSummary());
     }
 
     @Test
@@ -167,6 +168,6 @@ class TaskServiceIT {
         taskService.removeTaskFromSprint(savedSprint.getId(), assignedTask.getId());
 
         // then
-        assertThat(taskService.getTasksInSprint(savedSprint.getId())).hasSize(0);
+        assertThat(taskService.getTasksInSprint(savedSprint.getId())).isEmpty();
     }
 }
