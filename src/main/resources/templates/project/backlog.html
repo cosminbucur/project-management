@@ -8,6 +8,8 @@
 
 <div th:replace="fragments/header :: navbar"/>
 
+<div th:replace="fragments/sidebar :: sidebar (project = ${project})"/>
+
 <div class="container">
 
     <h2>Backlog</h2>
@@ -116,6 +118,7 @@
                 </div>
 
             </li>
+            <!-- /sprint item -->
 
         </ul>
 
@@ -125,7 +128,7 @@
     <div class="backlog-accordion d-flex mb-3">
 
         <div class="me-auto p-2">
-            <h3>Backlog</h3>
+            <b><span>Backlog</span></b>
         </div>
 
         <div class="p-2">

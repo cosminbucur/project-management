@@ -17,20 +17,20 @@ public class BacklogController {
 
     private static final Logger log = LoggerFactory.getLogger(BacklogController.class);
 
-    private final TaskService taskService;
     private final ProjectService projectService;
-    private final ProjectAccessService projectAccessService;
     private final SprintService sprintService;
+    private final TaskService taskService;
+    private final ProjectAccessService projectAccessService;
 
     @Autowired
-    public BacklogController(TaskService taskService,
-                             ProjectService projectService,
-                             ProjectAccessService projectAccessService,
-                             SprintService sprintService) {
-        this.taskService = taskService;
+    public BacklogController(ProjectService projectService,
+                             SprintService sprintService,
+                             TaskService taskService,
+                             ProjectAccessService projectAccessService) {
         this.projectService = projectService;
-        this.projectAccessService = projectAccessService;
         this.sprintService = sprintService;
+        this.taskService = taskService;
+        this.projectAccessService = projectAccessService;
     }
 
     @GetMapping("/projects/{id}/backlog")
