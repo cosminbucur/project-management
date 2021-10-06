@@ -50,7 +50,8 @@ public class ProjectController {
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
             model.addAttribute("project", project);
-            return "redirect:/projects/add";
+            model.addAttribute("users", userService.findAll());
+            return "project/project-add";
         }
     }
 
@@ -73,7 +74,8 @@ public class ProjectController {
             String errorMessage = e.getMessage();
             log.error(errorMessage);
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/projects/" + id + "/edit";
+            model.addAttribute("users", userService.findAll());
+            return "project/project-edit";
         }
     }
 
