@@ -35,7 +35,7 @@ public class BoardController {
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("tasks", taskService.findAll());
         // TODO: no hardcode
-        model.addAttribute("currentSprint", sprintService.findById(9L));
+        model.addAttribute("currentSprint", sprintService.findAll().get(0));
         return "project/board";
     }
 }

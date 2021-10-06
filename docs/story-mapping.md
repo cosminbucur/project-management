@@ -41,3 +41,4 @@
 - view users page
 - update user info
 - as admin, deactivate user
+- as admin, activate user

@@ -59,7 +59,7 @@ public class DbInit {
     @Bean
     public CommandLineRunner initialData() {
         return args -> {
-            log.info("create admin user");
+            log.info("setup initial data");
 
             Privilege readPrivilege = createPrivilegeIfNotFound(PrivilegeType.READ_PRIVILEGE);
             Privilege writePrivilege = createPrivilegeIfNotFound(PrivilegeType.WRITE_PRIVILEGE);
@@ -67,8 +67,11 @@ public class DbInit {
             createRoleIfNotFound(RoleType.ADMIN, Set.of(readPrivilege, writePrivilege));
             createRoleIfNotFound(RoleType.USER, Set.of(readPrivilege, writePrivilege));
 
+            User mainAdmin = createMainAdmin();
             User admin = createAdmin();
             User user = createUser();
+
+            userRepository.save(mainAdmin);
 
             Project project = new Project();
             project.setName("Sakura");
@@ -131,12 +134,24 @@ public class DbInit {
         };
     }
 
+    private User createMainAdmin() {
+        User admin = new User(
+                "main@gmail.com",
+                "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi",
+                "jon",
+                "snow");
+        Role adminRole = roleRepository.findByType(RoleType.ADMIN).orElseThrow();
+        admin.addRole(adminRole);
+        userRepository.save(admin);
+        return admin;
+    }
+
     private User createAdmin() {
         User admin = new User(
                 "admin@gmail.com",
                 "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi",
-                "jon",
-                "snow");
+                "bill",
+                "clinton");
         Role adminRole = roleRepository.findByType(RoleType.ADMIN).orElseThrow();
         admin.addRole(adminRole);
         userRepository.save(admin);
@@ -149,7 +164,8 @@ public class DbInit {
                 "{bcrypt}$2y$12$92ZkDrGVS3W5ZJI.beRlEuyRCPrIRlkEHz6T.7MVmH38l4/VAHhyi",
                 "alex",
                 "vasile");
-        Role userRole = roleRepository.findByType(RoleType.USER).orElseThrow();;
+        Role userRole = roleRepository.findByType(RoleType.USER).orElseThrow();
+        ;
         user.addRole(userRole);
         return userRepository.save(user);
     }

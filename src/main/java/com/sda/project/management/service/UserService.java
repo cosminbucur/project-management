@@ -88,6 +88,39 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public void enable(Long id) {
+        log.info("enable user {}", id);
+
+        userRepository.findById(id)
+                .map(foundUser -> {
+                    foundUser.setEnabled(true);
+                    return userRepository.save(foundUser);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("user not found"));
+    }
+
+    public void disable(Long id) {
+        log.info("disable user {}", id);
+
+        Role adminRole = roleRepository.findByType(RoleType.ADMIN)
+                .orElseThrow(() -> new ResourceNotFoundException("role not found"));
+        long enabledAdminsCount = userRepository.findAll().stream()
+                .filter(user -> user.isEnabled())
+                .filter(user -> user.getRoles().contains(adminRole))
+                .count();
+        if (enabledAdminsCount > 1) {
+            userRepository.findById(id)
+                    .map(foundUser -> {
+                        foundUser.setEnabled(false);
+                        return userRepository.save(foundUser);
+                    })
+                    .orElseThrow(() -> new ResourceNotFoundException("user not found"));
+
+        } else {
+            throw new RuntimeException("can't disable last admin");
+        }
+    }
+
     public void delete(Long id) {
         log.info("delete user {}", id);
 
