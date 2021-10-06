@@ -1,7 +1,18 @@
 package com.sda.project.management.model;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -14,6 +25,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private Boolean enabled;
 
     @ManyToMany
     @JoinTable(
@@ -38,6 +50,7 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.enabled = true;
     }
 
     public Long getId() {
@@ -80,6 +93,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -108,6 +129,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", enabled='" + enabled + '\'' +
                 '}';
     }
 

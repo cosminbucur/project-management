@@ -4,37 +4,54 @@
     <title>Users</title>
 </head>
 
-<body th:style="'background: url(https://content.thriveglobal.com/wp-content/uploads/2020/04/0-6.jpeg) no-repeat center center fixed;'">
+<body>
 
 <div th:replace="fragments/header :: navbar"/>
 
 <div class="container">
-    <h1>Assigned users</h1>
-    <div class="col-md">
-        <div class="form-floating">
-            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                <option selected>Open this select menu</option>
-                <option value="1"> user Popescu Vlad</option>
-                <option value="2"> user Marinescu Elisabeta</option>
-                <option value="3"> user Ionescu Valentina</option>
-            </select>
-            <label for="floatingSelectGrid">Assign users</label>
-        </div>
+    <div class="me-auto p-2">
+        <h1>Users</h1>
     </div>
 
-    <h1>Users</h1>
-    <div th:each="user: ${users}">
-        <div class="card" style="width:300px; max-height: 500px;">
-            <img src="https://www.orangescrum.org/articles/wp-content/uploads/2020/01/Why-should-you-invest-in-an-Enterprise-Project-Management-Software.jpg"
-            <div class="card-body">
-                <p class="card-text" th:text="${user.email}"/>
-                <p class="card-text" th:text="|${user.firstName} ${user.lastName}|"></p>
-                <a th:href="@{/delete-user/{id}(id = ${user.id})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/edit-user/{id}(id = ${user.id})}" class="btn btn-primary">Edit</a>
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Projects</th>
+            <th scope="col">Enabled</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td>
+                <p th:text="|${user.firstName} ${user.lastName}|"></p>
+            </td>
+            <td>
+                <p th:text="${user.roles}"></p>
+            </td>
+            <td>
+                <p th:text="${user.projectAccessList}"></p>
+            </td>
+            <td>
+                <p th:text="${user.enabled}"></p>
+            </td>
+            <td>
+                <a th:href="@{/users/{id}/disable(id = ${user.id})}" th:if="${user.enabled == true}">
+                    <button class="btn btn-danger" type="button">Disable</button>
+                </a>
+                <a th:href="@{/users/{id}/enable(id = ${user.id})}" th:if="${user.enabled == false}">
+                    <button class="btn btn-success" type="button">Enable</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
+
 
 <div th:replace="fragments/footer :: footer"/>
 <div th:replace="fragments/footer-js :: footer-js"/>
