@@ -61,7 +61,25 @@ class SprintServiceIT {
     }
 
     @Test
+    void whenGetByProjectId_shouldReturnList() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
     void whenFindById_shouldReturnOne() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenGetActiveSprintByProjectId_shouldReturnOne() {
         // given
 
         // when
@@ -93,7 +111,7 @@ class SprintServiceIT {
 
         // when
         sprintService.addTaskToSprint(savedSprint.getId(), task.getId());
-        List<Task> tasks = taskService.getTasksInSprint(savedSprint.getId());
+        List<Task> tasks = taskService.getTasksBySprintId(savedSprint.getId());
 
         // then
         assertThat(tasks).hasSize(2);
@@ -128,5 +146,15 @@ class SprintServiceIT {
         // then
         assertThat(sprintService.findAll()).isEmpty();
         assertThat(taskService.findAll()).isNotNull();
+    }
+
+
+    @Test
+    void whenCountRemainingDays_shouldReturnOk() {
+        // given
+
+        // when
+
+        // then
     }
 }

@@ -1,5 +1,7 @@
 package com.sda.project.management.controller;
 
+import com.sda.project.management.model.Sprint;
+import com.sda.project.management.model.TaskStatus;
 import com.sda.project.management.service.ProjectService;
 import com.sda.project.management.service.SprintService;
 import com.sda.project.management.service.TaskService;
@@ -32,9 +34,19 @@ public class BoardController {
     @GetMapping("/projects/{id}/board")
     public String showBoardPage(Model model,
                                 @PathVariable Long id) {
+        Sprint activeSprint = sprintService.getActiveSprintByProjectId(id);
+        if (activeSprint != null) {
+            model.addAttribute("activeSprintGoal", activeSprint.getSprintGoal() == null ? "" : activeSprint.getSprintGoal());
+
+            Long activeSprintId = activeSprint.getId();
+            model.addAttribute("todoTasks", taskService.getTasksBySprintIdAndStatus(activeSprintId, TaskStatus.TODO));
+            model.addAttribute("progressTasks", taskService.getTasksBySprintIdAndStatus(activeSprintId, TaskStatus.IN_PROGRESS));
+            model.addAttribute("doneTasks", taskService.getTasksBySprintIdAndStatus(activeSprintId, TaskStatus.DONE));
+        }
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("tasks", taskService.findAll());
-        model.addAttribute("activeSprint", sprintService.getActiveSprint(id));
+        model.addAttribute("activeSprint", activeSprint);
+        model.addAttribute("remainingDays", sprintService.countRemainingDays(id));
         return "project/board";
     }
 }

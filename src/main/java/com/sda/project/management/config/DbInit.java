@@ -129,18 +129,21 @@ public class DbInit {
             task1.setStoryPoints(5);
             task1.setDescription("description");
             task1.setStatus(TaskStatus.TODO);
-            task1.setTaskType(TaskType.TASK);
+            task1.setTaskType(TaskType.STORY);
             task1.setAssignee(user);
             task1.setSprint(sprint1);
             taskRepository.save(task1);
 
-            // add task 2 to project 1 backlog
+            // add task 2 to project 1 sprint 1
             Task task2 = new Task();
             task2.setProject(project1);
-            task2.setSummary("bug summary");
-            task2.setDescription("bug description");
-            task2.setStatus(TaskStatus.IN_PROGRESS);
-            task2.setTaskType(TaskType.BUG);
+            task2.setSummary("summary");
+            task2.setStoryPoints(5);
+            task2.setDescription("description");
+            task2.setStatus(TaskStatus.TODO);
+            task2.setTaskType(TaskType.TASK);
+            task2.setAssignee(user);
+            task2.setSprint(sprint1);
             taskRepository.save(task2);
 
             // add task 3 to project 1 backlog
@@ -151,6 +154,15 @@ public class DbInit {
             task3.setStatus(TaskStatus.IN_PROGRESS);
             task3.setTaskType(TaskType.BUG);
             taskRepository.save(task3);
+
+            // add task 4 to project 1 backlog
+            Task task4 = new Task();
+            task4.setProject(project1);
+            task4.setSummary("bug summary");
+            task4.setDescription("bug description");
+            task4.setStatus(TaskStatus.DONE);
+            task4.setTaskType(TaskType.TASK);
+            taskRepository.save(task4);
 
             // add user to project 1
             ProjectAccess projectAccess1 = new ProjectAccess();

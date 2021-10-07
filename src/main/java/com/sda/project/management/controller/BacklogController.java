@@ -39,9 +39,9 @@ public class BacklogController {
         model.addAttribute("tasks", taskService.findAll());
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("users", projectAccessService.getAssignedUsers(id));
-        model.addAttribute("sprints", sprintService.findByProjectId(id));
-        model.addAttribute("activeSprint", sprintService.getActiveSprint(id));
-        model.addAttribute("backlogTasks", taskService.findProjectUnassignedTasks(id));
+        model.addAttribute("sprints", sprintService.getByProjectId(id));
+        model.addAttribute("activeSprint", sprintService.getActiveSprintByProjectId(id));
+        model.addAttribute("backlogTasks", taskService.getUnassignedTasksByProjectId(id));
         return "project/backlog";
     }
 }

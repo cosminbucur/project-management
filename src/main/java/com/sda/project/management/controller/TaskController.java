@@ -21,20 +21,20 @@ public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
-    private final TaskService taskService;
-    private final UserService userService;
     private final ProjectService projectService;
     private final SprintService sprintService;
+    private final TaskService taskService;
+    private final UserService userService;
 
     @Autowired
-    public TaskController(TaskService taskService,
-                          UserService userService,
-                          ProjectService projectService,
-                          SprintService sprintService) {
-        this.taskService = taskService;
-        this.userService = userService;
+    public TaskController(ProjectService projectService,
+                          SprintService sprintService,
+                          TaskService taskService,
+                          UserService userService) {
         this.projectService = projectService;
         this.sprintService = sprintService;
+        this.taskService = taskService;
+        this.userService = userService;
     }
 
     @GetMapping("/tasks")
@@ -51,7 +51,7 @@ public class TaskController {
         model.addAttribute("project", projectService.findById(projectId));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("sprints", sprintService.findAll());
+        model.addAttribute("sprints", sprintService.getByProjectId(projectId));
         return "task/task-add";
     }
 
@@ -71,13 +71,14 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/tasks/{id}/edit")
+    @GetMapping("/projects/{projectId}/tasks/{taskId}/edit")
     public String showEditForm(Model model,
-                               @PathVariable Long id) {
-        model.addAttribute("task", taskService.findById(id));
+                               @PathVariable Long projectId,
+                               @PathVariable Long taskId) {
+        model.addAttribute("task", taskService.findById(taskId));
         model.addAttribute("users", userService.findAll());
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("sprints", sprintService.findAll());
+        model.addAttribute("sprints", sprintService.getByProjectId(projectId));
         return "task/task-edit";
     }
 

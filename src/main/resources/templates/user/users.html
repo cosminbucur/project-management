@@ -38,9 +38,12 @@
                 <p th:text="${user.enabled}"></p>
             </td>
             <td>
+                <!-- disable button -->
                 <a th:href="@{/users/{id}/disable(id = ${user.id})}" th:if="${user.enabled == true}">
                     <button class="btn btn-danger" type="button">Disable</button>
                 </a>
+
+                <!-- enable button -->
                 <a th:href="@{/users/{id}/enable(id = ${user.id})}" th:if="${user.enabled == false}">
                     <button class="btn btn-success" type="button">Enable</button>
                 </a>

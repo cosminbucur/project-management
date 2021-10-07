@@ -12,6 +12,6 @@ public interface SprintRepository extends JpaRepository<Sprint, Long> {
 
     Sprint findByName(String name);
 
-    @Query("FROM Sprint s WHERE s.project.id = :id AND s.complete = false")
-    List<Sprint> findByProjectId(Long id);
+    @Query("FROM Sprint s WHERE s.project.id = :projectId AND s.complete = false")
+    List<Sprint> getByProjectId(Long projectId);
 }

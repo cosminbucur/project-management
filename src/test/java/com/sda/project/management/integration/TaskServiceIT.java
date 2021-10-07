@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TaskServiceIT {
 
     @Autowired
-    TaskService taskService;
-
-    @Autowired
     ProjectService projectService;
 
     @Autowired
     SprintService sprintService;
+
+    @Autowired
+    TaskService taskService;
 
     @BeforeEach
     void setUp() {
@@ -67,6 +67,55 @@ class TaskServiceIT {
 
     @Test
     void whenFindById_shouldReturnOne() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenGetUnassignedTasksByProjectId_shouldReturnOk() {
+        // given
+        Project project = new Project();
+        project.setName("project");
+        projectService.save(project);
+
+        Task unassignedTask = new Task();
+        unassignedTask.setProject(project);
+        unassignedTask.setTaskType(TaskType.TASK);
+        unassignedTask.setSummary("summary 1");
+        taskService.save(unassignedTask);
+
+        Task assignedTask = new Task();
+        assignedTask.setProject(project);
+        assignedTask.setTaskType(TaskType.TASK);
+        assignedTask.setSummary("summary 2");
+        taskService.save(assignedTask);
+
+        Sprint savedSprint = sprintService.save(project.getId());
+
+        sprintService.addTaskToSprint(savedSprint.getId(), assignedTask.getId());
+
+        // when
+        List<Task> projectUnassignedTasks = taskService.getUnassignedTasksByProjectId(project.getId());
+
+        // then
+        assertThat(projectUnassignedTasks).hasSize(1);
+        assertThat("summary 2").isEqualTo(assignedTask.getSummary());
+    }
+
+    @Test
+    void whenGetTasksBySprintId_shouldReturnOk() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void whenGetTasksBySprintIdAndStatus_shouldReturnOk() {
         // given
 
         // when
@@ -120,37 +169,6 @@ class TaskServiceIT {
     }
 
     @Test
-    void whenFindProjectUnassignedTasks_shouldReturnList() {
-        // given
-        Project project = new Project();
-        project.setName("project");
-        projectService.save(project);
-
-        Task unassignedTask = new Task();
-        unassignedTask.setProject(project);
-        unassignedTask.setTaskType(TaskType.TASK);
-        unassignedTask.setSummary("summary 1");
-        taskService.save(unassignedTask);
-
-        Task assignedTask = new Task();
-        assignedTask.setProject(project);
-        assignedTask.setTaskType(TaskType.TASK);
-        assignedTask.setSummary("summary 2");
-        taskService.save(assignedTask);
-
-        Sprint savedSprint = sprintService.save(project.getId());
-
-        sprintService.addTaskToSprint(savedSprint.getId(), assignedTask.getId());
-
-        // when
-        List<Task> projectUnassignedTasks = taskService.findProjectUnassignedTasks(project.getId());
-
-        // then
-        assertThat(projectUnassignedTasks).hasSize(1);
-        assertThat("summary 2").isEqualTo(assignedTask.getSummary());
-    }
-
-    @Test
     void whenRemoveTaskFromSprint_shouldHaveSprintWithoutTask() {
         // given
         Project project = new Project();
@@ -168,6 +186,6 @@ class TaskServiceIT {
         taskService.removeTaskFromSprint(savedSprint.getId(), assignedTask.getId());
 
         // then
-        assertThat(taskService.getTasksInSprint(savedSprint.getId())).isEmpty();
+        assertThat(taskService.getTasksBySprintId(savedSprint.getId())).isEmpty();
     }
 }

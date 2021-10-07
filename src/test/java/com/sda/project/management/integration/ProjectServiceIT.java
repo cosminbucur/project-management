@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProjectServiceIT {
 
     @Autowired
+    ProjectService projectService;
+
+    @Autowired
     SprintService sprintService;
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    ProjectService projectService;
 
     @Test
     void whenSaveNewProjectName_shouldReturnProject() {
@@ -111,15 +111,6 @@ class ProjectServiceIT {
 
         // then
         assertThat(projectWithSprint.getSprints()).contains(savedSprint);
-    }
-
-    @Test
-    void whenRemoveSprintFromProject_shouldHaveProjectWithoutSprint() {
-        // given
-
-        // when
-
-        // then
     }
 
     @Test

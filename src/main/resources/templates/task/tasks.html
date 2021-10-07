@@ -26,7 +26,8 @@
 
     <ul class="list-group" th:each="task : ${tasks}">
         <li class="list-group-item d-flex mb-3"
-            th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+            th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}">
+
             <div class="me-auto p-2">
                 <span th:text="${task.taskType}"></span>
 
@@ -42,10 +43,12 @@
 
                 <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
 
-                <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                <!-- edit button -->
+                <a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}">
                     <i class="fas fa-edit"></i>
                 </a>
 
+                <!-- delete button -->
                 <a th:href="@{/tasks/{id}/delete(id = ${task.id})}">
                     <i class="fas fa-trash"></i>
                 </a>
