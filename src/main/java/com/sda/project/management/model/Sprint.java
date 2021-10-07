@@ -91,6 +91,9 @@ public class Sprint {
     }
 
     public Integer getStoryPoints() {
+        this.storyPoints = getTasks().stream()
+                .mapToInt(task -> task.getStoryPoints())
+                .sum();
         return storyPoints;
     }
 
