@@ -54,6 +54,7 @@ public class UserService implements UserDetailsService {
 
     public List<User> findAll() {
         log.info("find users");
+
         return userRepository.findAll();
     }
 

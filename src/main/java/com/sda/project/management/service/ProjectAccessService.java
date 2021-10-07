@@ -37,6 +37,8 @@ public class ProjectAccessService {
     }
 
     public void addUserToProject(ProjectAccessInfo projectAccessInfo) {
+        log.info("add user to project {}", projectAccessInfo);
+
         Project project = projectRepository.findById(projectAccessInfo.getProjectId())
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
 
@@ -54,6 +56,8 @@ public class ProjectAccessService {
     }
 
     public ProjectAccess removeUserFromProject(Long userId, Long projectId) {
+        log.info("remove user {} from project {}", userId, projectId);
+
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
         User user = userRepository.findById(userId)
@@ -68,21 +72,25 @@ public class ProjectAccessService {
         return projectAccessRepository.save(projectAccess);
     }
 
-    public List<User> getAssignedUsers(Long id) {
-        return projectAccessRepository.getUsersInProject(id).stream()
+    public List<User> getAssignedUsers(Long projectId) {
+        log.info("get assigned users by project {}", projectId);
+
+        return projectAccessRepository.getUsersByProjectId(projectId).stream()
                 .map(projectAccess -> projectAccess.getUser())
                 .collect(Collectors.toList());
     }
 
-    public Set<User> getUnassignedUsers(Long id) {
-        List<Long> assignedUsers = getUserIdsInProject(id);
+    public Set<User> getUnassignedUsers(Long projectId) {
+        log.info("get unassigned users by project {}", projectId);
+
+        List<Long> assignedUsers = getUserIdsInProject(projectId);
         return userRepository.findAll().stream()
                 .filter(user -> !assignedUsers.contains(user.getId()))
                 .collect(Collectors.toSet());
     }
 
     private List<Long> getUserIdsInProject(Long id) {
-        return projectAccessRepository.getUsersInProject(id).stream()
+        return projectAccessRepository.getUsersByProjectId(id).stream()
                 .map(projectAccess -> projectAccess.getUser().getId())
                 .collect(Collectors.toList());
     }

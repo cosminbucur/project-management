@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +29,9 @@ public class SprintService {
     private final ProjectRepository projectRepository;
 
     @Autowired
-    public SprintService(SprintRepository sprintRepository, TaskRepository taskRepository, ProjectRepository projectRepository) {
+    public SprintService(SprintRepository sprintRepository,
+                         TaskRepository taskRepository,
+                         ProjectRepository projectRepository) {
         this.sprintRepository = sprintRepository;
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
@@ -35,10 +39,12 @@ public class SprintService {
 
     @Transactional
     public Sprint save(Long projectId) {
-        long nextSprintNumber = sprintRepository.findByProjectId(projectId).size() + 1L;
+        long nextSprintNumber = sprintRepository.getByProjectId(projectId).size() + 1L;
         String sprintName = "Sprint " + nextSprintNumber;
         Sprint sprint = new Sprint(sprintName);
+
         log.info("save sprint {}", sprint);
+
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project was not found"));
         project.addSprint(sprint);
@@ -51,10 +57,10 @@ public class SprintService {
         return sprintRepository.findAll();
     }
 
-    public List<Sprint> findByProjectId(Long projectId) {
+    public List<Sprint> getByProjectId(Long projectId) {
         log.info("find sprints by project id {}", projectId);
 
-        return sprintRepository.findByProjectId(projectId);
+        return sprintRepository.getByProjectId(projectId);
     }
 
     public Sprint findById(Long id) {
@@ -62,6 +68,17 @@ public class SprintService {
 
         return sprintRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+    }
+
+    public Sprint getActiveSprintByProjectId(Long projectId) {
+        log.info("get active sprint by project {}", projectId);
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
+        return project.getSprints().stream()
+                .filter(sprint -> sprint.isActive().equals(true))
+                .findFirst()
+                .orElse(null);
     }
 
     public void update(Long sprintId, SprintUpdate sprintData) {
@@ -128,12 +145,14 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
-    public Sprint getActiveSprint(Long projectId) {
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
-        return project.getSprints().stream()
-                .filter(sprint -> sprint.isActive().equals(true))
-                .findFirst()
-                .orElse(null);
+    public long countRemainingDays(Long projectId) {
+        log.info("count remaining days for project {}", projectId);
+
+        Sprint activeSprint = getActiveSprintByProjectId(projectId);
+        if (activeSprint != null) {
+            return ChronoUnit.DAYS.between(LocalDate.now(), activeSprint.getDateTo());
+        } else {
+            return 0;
+        }
     }
 }

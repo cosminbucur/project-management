@@ -14,16 +14,128 @@
 
     <h2>Board</h2>
 
-    <h1 th:if="${activeSprint != null}" th:text="${activeSprint.name}"></h1>
-
-    <a th:href="@{/projects/{projectId}/sprints/{sprintId}/complete(projectId = ${project.id}, sprintId = ${activeSprint.id})}"
-       th:if="${activeSprint != null}">
-        <button class="btn btn-primary" type="button">Complete sprint</button>
-    </a>
-
+    <!-- no active sprint -->
     <p th:if="${activeSprint == null}">No sprint is active. Start a sprint to see the board.</p>
 
-    <!--  TODO: add sprint with tasks  -->
+    <div th:if="${activeSprint != null}">
+        <h1 th:text="${activeSprint.name}"></h1>
+        <p th:text="${activeSprintGoal}"></p>
+
+        <b>
+            <span th:text="${#temporals.format(activeSprint.dateFrom, 'd MMM')}"></span> -
+            <span th:text="${#temporals.format(activeSprint.dateTo, 'd MMM')}"></span>
+        </b>
+        <span th:text="${remainingDays}"></span><span> day(s) remaining.</span>
+
+        <a th:href="@{/projects/{projectId}/sprints/{sprintId}/complete(projectId = ${project.id}, sprintId = ${activeSprint.id})}">
+            <button class="btn btn-primary" type="button">Complete sprint</button>
+        </a>
+
+        <!-- edit button -->
+        <a th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${activeSprint.id})}">
+            <i class="fas fa-edit"></i>
+        </a>
+
+        <div class="row">
+
+            <div class="col">
+                <h2>TODO</h2><span th:text="|${#lists.size(todoTasks)} issues|"></span>
+
+                <!-- issue list -->
+                <ul class="list-group" th:each="task : ${todoTasks}">
+
+                    <!-- issue -->
+                    <li class="issue-wrapper col-lg-3 d-flex list-group-item mb-3"
+                        th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+
+                        <!-- issue info -->
+                        <div class="issue-info me-auto p-2">
+
+                            <!-- issue left -->
+                            <div th:text="${task.summary}"></div>
+
+                            <!-- issue right -->
+                            <div>
+                                <div>
+                                    <span th:text="${task.taskType}"></span>
+                                    <span th:text="|${task.project.projectKey}-${task.id}|"></span>
+                                </div>
+                                <div>
+                                    <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
+                                    <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col">
+                <h2>IN PROGRESS</h2><span th:text="|${#lists.size(progressTasks)} issues|"></span>
+
+                <!-- issue list -->
+                <ul class="list-group" th:each="task : ${progressTasks}">
+
+                    <!-- issue -->
+                    <li class="issue-wrapper col-lg-3 d-flex list-group-item mb-3"
+                        th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+
+                        <!-- issue info -->
+                        <div class="issue-info me-auto p-2">
+
+                            <!-- issue left -->
+                            <div th:text="${task.summary}"></div>
+
+                            <!-- issue right -->
+                            <div>
+                                <div>
+                                    <span th:text="${task.taskType}"></span>
+                                    <span th:text="|${task.project.projectKey}-${task.id}|"></span>
+                                </div>
+                                <div>
+                                    <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
+                                    <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col">
+                <h2>DONE</h2><span th:text="|${#lists.size(doneTasks)} issues|"></span>
+
+                <!-- issue list -->
+                <ul class="list-group" th:each="task : ${doneTasks}">
+
+                    <!-- issue -->
+                    <li class="issue-wrapper col-lg-3 d-flex list-group-item mb-3"
+                        th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+
+                        <!-- issue info -->
+                        <div class="issue-info me-auto p-2">
+
+                            <!-- issue left -->
+                            <div th:text="${task.summary}"></div>
+
+                            <!-- issue right -->
+                            <div>
+                                <div>
+                                    <span th:text="${task.taskType}"></span>
+                                    <span th:text="|${task.project.projectKey}-${task.id}|"></span>
+                                </div>
+                                <div>
+                                    <span class="badge rounded-pill bg-primary" th:text="${task.storyPoints}"></span>
+                                    <span th:text="${task.assignee} ? |${task.assignee.firstName} ${task.assignee.lastName}| : ''"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 

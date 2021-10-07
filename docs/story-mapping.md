@@ -15,9 +15,10 @@
 - update project info
 - delete project
 - as project lead, add user to project
+- view backlog page
+- view board page
 
 # manage task
-- view backlog page
 - view task list
 - create task
 - update task info
@@ -34,8 +35,8 @@
 - assign user to task
 - un-assign user from task
 - start sprint
+- complete sprint
 - view sprint total story points
-- view board
 
 # manage user
 - view users page

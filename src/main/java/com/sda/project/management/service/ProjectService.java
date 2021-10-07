@@ -75,7 +75,7 @@ public class ProjectService {
     }
 
     public void setProjectLead(Long projectId, Long userId) {
-        log.info("save project lead {}", userId);
+        log.info("save project lead {} to project {}", userId, projectId);
 
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));
@@ -87,6 +87,8 @@ public class ProjectService {
 
     @Transactional
     public void addSprintToProject(Long projectId, Long sprintId) {
+        log.info("add sprint {} to project {}", sprintId, projectId);
+
         Sprint sprint = sprintRepository.findById(sprintId)
                 .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
         Project project = projectRepository.findById(projectId)

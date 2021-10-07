@@ -41,9 +41,12 @@
                 <p th:text="|${project.projectLead.firstName} ${project.projectLead.lastName}|"></p>
             </td>
             <td>
+                <!-- edit button -->
                 <a th:href="@{/projects/{id}/edit(id = ${project.id})}">
                     <i class="fas fa-edit"></i>
                 </a>
+
+                <!-- delete button -->
                 <a th:href="@{/projects/{id}/delete(id = ${project.id})}">
                     <i class="fas fa-trash"></i>
                 </a>

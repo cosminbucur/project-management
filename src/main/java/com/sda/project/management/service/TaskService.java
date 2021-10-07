@@ -5,7 +5,7 @@ import com.sda.project.management.dto.TaskEdit;
 import com.sda.project.management.mapper.TaskMapper;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
-import com.sda.project.management.repository.ProjectRepository;
+import com.sda.project.management.model.TaskStatus;
 import com.sda.project.management.repository.SprintRepository;
 import com.sda.project.management.repository.TaskRepository;
 import org.slf4j.Logger;
@@ -23,17 +23,14 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final SprintRepository sprintRepository;
-    private final ProjectRepository projectRepository;
     private final TaskMapper taskMapper;
 
     @Autowired
     public TaskService(TaskRepository taskRepository,
                        SprintRepository sprintRepository,
-                       ProjectRepository projectRepository,
                        TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.sprintRepository = sprintRepository;
-        this.projectRepository = projectRepository;
         this.taskMapper = taskMapper;
     }
 
@@ -56,10 +53,22 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException("task not found"));
     }
 
-    public List<Task> getTasksInSprint(Long sprintId) {
-        log.info("get tasks in sprint {}", sprintId);
+    public List<Task> getUnassignedTasksByProjectId(Long projectId) {
+        log.info("get unassigned tasks by project id {}", projectId);
 
-        return taskRepository.getTasksInSprint(sprintId);
+        return taskRepository.getUnassignedTasksByProjectId(projectId);
+    }
+
+    public List<Task> getTasksBySprintId(Long sprintId) {
+        log.info("get tasks by sprint id {}", sprintId);
+
+        return taskRepository.getTasksBySprintId(sprintId);
+    }
+
+    public List<Task> getTasksBySprintIdAndStatus(Long sprintId, TaskStatus status) {
+        log.info("get tasks by sprint id {} and status {}", sprintId, status);
+
+        return taskRepository.getTasksBySprintIdAndStatus(sprintId, status);
     }
 
     public void update(Long taskId, TaskEdit taskData) {
@@ -79,10 +88,6 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public List<Task> findProjectUnassignedTasks(Long id) {
-        return taskRepository.findProjectUnassignedTasks(id);
-    }
-
     @Transactional
     public void removeTaskFromSprint(Long sprintId, Long taskId) {
         log.info("removed task {} from sprint {}", taskId, sprintId);
@@ -94,5 +99,4 @@ public class TaskService {
                 .orElseThrow(() -> new ResourceNotFoundException("task not found"));
         sprint.removeTaskFromSprint(task);
     }
-
 }

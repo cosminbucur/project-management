@@ -44,7 +44,7 @@ class ProjectAccessServiceTest {
         ProjectAccess projectAccess2 = new ProjectAccess();
         projectAccess2.setUser(user2);
 
-        when(projectAccessRepository.getUsersInProject(anyLong()))
+        when(projectAccessRepository.getUsersByProjectId(anyLong()))
                 .thenReturn(List.of(projectAccess1, projectAccess2));
         when(userRepository.findAll())
                 .thenReturn(List.of(user1, user2, user3));

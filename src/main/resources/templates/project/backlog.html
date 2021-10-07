@@ -101,7 +101,7 @@
 
                         <!-- issue -->
                         <li class="issue-wrapper list-group-item d-flex mb-3"
-                            th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                            th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}">
 
                             <!-- issue info left -->
                             <div class="issue-info-left me-auto p-2">
@@ -118,7 +118,7 @@
 
                                 <!-- actions -->
                                 <span class="actions">
-                                    <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                                    <a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
@@ -165,7 +165,7 @@
 
             <!-- issue -->
             <li class="issue-wrapper list-group-item d-flex mb-3"
-                th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+                th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}">
 
                 <!-- issue info left -->
                 <div class="issue-info-left me-auto p-2">
@@ -182,10 +182,13 @@
 
                     <!-- actions -->
                     <span class="actions">
-                        <a th:href="@{/tasks/{id}/edit(id = ${task.id})}">
+
+                        <!-- edit button -->
+                        <a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId = ${task.project.id}, taskId = ${task.id})}">
                             <i class="fas fa-edit"></i>
                         </a>
 
+                        <!-- delete button -->
                         <a th:href="@{/projects/{projectId}/tasks/{taskId}/delete(projectId = ${project.id}, taskId = ${task.id})}">
                             <i class="fas fa-trash"></i>
                         </a>
