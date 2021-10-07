@@ -35,7 +35,7 @@ public class SprintService {
 
     @Transactional
     public Sprint save(Long projectId) {
-        long nextSprintNumber = sprintRepository.count() + 1;
+        long nextSprintNumber = sprintRepository.findByProjectId(projectId).size() + 1L;
         String sprintName = "Sprint " + nextSprintNumber;
         Sprint sprint = new Sprint(sprintName);
         log.info("save sprint {}", sprint);
@@ -49,6 +49,12 @@ public class SprintService {
         log.info("find sprints");
 
         return sprintRepository.findAll();
+    }
+
+    public List<Sprint> findByProjectId(Long projectId) {
+        log.info("find sprints by project id {}", projectId);
+
+        return sprintRepository.findByProjectId(projectId);
     }
 
     public Sprint findById(Long id) {
@@ -99,5 +105,24 @@ public class SprintService {
         sprint.removeTasksFromSprint(tasks);
 
         sprintRepository.deleteById(id);
+    }
+
+    public void start(Long sprintId) {
+        log.info("start sprint {}", sprintId);
+
+        Sprint sprint = sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+
+        sprint.setActive(true);
+        sprintRepository.save(sprint);
+    }
+
+    public Sprint getActiveSprint(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("project not found"));
+        return project.getSprints().stream()
+                .filter(sprint -> sprint.isActive().equals(true))
+                .findFirst()
+                .orElse(null);
     }
 }

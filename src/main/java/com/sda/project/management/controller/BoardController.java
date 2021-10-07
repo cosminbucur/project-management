@@ -34,8 +34,7 @@ public class BoardController {
                                 @PathVariable Long id) {
         model.addAttribute("project", projectService.findById(id));
         model.addAttribute("tasks", taskService.findAll());
-        // TODO: no hardcode
-        model.addAttribute("currentSprint", sprintService.findAll().get(0));
+        model.addAttribute("activeSprint", sprintService.getActiveSprint(id));
         return "project/board";
     }
 }

@@ -55,6 +55,13 @@
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
 
                         <span class="actions">
+                            <span th:text="${sprint.active}"></span>
+
+                            <a th:href="@{/projects/{projectId}/sprints/{sprintId}/start(projectId = ${project.id}, sprintId = ${sprint.id})}"
+                               th:if="${activeSprint == null}">
+                                <button class="btn btn-primary" type="button">Start sprint</button>
+                            </a>
+
                             <a th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${sprint.id})}">
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -66,7 +73,7 @@
                 </div>
 
                 <!-- no tasks -->
-                <div th:unless="${#lists.size(sprint.tasks) > 0}">
+                <div th:if="${#lists.size(sprint.tasks) == 0}">
                     <span>Plan a sprint by adding issues here.</span>
                 </div>
 
@@ -128,7 +135,7 @@
     <div class="backlog-accordion d-flex mb-3">
 
         <div class="me-auto p-2">
-            <b><span>Backlog</span></b>
+            <b><span>Backlog</span></b> <span>(<a th:text="${#lists.size(backlogTasks)}"></a> issues)</span>
         </div>
 
         <div class="p-2">
