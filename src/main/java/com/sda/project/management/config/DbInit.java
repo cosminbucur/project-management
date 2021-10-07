@@ -61,23 +61,26 @@ public class DbInit {
         return args -> {
             log.info("setup initial data");
 
+            // create privileges
             Privilege readPrivilege = createPrivilegeIfNotFound(PrivilegeType.READ_PRIVILEGE);
             Privilege writePrivilege = createPrivilegeIfNotFound(PrivilegeType.WRITE_PRIVILEGE);
 
+            // create roles
             createRoleIfNotFound(RoleType.ADMIN, Set.of(readPrivilege, writePrivilege));
             createRoleIfNotFound(RoleType.USER, Set.of(readPrivilege, writePrivilege));
 
+            // create main admin, admin, user
             User mainAdmin = createMainAdmin();
+            userRepository.save(mainAdmin);
+
             User admin = createAdmin();
             User user = createUser();
 
-            userRepository.save(mainAdmin);
-
-            Project project = new Project();
-            project.setName("Sakura");
-            project.setProjectKey("SAK");
-            project.setProjectLead(admin);
-            projectRepository.save(project);
+            Project project1 = new Project();
+            project1.setName("Sakura");
+            project1.setProjectKey("SAK");
+            project1.setProjectLead(admin);
+            projectRepository.save(project1);
 
             Project project2 = new Project();
             project2.setName("Agile");
@@ -85,50 +88,80 @@ public class DbInit {
             project2.setProjectLead(user);
             projectRepository.save(project2);
 
-            Sprint sprint = new Sprint();
-            sprint.setName("SAK-20-1");
-            sprint.setDateFrom(LocalDate.now());
-            sprint.setDateTo(sprint.getDateFrom().plusDays(14));
-            sprint.setStoryPoints(20);
-            sprint.setSprintGoal("goal");
-            sprintRepository.save(sprint);
+            // add sprint 1 to project 1
+            Sprint sprint1 = new Sprint();
+            sprint1.setName("SAK-20-1");
+            sprint1.setDateFrom(LocalDate.now());
+            sprint1.setDateTo(sprint1.getDateFrom().plusDays(14));
+            sprint1.setStoryPoints(20);
+            sprint1.setSprintGoal("goal");
+            sprint1.setActive(false);
+            sprint1.setProject(project1);
+            sprintRepository.save(sprint1);
 
+            // add sprint 2 to project 1
+            Sprint sprint2 = new Sprint();
+            sprint2.setName("SAK-20-2");
+            sprint2.setDateFrom(LocalDate.now());
+            sprint2.setDateTo(sprint2.getDateFrom().plusDays(14));
+            sprint2.setStoryPoints(20);
+            sprint2.setSprintGoal("goal 2");
+            sprint2.setActive(false);
+            sprint2.setProject(project1);
+            sprintRepository.save(sprint2);
+
+            // add sprint 3 to project 2
+            Sprint sprint3 = new Sprint();
+            sprint3.setName("AGL-20-1");
+            sprint3.setDateFrom(LocalDate.now());
+            sprint3.setDateTo(sprint3.getDateFrom().plusDays(14));
+            sprint3.setStoryPoints(20);
+            sprint3.setSprintGoal("goal 3");
+            sprint3.setActive(false);
+            sprint3.setProject(project2);
+            sprintRepository.save(sprint3);
+
+            // add task 1 to project 1 sprint 1
             Task task1 = new Task();
-            task1.setProject(project);
+            task1.setProject(project1);
             task1.setSummary("summary");
             task1.setStoryPoints(5);
             task1.setDescription("description");
             task1.setStatus(TaskStatus.TODO);
             task1.setTaskType(TaskType.TASK);
             task1.setAssignee(user);
-            task1.setSprint(sprint);
+            task1.setSprint(sprint1);
             taskRepository.save(task1);
 
+            // add task 2 to project 1 backlog
             Task task2 = new Task();
-            task2.setProject(project);
+            task2.setProject(project1);
             task2.setSummary("bug summary");
             task2.setDescription("bug description");
             task2.setStatus(TaskStatus.IN_PROGRESS);
             task2.setTaskType(TaskType.BUG);
             taskRepository.save(task2);
 
+            // add task 3 to project 1 backlog
             Task task3 = new Task();
-            task3.setProject(project);
+            task3.setProject(project1);
             task3.setSummary("bug summary");
             task3.setDescription("bug description");
             task3.setStatus(TaskStatus.IN_PROGRESS);
             task3.setTaskType(TaskType.BUG);
             taskRepository.save(task3);
 
+            // add user to project 1
             ProjectAccess projectAccess1 = new ProjectAccess();
             projectAccess1.setUser(user);
-            projectAccess1.setProject(project);
+            projectAccess1.setProject(project1);
             projectAccess1.setCreatedAt(LocalDate.now());
             projectAccessRepository.save(projectAccess1);
 
+            // add admin to project 1
             ProjectAccess projectAccess2 = new ProjectAccess();
             projectAccess2.setUser(admin);
-            projectAccess2.setProject(project);
+            projectAccess2.setProject(project1);
             projectAccess2.setCreatedAt(LocalDate.now());
             projectAccessRepository.save(projectAccess2);
         };
@@ -165,7 +198,6 @@ public class DbInit {
                 "alex",
                 "vasile");
         Role userRole = roleRepository.findByType(RoleType.USER).orElseThrow();
-        ;
         user.addRole(userRole);
         return userRepository.save(user);
     }

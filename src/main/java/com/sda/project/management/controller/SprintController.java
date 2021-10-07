@@ -67,6 +67,13 @@ public class SprintController {
         }
     }
 
+    @GetMapping("/projects/{projectId}/sprints/{sprintId}/start")
+    public String start(@PathVariable Long projectId,
+                        @PathVariable Long sprintId) {
+        sprintService.start(sprintId);
+        return "redirect:/projects/" + projectId + "/backlog";
+    }
+
     @GetMapping("/projects/{projectId}/sprints/{sprintId}/delete")
     public String delete(Model model,
                          @PathVariable Long projectId,

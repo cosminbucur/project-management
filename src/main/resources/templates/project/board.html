@@ -12,7 +12,11 @@
 
 <div class="container">
 
-    <h1 th:text="${currentSprint.name}"></h1>
+    <h2>Board</h2>
+
+    <h1 th:if="${activeSprint != null}" th:text="${activeSprint.name}"></h1>
+
+    <p th:if="${activeSprint == null}">No sprint is active. Start a sprint to see the board.</p>
 
     <!--  TODO: add sprint with tasks  -->
 
