@@ -36,6 +36,8 @@ public class Sprint {
 
     private Boolean active;
 
+    private Boolean complete;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
@@ -53,6 +55,7 @@ public class Sprint {
     public Sprint(String name) {
         this.name = name;
         this.active = false;
+        this.complete = false;
     }
 
     public Long getId() {
@@ -103,6 +106,14 @@ public class Sprint {
         this.active = active;
     }
 
+    public Boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
+
     public Project getProject() {
         return project;
     }
@@ -150,6 +161,7 @@ public class Sprint {
                 ", storyPoints=" + storyPoints +
                 ", sprintGoal=" + sprintGoal +
                 ", active=" + active +
+                ", complete=" + complete +
                 '}';
     }
 

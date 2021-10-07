@@ -74,6 +74,13 @@ public class SprintController {
         return "redirect:/projects/" + projectId + "/backlog";
     }
 
+    @GetMapping("/projects/{projectId}/sprints/{sprintId}/complete")
+    public String complete(@PathVariable Long projectId,
+                           @PathVariable Long sprintId) {
+        sprintService.complete(sprintId);
+        return "redirect:/projects/" + projectId + "/backlog";
+    }
+
     @GetMapping("/projects/{projectId}/sprints/{sprintId}/delete")
     public String delete(Model model,
                          @PathVariable Long projectId,

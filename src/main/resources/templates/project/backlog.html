@@ -44,8 +44,16 @@
                     <!-- sprint info left -->
                     <div class="sprint-info-left me-auto">
                         <b><span th:text="${sprint.name}"></span></b>
-                        <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span> -
+                        <span th:text="${#temporals.format(sprint.dateFrom, 'd MMM')}"></span>
+                        <span th:if="${sprint.dateFrom != null} or ${sprint.dateTo != null}"> - </span>
                         <span th:text="${#temporals.format(sprint.dateTo, 'd MMM')}"></span>
+
+                        <a class="btn btn-primary btn-sm" role="button"
+                           th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${sprint.id})}"
+                           th:if="${sprint.dateFrom == null} or ${sprint.dateTo == null}">
+                            <i class="fas fa-pencil-alt"></i> Add dates
+                        </a>
+
                         <span>(<a th:text="${#lists.size(sprint.tasks)}"></a> issues)</span>
                     </div>
 
@@ -55,16 +63,25 @@
                         <span class="badge rounded-pill bg-primary" th:text="${sprint.storyPoints}"></span>
 
                         <span class="actions">
-                            <span th:text="${sprint.active}"></span>
 
+                            <!-- start sprint button -->
                             <a th:href="@{/projects/{projectId}/sprints/{sprintId}/start(projectId = ${project.id}, sprintId = ${sprint.id})}"
                                th:if="${activeSprint == null}">
                                 <button class="btn btn-primary" type="button">Start sprint</button>
                             </a>
 
+                            <!-- complete sprint button -->
+                            <a th:href="@{/projects/{projectId}/sprints/{sprintId}/complete(projectId = ${project.id}, sprintId = ${sprint.id})}"
+                               th:if="${sprint.active}">
+                                <button class="btn btn-primary" type="button">Complete sprint</button>
+                            </a>
+
+                            <!-- edit button -->
                             <a th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${sprint.id})}">
                                 <i class="fas fa-edit"></i>
                             </a>
+
+                            <!-- delete button -->
                             <a th:href="@{/projects/{projectId}/sprints/{sprintId}/delete(projectId = ${project.id}, sprintId = ${sprint.id})}">
                                 <i class="fas fa-trash"></i>
                             </a>
@@ -79,11 +96,6 @@
 
                 <!-- tasks in sprint -->
                 <div class="sprint-task-list" th:if="${#lists.size(sprint.tasks) > 0}">
-
-                    <a class="btn btn-primary btn-sm" role="button"
-                       th:href="@{/projects/{projectId}/sprints/{sprintId}/edit(projectId = ${project.id}, sprintId = ${sprint.id})}">
-                        <i class="fas fa-pencil-alt"></i> Add dates
-                    </a>
 
                     <ul class="list-group" th:each="task : ${sprint.tasks}">
 

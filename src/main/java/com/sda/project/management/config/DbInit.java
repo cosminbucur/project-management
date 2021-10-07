@@ -96,17 +96,17 @@ public class DbInit {
             sprint1.setStoryPoints(20);
             sprint1.setSprintGoal("goal");
             sprint1.setActive(false);
+            sprint1.setComplete(false);
             sprint1.setProject(project1);
             sprintRepository.save(sprint1);
 
             // add sprint 2 to project 1
             Sprint sprint2 = new Sprint();
             sprint2.setName("SAK-20-2");
-            sprint2.setDateFrom(LocalDate.now());
-            sprint2.setDateTo(sprint2.getDateFrom().plusDays(14));
             sprint2.setStoryPoints(20);
             sprint2.setSprintGoal("goal 2");
             sprint2.setActive(false);
+            sprint2.setComplete(false);
             sprint2.setProject(project1);
             sprintRepository.save(sprint2);
 
@@ -118,6 +118,7 @@ public class DbInit {
             sprint3.setStoryPoints(20);
             sprint3.setSprintGoal("goal 3");
             sprint3.setActive(false);
+            sprint3.setComplete(false);
             sprint3.setProject(project2);
             sprintRepository.save(sprint3);
 

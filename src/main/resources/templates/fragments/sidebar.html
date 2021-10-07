@@ -22,19 +22,19 @@
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
 
-                        <!-- board -->
-                        <li>
-                            <a class="nav-link px-0 align-middle"
-                               th:href="@{/projects/{projectId}/board(projectId = ${project.id})}">
-                                <i class="fas fa-columns"></i> <span class="ms-1 d-none d-sm-inline">Board</span>
-                            </a>
-                        </li>
-
                         <!-- backlog -->
                         <li>
                             <a class="nav-link px-0 align-middle"
                                th:href="@{/projects/{projectId}/backlog(projectId = ${project.id})}">
                                 <i class="fas fa-tasks"></i> <span class="ms-1 d-none d-sm-inline">Backlog</span>
+                            </a>
+                        </li>
+
+                        <!-- board -->
+                        <li>
+                            <a class="nav-link px-0 align-middle"
+                               th:href="@{/projects/{projectId}/board(projectId = ${project.id})}">
+                                <i class="fas fa-columns"></i> <span class="ms-1 d-none d-sm-inline">Board</span>
                             </a>
                         </li>
 
