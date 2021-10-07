@@ -99,6 +99,7 @@ public class SprintService {
         return existingSprint;
     }
 
+    // TODO: unused
     @Transactional
     public void addTaskToSprint(Long sprintId, Long taskId) {
         log.info("add task {} to sprint {}", taskId, sprintId);

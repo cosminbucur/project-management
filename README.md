@@ -20,9 +20,11 @@ design - [figma](https://www.figma.com/files/team/720697583435508813/free-minion
 [git repository](https://github.com/cosminbucur/project-management)
 
 # test
+```mvn -T 4 clean test```
 
 # run
-- create mysql database: project_management
+
+- create mysql database: project-management
 - use the run configuration: ProjectManagementApplication
 - open http://localhost:8081/ in browser
 

@@ -44,7 +44,7 @@ public class Task {
     private TaskType taskType;
 
     @Column(name = "story_points")
-    private Integer storyPoints;
+    private Integer storyPoints = 0;
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
