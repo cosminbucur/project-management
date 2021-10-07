@@ -117,6 +117,17 @@ public class SprintService {
         sprintRepository.save(sprint);
     }
 
+    public void complete(Long sprintId) {
+        log.info("start sprint {}", sprintId);
+
+        Sprint sprint = sprintRepository.findById(sprintId)
+                .orElseThrow(() -> new ResourceNotFoundException("sprint not found"));
+
+        sprint.setActive(false);
+        sprint.setComplete(true);
+        sprintRepository.save(sprint);
+    }
+
     public Sprint getActiveSprint(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("project not found"));

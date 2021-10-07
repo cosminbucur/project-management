@@ -16,6 +16,11 @@
 
     <h1 th:if="${activeSprint != null}" th:text="${activeSprint.name}"></h1>
 
+    <a th:href="@{/projects/{projectId}/sprints/{sprintId}/complete(projectId = ${project.id}, sprintId = ${activeSprint.id})}"
+       th:if="${activeSprint != null}">
+        <button class="btn btn-primary" type="button">Complete sprint</button>
+    </a>
+
     <p th:if="${activeSprint == null}">No sprint is active. Start a sprint to see the board.</p>
 
     <!--  TODO: add sprint with tasks  -->
