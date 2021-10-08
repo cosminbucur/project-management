@@ -1,5 +1,5 @@
 # Project management
-```scrum management tool```
+`scrum management tool`
 
 # plan
 task management - [jira board](https://freeminions.atlassian.net/jira/software/projects/DEV/boards/2)
@@ -31,3 +31,38 @@ design - [figma](https://www.figma.com/files/team/720697583435508813/free-minion
 # deploy
 
 # monitor
+
+## REST endpoints
+
+Swagger 2 is used to document the endpoints. The swagger ui is located at:
+
+http://localhost:8081/swagger-ui/#/
+
+All rest controllers follow the API convention:
+
+    POST    /{collection} (json body)
+    GET     /{collection}
+    GET     /{collection}/{id}
+    PUT     /{collection}/{id} (json body)
+    DELETE  /{collection}/{id}
+
+## Logging
+
+Logback is configured at:
+
+    /src/main/resources/logback.xml
+
+There are two appenders defined:
+
+- console appender
+- file appender
+
+The log files are located at:
+
+    /logs/app.log
+
+## Custom banner
+
+You can change the custom banner by editing the file:
+
+    /src/main/resources/banner.txt
