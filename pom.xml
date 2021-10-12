@@ -21,6 +21,7 @@
         <bootstrap.version>5.1.0</bootstrap.version>
         <webjars-locator.version>0.42</webjars-locator.version>
         <font-awesome.version>5.15.4</font-awesome.version>
+        <jquery.version>3.6.0</jquery.version>
     </properties>
 
     <dependencies>
@@ -92,6 +93,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
             <version>${font-awesome.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
         </dependency>
 
         <!-- manage the client-side dependencies -->
