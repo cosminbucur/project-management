@@ -2,6 +2,7 @@ package com.sda.project.management.service;
 
 import com.sda.project.management.controller.exception.ResourceNotFoundException;
 import com.sda.project.management.dto.TaskEdit;
+import com.sda.project.management.dto.TaskInfo;
 import com.sda.project.management.mapper.TaskMapper;
 import com.sda.project.management.model.Sprint;
 import com.sda.project.management.model.Task;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -71,6 +73,21 @@ public class TaskService {
         return taskRepository.getTasksBySprintIdAndStatus(sprintId, status);
     }
 
+    public List<TaskInfo> search(String query) {
+        if (query == null || query.equals("")) {
+            return taskRepository.findAll().stream()
+                    .limit(15)
+                    .map(task -> toTaskInfo(task))
+                    .collect(Collectors.toList());
+        }
+
+        return taskRepository.findAll().stream()
+                .filter(task -> task.getSummary().contains(query))
+                .limit(15)
+                .map(task -> toTaskInfo(task))
+                .collect(Collectors.toList());
+    }
+
     public void update(Long taskId, TaskEdit taskData) {
         log.info("update task {} with data {}", taskId, taskData);
 
@@ -98,5 +115,12 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("task not found"));
         sprint.removeTaskFromSprint(task);
+    }
+
+    private TaskInfo toTaskInfo(Task task) {
+        TaskInfo taskInfo = new TaskInfo();
+        taskInfo.setId(task.getId());
+        taskInfo.setText(task.getProject().getProjectKey() + "-" + task.getId() + " " + task.getSummary());
+        return taskInfo;
     }
 }

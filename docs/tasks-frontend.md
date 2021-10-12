@@ -59,14 +59,35 @@
         crossorigin="anonymous"></script>
 ```
 
+### add jquery with cdn
+
+- add in header before bootstrap
+
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+```
+
+### add jquery with webjars
+
+- add in header before bootstrap
+
+```html
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+```
+
 ### add custom css
+
 - create src/main/resources/static/css/main.css
 - add in header
+
 ```html
+
 <link th:rel="stylesheet" th:href="@{/css/main.css}"/>
 ```
 
 ### add custom js
+
 - create src/main/resources/static/js/main.js
 - import in footer of html:
 ```html
